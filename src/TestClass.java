@@ -12,4 +12,9 @@ public class TestClass {
     static void function(){
         System.out.println("Function");
     }
+
+
+    static void Change(){
+        System.out.println("This is a change");
+    }
 }
