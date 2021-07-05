@@ -12,4 +12,8 @@ public class TestClass {
     static void function(){
         System.out.println("Function");
     }
+
+    static int add(int a, int b) {
+        return a+b;
+    }
 }
