@@ -1,6 +1,6 @@
 public class TestClass {
     public static void main(String[] args) {
-        System.out.println("This is a CestClass!!");
+        System.out.println("This is a TestClass!!");
     }
 
     static void function(){
