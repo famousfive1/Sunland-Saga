@@ -25,7 +25,7 @@ public class StateMainMenu extends GameState {
 
         BufferedImage myPicture = null;
         try {
-            myPicture = ImageIO.read(new File("src/assets/MainMenu.png"));
+            myPicture = ImageIO.read(new File("C:\\Users\\kaust\\Desktop\\College stuff\\Computer porgs\\SunlandSaga_KK\\Sunland-Saga\\src\\assets\\MainMenu.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,6 +36,6 @@ public class StateMainMenu extends GameState {
 
     public static void button1Clicked() {
         System.out.println("clicked");
+        Game.setCurrentState(new StateWorld());
     }
-
 }
