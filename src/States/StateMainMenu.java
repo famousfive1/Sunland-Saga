@@ -25,7 +25,7 @@ public class StateMainMenu extends GameState {
 
         BufferedImage myPicture = null;
         try {
-            myPicture = ImageIO.read(new File("C:\\Users\\kaust\\Desktop\\College stuff\\Computer porgs\\SunlandSaga_KK\\Sunland-Saga\\src\\assets\\MainMenu.png"));
+            myPicture = ImageIO.read(getClass().getResourceAsStream("/assets/MainMenu.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
