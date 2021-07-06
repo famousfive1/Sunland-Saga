@@ -2,11 +2,7 @@ package States;
 
 import GUI.UIParts;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class StateMainMenu extends GameState {
 
@@ -15,27 +11,26 @@ public class StateMainMenu extends GameState {
 
         JButton b = new JButton("Play");
         b.setBounds(400-35, 350-15, 90, 50);
-        b.addActionListener(e -> button1Clicked());
+        b.addActionListener(e -> buttonPlayClicked());
         display.addComponent(b);
 
         b = new JButton("Exit");
         b.setBounds(400-35, 420-15, 90, 50);
-        b.addActionListener(e -> button1Clicked());
+        b.addActionListener(e -> System.exit(0));
         display.addComponent(b);
 
-        BufferedImage myPicture = null;
-        try {
-            myPicture = ImageIO.read(getClass().getResourceAsStream("/assets/MainMenu.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        picLabel.setBounds(0, 0, 800, 600);
-        display.addComponent(picLabel);
+        JLabel background = new JLabel(new ImageIcon(display.loadImg("/assets/MainMenu.png")));
+        background.setBounds(0, 0, 800, 600);
+        display.addComponent(background);
     }
 
-    public static void button1Clicked() {
-        System.out.println("clicked");
+    public static void buttonPlayClicked() {
+        System.out.println("State Changed: Main Menu -> World");
         Game.setCurrentState(new StateWorld());
+    }
+
+    @Override
+    public void handleInput(char typed) {
+        System.out.println("I dont care if you type");
     }
 }

@@ -1,45 +1,54 @@
 package States;
 
+import Entity.Player;
 import GUI.UIParts;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 /*Load map
 Load objects pngs 
-Load charcter/move*/
+Load character/move*/
 
 public class StateWorld extends GameState{
-    public StateWorld()//forestmap1
+    Player player;
+
+    public StateWorld() //forestmap1
     {
         //load map forest1
         display = new UIParts();
 
-        JButton b = new JButton("Play");
-        b.setBounds(400-35, 350-15, 90, 50);
-        b.addActionListener(e -> button1Clicked());
-        display.addComponent(b);
+        JLabel background = new JLabel(new ImageIcon(display.loadImg("/assets/Forest1Test.png")));
+        background.setBounds(0, 0, 800, 600);
+        display.addComponent(background);
 
-        b = new JButton("Exit");
-        b.setBounds(400-35, 420-15, 90, 50);
-        b.addActionListener(e -> button1Clicked());
-        display.addComponent(b);
-
-        BufferedImage myPicture = null;
-        try {
-            myPicture = ImageIO.read(new File("C:\\Users\\kaust\\Desktop\\College stuff\\Computer porgs\\SunlandSaga_KK\\Sunland-Saga\\src\\assets\\MainMenu.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        picLabel.setBounds(0, 0, 800, 600);
-        display.addComponent(picLabel);
+        //load player
+        player = new Player(display.loadImg("/assets/PlayerCharacter.png"));
+        display.addCharacter(player);
     }
 
-    public static void button1Clicked() {
-        System.out.println("clked");
+    @Override
+    public void handleInput(char typed) {
+        System.out.println(typed);
+        switch (typed) {
+            case 'w':
+                player.setY(player.getY() - 1);
+                Game.getWindow().updateWindow();
+                break;
+            case 's':
+                player.setY(player.getY() + 1);
+                Game.getWindow().updateWindow();
+                break;
+            case 'a':
+                player.setX(player.getX() - 1);
+                Game.getWindow().updateWindow();
+                break;
+            case 'd':
+                player.setX(player.getX() + 1);
+                Game.getWindow().updateWindow();
+                break;
+        }
     }
 }
