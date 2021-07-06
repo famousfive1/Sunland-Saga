@@ -11,7 +11,6 @@ public class Game {
         window = new GameWindow();
         currentState = new StateMainMenu();
         window.setState(currentState);
-        window.updateWindow();
     }
 
     public static GameWindow getWindow() {
@@ -25,6 +24,5 @@ public class Game {
     public static void setCurrentState(GameState GS){
         currentState = GS;
         window.setState(currentState);
-        window.updateWindow();
     }
 }
