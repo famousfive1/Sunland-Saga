@@ -16,6 +16,8 @@ public class GameWindow {
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
     }
 
     public void setState(GameState state) {
@@ -26,6 +28,7 @@ public class GameWindow {
 
     public void updateWindow() {
         frame.getContentPane().removeAll();
+        frame.setLayout(display.getLayout());
         for(JComponent c : display.getComponents())
             frame.add(c);
         SwingUtilities.updateComponentTreeUI(frame);
