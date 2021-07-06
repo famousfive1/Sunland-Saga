@@ -25,4 +25,8 @@ public class Game {
         currentState = GS;
         window.setState(currentState);
     }
+
+    public static void updateWindow() {
+        window.updateWindow();
+    }
 }
