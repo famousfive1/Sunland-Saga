@@ -32,23 +32,7 @@ public class StateWorld extends GameState{
     @Override
     public void handleInput(char typed) {
         System.out.println(typed);
-        switch (typed) {
-            case 'w':
-                player.setY(player.getY() - 1);
-                Game.getWindow().updateWindow();
-                break;
-            case 's':
-                player.setY(player.getY() + 1);
-                Game.getWindow().updateWindow();
-                break;
-            case 'a':
-                player.setX(player.getX() - 1);
-                Game.getWindow().updateWindow();
-                break;
-            case 'd':
-                player.setX(player.getX() + 1);
-                Game.getWindow().updateWindow();
-                break;
-        }
+        if(player.move(typed))
+            Game.updateWindow();
     }
 }

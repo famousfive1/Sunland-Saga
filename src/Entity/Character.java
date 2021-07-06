@@ -3,8 +3,8 @@ package Entity;
 import java.awt.image.BufferedImage;
 
 public class Character {
-    private int x, y;
-    private BufferedImage img;
+    protected int x, y;
+    protected BufferedImage img;
 
     public Character(BufferedImage img) {
         this.img = img;
