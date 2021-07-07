@@ -1,6 +1,6 @@
+package States;
+
 import GUI.GameWindow;
-import States.GameState;
-import States.StateMainMenu;
 
 public class Game {
 
@@ -11,7 +11,6 @@ public class Game {
         window = new GameWindow();
         currentState = new StateMainMenu();
         window.setState(currentState);
-        window.updateWindow();
     }
 
     public static GameWindow getWindow() {
@@ -20,5 +19,14 @@ public class Game {
 
     public static GameState getCurrentState() {
         return currentState;
+    }
+
+    public static void setCurrentState(GameState GS){
+        currentState = GS;
+        window.setState(currentState);
+    }
+
+    public static void updateWindow() {
+        window.updateWindow();
     }
 }

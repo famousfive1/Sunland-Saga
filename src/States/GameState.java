@@ -12,7 +12,5 @@ public abstract class GameState {
         return display;
     }
 
-    public void handleInput() {
-
-    }
+    public abstract void handleInput(char typed);
 }
