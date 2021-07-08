@@ -14,8 +14,6 @@ public class Game {
         window = new GameWindow();
         currentState = new StateMainMenu();
         window.setState(currentState);
-        for (String i : loadFile("/assets/forest1Test.txt"))
-            System.out.println(i);
     }
 
     public static GameWindow getWindow() {
