@@ -1,5 +1,6 @@
 package Entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Character {
@@ -36,5 +37,9 @@ public class Character {
 
     public BufferedImage getImg() {
         return img;
+    }
+
+    public Image getImgScaled() {
+        return img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
     }
 }
