@@ -4,6 +4,7 @@ import Entity.Character;
 import States.GameState;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -15,13 +16,11 @@ public class GameWindow {
 
     public GameWindow() {
         frame = new JFrame();
-        frame.setSize(800, 600);
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
         frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
         frame.setFocusable(true);
+        frame.getContentPane().setPreferredSize(new Dimension(800, 600));
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -36,6 +35,9 @@ public class GameWindow {
             @Override
             public void keyReleased(KeyEvent e) { }
         });
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public void setState(GameState state) {
