@@ -6,26 +6,62 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Character {
 
+    static String[] map ={
+                   "0000000000000000" ,
+                   "0000000000001000" ,
+                   "0011000000000000" ,
+                   "0001000000000000" ,
+                   "0000000000110000" ,
+                   "0000001000110000" ,
+                   "0000000000000000" ,
+                   "0000000000010000" ,
+                   "0000000000000000" ,
+                   "0000000000000000" ,
+                   "0000000000000000" ,
+                   "0000000000000000" };
+
     public Player(BufferedImage img) {
         super(img);
     }
 
     public boolean move(char typed) {
+
+        int newX=this.x;
+        int newY=this.y;
+
+
+
+
         switch (typed) {
             case 'w':
-                y--;
-                return true;
+                newY--;
+                break;
+                //return true;
             case 's':
-                y++;
-                return true;
+                newY++;
+                break;
+                //return true;
             case 'a':
-                x--;
-                return true;
+                newX--;
+                break;
+                //return true;
             case 'd':
-                x++;
-                return true;
+                newX++;
+                break;
+                //return true;
             default:
                 return false;
         }
+
+        if(isValid(newX, newY)){
+            this.x = newX;
+            this.y=newY;
+            return true;
+        }
+        return false;
+    }
+
+    static boolean isValid(int newX, int newY){
+        return newX>=0&&newY>=0 && newX<16&&newY<12&&map[newY].charAt(newX)=='0';
     }
 }
