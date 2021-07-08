@@ -18,6 +18,7 @@ public class StateWorld extends GameState{
     // Map related stuff
     int[][] map;
     JLabel background;
+    JButton pause;
 
     public StateWorld() //forestmap1
     {
@@ -31,6 +32,11 @@ public class StateWorld extends GameState{
         //load player
         player = new Player("Get Player Name From User", display.loadImg("/assets/PlayerCharacter.png"));
         display.addCharacter(player);
+
+        pause = new JButton("pause");
+        pause.setBounds(720, 0, 80, 40);
+        pause.addActionListener(e -> Game.setCurrentState(new StatePaused(this)));
+        display.addComponent(pause);
 
         //Load collision map
         map = new int[12][16]; int i = 0;
@@ -69,6 +75,7 @@ public class StateWorld extends GameState{
                 map[player.getY()][player.getX()] = 0;
                 Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
             }
+
         }
     }
 
@@ -79,5 +86,9 @@ public class StateWorld extends GameState{
     private Character generateEnemy() {
         // Do more stuff
         return new Character("Enemy", display.loadImg("/assets/enemy.png"), 900);
+    }
+
+    public void pauseButtonCLicked() {
+
     }
 }
