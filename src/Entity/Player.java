@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Character {
 
-    public Player(BufferedImage img) {
-        super(img);
+    public Player(String name, BufferedImage img){
+        super(name, img, 100);
     }
 
     public void usedMove(char typed)
@@ -13,18 +13,18 @@ public class Player extends Character {
         switch (typed) {
             case 'e':
                 System.out.println("You deal E damage");
-                System.out.println("Current health: "+health_bar_value);
+                System.out.println("Current health: "+ health);
                 break;
                 //return true;
             case 'f':
                 System.out.println("You dash away but take F damage");
-                health_bar_value -= 10;
+                health -= 10;
                 if(!checkHealth())
                 {
                     System.out.println("Player has no health left");
                     System.exit(0);
                 }
-                System.out.println("Current health: "+health_bar_value);
+                System.out.println("Current health: "+ health);
                 break;
                 //return true;
             default:

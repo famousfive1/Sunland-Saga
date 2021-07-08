@@ -28,7 +28,7 @@ public class StateWorld extends GameState{
         display.addComponent(background);
 
         //load player
-        player = new Player(display.loadImg("/assets/PlayerCharacter.png"));
+        player = new Player("Get Player Name From User", display.loadImg("/assets/PlayerCharacter.png"));
         display.addCharacter(player);
 
         //Load collision map
