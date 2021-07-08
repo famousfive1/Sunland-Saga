@@ -5,8 +5,6 @@ import Entity.Player;
 import GUI.UIParts;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /*
 Load map
@@ -18,7 +16,7 @@ public class StateWorld extends GameState{
     Player player;
 
     // Map related stuff
-    String[] map;
+    int[][] map;
     JLabel background;
 
     public StateWorld() //forestmap1
@@ -35,24 +33,28 @@ public class StateWorld extends GameState{
         display.addCharacter(player);
 
         //Load collision map
-        map = new String[12]; int j = 0;
-        for(String i : Game.loadFile("/assets/Forest1Test.txt"))
-            map[j++] = i;
+        map = new int[12][16]; int i = 0;
+        for(String s : Game.loadFile("/assets/Forest1Test.txt")) {
+            for (int j = 0; j < 16; j++) {
+                map[i][j] = s.charAt(j) - '0';
+            }
+            i++;
+        }
 
         //Add 10 enemies to the map
-        int i  = 0;
-        while(i!=10){
-            int x = (int)(Math.random()*16 );
-            int y = (int)(Math.random()*12);
+        i  = 0;
+        while(i != 10){
+            int x = (int)(Math.random() * 16);
+            int y = (int)(Math.random() * 12);
 
-            if(map[y].charAt(x)!='1')
-                map[y] = map[y].substring(0, x) + "2" + map[y].substring(x+1);
+            if(map[y][x] != 1)
+                map[y][x] = 2;
             i++;
         }
 
         for(int m = 0 ; m<12; m++){
             for(int n = 0 ; n<16; n++){
-                System.out.print(map[m].charAt(n));
+                System.out.print(map[m][n]);
             }
             System.out.println();
         }
@@ -60,16 +62,13 @@ public class StateWorld extends GameState{
 
     @Override
     public void handleInput(char typed) {
-        if(typed == 'c')
-        {
-            Character enemy = generateEnemy( /* args */ );
-            Game.setCurrentState(new StateCombat(player, enemy));
-        }
-        if(player.move(typed, map))
+        if(player.move(typed, map)) {
             Game.updateWindow();
 
-        if(map[player.getY()].charAt(player.getX())=='2'){
-            Game.setCurrentState(new StateCombat(player, generateEnemy()));
+            if (map[player.getY()][player.getX()] == 2) {
+                map[player.getY()][player.getX()] = 0;
+                Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
+            }
         }
     }
 

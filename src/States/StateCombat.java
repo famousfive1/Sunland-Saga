@@ -9,8 +9,11 @@ import javax.swing.*;
 public class StateCombat extends GameState {
     Player player;
     Character enemy;
+    StateWorld save;
 
-    public StateCombat(Player player, Character enemy) {
+    public StateCombat(Player player, Character enemy, StateWorld save) {
+        this.save = save;
+
         display = new UIParts();
 
         this.player = player;
@@ -31,6 +34,11 @@ public class StateCombat extends GameState {
         b = new JButton("Attack 2");
         b.setBounds(400, 400, 80, 40);
         b.addActionListener(e -> player.usedMove('e'));
+        display.addComponent(b);
+
+        b = new JButton("After player wins, do this");
+        b.setBounds(300, 500, 200, 60);
+        b.addActionListener(e -> Game.setCurrentState(save));
         display.addComponent(b);
     }
 

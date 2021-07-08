@@ -15,7 +15,6 @@ public class Player extends Character {
                 System.out.println("You deal E damage");
                 System.out.println("Current health: "+ health);
                 break;
-                //return true;
             case 'f':
                 System.out.println("You dash away but take F damage");
                 health -= 10;
@@ -26,13 +25,10 @@ public class Player extends Character {
                 }
                 System.out.println("Current health: "+ health);
                 break;
-                //return true;
-            default:
-                ;
         }
     }
 
-    public boolean move(char typed, String[] map) {
+    public boolean move(char typed, int[][] map) {
         int newX = this.x;
         int newY = this.y;
 
@@ -65,7 +61,7 @@ public class Player extends Character {
         return false;
     }
 
-    static boolean isValid(int newX, int newY, String[] map){
-        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && map[newY].charAt(newX) != '1';
+    static boolean isValid(int newX, int newY, int[][] map){
+        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && (map[newY][newX] == 0 || map[newY][newX] == 2);
     }
 }
