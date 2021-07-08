@@ -9,10 +9,7 @@ public class Character {
 
     public boolean checkHealth()
     {
-        if(health_bar_value <=0)
-        return false;
-        else
-        return true;
+        return health_bar_value > 0;
     }
 
     public Character(BufferedImage img) {
