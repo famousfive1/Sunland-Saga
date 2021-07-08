@@ -1,5 +1,6 @@
 package States;
 
+import Entity.Character;
 import Entity.Player;
 import GUI.UIParts;
 
@@ -28,7 +29,7 @@ public class StateWorld extends GameState{
         display.addComponent(background);
 
         //load player
-        player = new Player(display.loadImg("/assets/PlayerCharacter.png"));
+        player = new Player("Get Player Name From User", display.loadImg("/assets/PlayerCharacter.png"));
         display.addCharacter(player);
 
         //Load collision map
@@ -39,12 +40,25 @@ public class StateWorld extends GameState{
 
     @Override
     public void handleInput(char typed) {
-        player.usedMove(typed);
+        if(typed == 'c')
+        {
+            Character enemy = generateEnemy( /* args */ );
+            Game.setCurrentState(new StateCombat(player, enemy));
+        }
         if(player.move(typed, map))
             Game.updateWindow();
+
+        if(map[player.getY()].charAt(player.getX())=='2'){
+            Game.setCurrentState(new StateCombat(player, generateEnemy()));
+        }
     }
 
     void changeMap(String path) {
 
+    }
+
+    private Character generateEnemy() {
+        // Do more stuff
+        return new Character("Enemy", display.loadImg("/assets/PlayerCharacter.png"), 900);
     }
 }
