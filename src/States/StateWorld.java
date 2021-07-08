@@ -39,6 +39,7 @@ public class StateWorld extends GameState{
 
     @Override
     public void handleInput(char typed) {
+        player.usedMove(typed);
         if(player.move(typed, map))
             Game.updateWindow();
     }

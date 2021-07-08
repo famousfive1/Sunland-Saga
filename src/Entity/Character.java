@@ -5,6 +5,15 @@ import java.awt.image.BufferedImage;
 public class Character {
     protected int x, y;
     protected BufferedImage img;
+    protected int health_bar_value = 100;
+
+    public boolean checkHealth()
+    {
+        if(health_bar_value <=0)
+        return false;
+        else
+        return true;
+    }
 
     public Character(BufferedImage img) {
         this.img = img;
