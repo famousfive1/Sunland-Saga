@@ -47,7 +47,7 @@ public class StateWorld extends GameState{
             int y = (int)(Math.random()*12);
 
             if(map[y].charAt(x)!='1')
-                map[y] = map[y].substring(0, x) + "2" + map[y].substring(x+1, 16);
+                map[y] = map[y].substring(0, x) + "2" + map[y].substring(x+1);
             i++;
         }
 
