@@ -32,7 +32,7 @@ public class StateWorld extends GameState{
         display.addComponent(background);
 
         //load player
-        player = new Player("Get Player Name From User", display.loadImg("/assets/PlayerCharacter.png"));
+        player = new Player("Get Player Name From User", display.loadImg("/assets/enemy.png"));
         display.addCharacter(player);
 
         //Load collision map
