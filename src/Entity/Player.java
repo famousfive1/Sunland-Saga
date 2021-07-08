@@ -66,6 +66,6 @@ public class Player extends Character {
     }
 
     static boolean isValid(int newX, int newY, String[] map){
-        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && map[newY].charAt(newX) == '0';
+        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && map[newY].charAt(newX) != '1';
     }
 }

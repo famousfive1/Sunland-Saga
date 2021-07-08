@@ -47,6 +47,10 @@ public class StateWorld extends GameState{
         }
         if(player.move(typed, map))
             Game.updateWindow();
+
+        if(map[player.getY()].charAt(player.getX())=='2'){
+            Game.setCurrentState(new StateCombat(player, generateEnemy()));
+        }
     }
 
     void changeMap(String path) {
@@ -55,6 +59,6 @@ public class StateWorld extends GameState{
 
     private Character generateEnemy() {
         // Do more stuff
-        return new Character(display.loadImg("/assets/PlayerCharacter.png"));
+        return new Character("Enemy", display.loadImg("/assets/PlayerCharacter.png"), 900);
     }
 }
