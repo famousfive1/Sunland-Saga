@@ -31,7 +31,7 @@ public class StateWorld extends GameState{
 
     @Override
     public void handleInput(char typed) {
-        System.out.println(typed);
+        player.usedMove(typed);
         if(player.move(typed))
             Game.updateWindow();
     }

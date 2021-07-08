@@ -24,29 +24,54 @@ public class Player extends Character {
         super(img);
     }
 
-    public boolean move(char typed) {
+    public void usedMove(char typed)
+    {
+        switch (typed) {
+            case 'e':
+                System.out.println("You deal E damage");
+                System.out.println("Current health: "+health_bar_value);
+                break;
+                //return true;
+            case 'f':
+                System.out.println("You dash away but take F damage");
+                health_bar_value -= 10;
+                if(!checkHealth())
+                {
+                    System.out.println("Player has no health left");
+                    System.exit(0);
+                }
+                System.out.println("Current health: "+health_bar_value);
+                break;
+                //return true;
+            default:
+                ;
+        }
+    }
 
+    public boolean move(char typed) {
+        
         int newX=this.x;
         int newY=this.y;
-
-
-
 
         switch (typed) {
             case 'w':
                 newY--;
+                System.out.println(typed);
                 break;
                 //return true;
             case 's':
                 newY++;
+                System.out.println(typed);
                 break;
                 //return true;
             case 'a':
                 newX--;
+                System.out.println(typed);
                 break;
                 //return true;
             case 'd':
                 newX++;
+                System.out.println(typed);
                 break;
                 //return true;
             default:
