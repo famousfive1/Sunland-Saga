@@ -29,7 +29,7 @@ public class StateWorld extends GameState{
         display.addComponent(background);
 
         //load player
-        player = new Player("Get Player Name From User", display.loadImg("/assets/enemy.png"));
+        player = new Player("Get Player Name From User", display.loadImg("/assets/PlayerCharacter.png"));
         display.addCharacter(player);
 
         //Load collision map
@@ -59,6 +59,6 @@ public class StateWorld extends GameState{
 
     private Character generateEnemy() {
         // Do more stuff
-        return new Character("Enemy", display.loadImg("/assets/PlayerCharacter.png"), 900);
+        return new Character("Enemy", display.loadImg("/assets/enemy.png"), 900);
     }
 }
