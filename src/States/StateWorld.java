@@ -1,5 +1,6 @@
 package States;
 
+import Entity.Character;
 import Entity.Player;
 import GUI.UIParts;
 
@@ -39,12 +40,21 @@ public class StateWorld extends GameState{
 
     @Override
     public void handleInput(char typed) {
-        player.usedMove(typed);
+        if(typed == 'c')
+        {
+            Character enemy = generateEnemy( /* args */ );
+            Game.setCurrentState(new StateCombat(player, enemy));
+        }
         if(player.move(typed, map))
             Game.updateWindow();
     }
 
     void changeMap(String path) {
 
+    }
+
+    private Character generateEnemy() {
+        // Do more stuff
+        return new Character(display.loadImg("/assets/PlayerCharacter.png"));
     }
 }

@@ -22,6 +22,7 @@ public class UIParts {
     }
 
     public void addComponent(JComponent c) {
+        c.setFocusable(false);
         components.add(c);
     }
 
