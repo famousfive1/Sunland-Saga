@@ -2,6 +2,9 @@ package States;
 
 import GUI.GameWindow;
 
+import java.io.*;
+import java.util.ArrayList;
+
 public class Game {
 
     static GameWindow window;
@@ -28,5 +31,18 @@ public class Game {
 
     public static void updateWindow() {
         window.updateWindow();
+    }
+
+    public static ArrayList<String> loadFile(String path) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(Game.class.getResourceAsStream(path)));
+        ArrayList<String> s = new ArrayList<>();
+        String st;
+        try {
+            while((st = br.readLine()) != null)
+                s.add(st);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 }
