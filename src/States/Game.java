@@ -35,7 +35,12 @@ public class Game {
     }
 
     public static ArrayList<String> loadFile(String path) {
-        BufferedReader br = new BufferedReader(new InputStreamReader(Game.class.getResourceAsStream(path)));
+        InputStream fs = Game.class.getResourceAsStream(path);
+        if(fs == null) {
+            System.out.println("Couldn't load file at path: " + path);
+            return null;
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(fs));
         ArrayList<String> s = new ArrayList<>();
         String st;
         try {
