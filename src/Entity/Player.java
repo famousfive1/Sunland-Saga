@@ -35,19 +35,15 @@ public class Player extends Character {
         switch (typed) {
             case 'w':
                 newY--;
-                System.out.println(typed);
                 break;
             case 's':
                 newY++;
-                System.out.println(typed);
                 break;
             case 'a':
                 newX--;
-                System.out.println(typed);
                 break;
             case 'd':
                 newX++;
-                System.out.println(typed);
                 break;
             default:
                 return false;

@@ -5,9 +5,9 @@ import GUI.UIParts;
 import javax.swing.*;
 
 public class StatePaused extends GameState{
-    StateWorld save;
+    GameState save;
 
-    public StatePaused(StateWorld save) {
+    public StatePaused(GameState save) {
         this.save = save;
 
         display = new UIParts();
@@ -32,8 +32,11 @@ public class StatePaused extends GameState{
         display.addComponent(backToMainMenu);
     }
 
+
     @Override
     public void handleInput(char typed) {
-        System.out.println("Press buttons instead!!");
+        if(typed == 'p')
+            Game.setCurrentState(save);
+        else System.out.println("Press buttons instead!!");
     }
 }

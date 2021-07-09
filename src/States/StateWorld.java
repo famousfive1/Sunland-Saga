@@ -33,11 +33,6 @@ public class StateWorld extends GameState{
         player = new Player("Get Player Name From User", display.loadImg("/assets/PlayerCharacter.png"));
         display.addCharacter(player);
 
-        pause = new JButton("pause");
-        pause.setBounds(720, 0, 80, 40);
-        pause.addActionListener(e -> Game.setCurrentState(new StatePaused(this)));
-        display.addComponent(pause);
-
         //Load collision map
         map = new int[12][16]; int i = 0;
         for(String s : Game.loadFile("/assets/Forest1Test.txt")) {
@@ -57,18 +52,13 @@ public class StateWorld extends GameState{
                 map[y][x] = 2;
             i++;
         }
-
-        for(int m = 0 ; m<12; m++){
-            for(int n = 0 ; n<16; n++){
-                System.out.print(map[m][n]);
-            }
-            System.out.println();
-        }
     }
 
     @Override
     public void handleInput(char typed) {
-        if(player.move(typed, map)) {
+        if(typed == 'p')
+            pauseGame();
+        else if(player.move(typed, map)) {
             Game.updateWindow();
 
             if (map[player.getY()][player.getX()] == 2) {
@@ -79,7 +69,7 @@ public class StateWorld extends GameState{
         }
     }
 
-    void changeMap(String path) {
+    private void changeMap(String path) {
 
     }
 
@@ -88,7 +78,7 @@ public class StateWorld extends GameState{
         return new Character("Enemy", display.loadImg("/assets/enemy.png"), 900);
     }
 
-    public void pauseButtonCLicked() {
-
+    private void pauseGame() {
+        Game.setCurrentState(new StatePaused(this));
     }
 }
