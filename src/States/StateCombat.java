@@ -44,6 +44,8 @@ public class StateCombat extends GameState {
 
     @Override
     public void handleInput(char typed) {
-        System.out.println("Press buttons instead!!");
+        if(typed == 'p')
+            Game.setCurrentState(new StatePaused(this));
+        else System.out.println("Press buttons instead!!");
     }
 }

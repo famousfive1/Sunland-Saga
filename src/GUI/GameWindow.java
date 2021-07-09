@@ -25,8 +25,8 @@ public class GameWindow {
             @Override
             public void keyTyped(KeyEvent e) {
                 if(e.getKeyChar() == 27)
-                    System.exit(0);
-                currentState.handleInput(e.getKeyChar());
+                    currentState.handleInput('p');
+                else currentState.handleInput(e.getKeyChar());
             }
 
             @Override
