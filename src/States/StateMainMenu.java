@@ -25,7 +25,6 @@ public class StateMainMenu extends GameState {
     }
 
     public static void buttonPlayClicked() {
-        System.out.println("State Changed: Main Menu -> World");
         Game.setCurrentState(new StateWorld());
     }
 

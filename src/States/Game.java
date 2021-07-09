@@ -25,6 +25,7 @@ public class Game {
     }
 
     public static void setCurrentState(GameState GS){
+        System.out.println("State Change: " + currentState.toString() + " --> " + GS.toString());
         currentState = GS;
         window.setState(currentState);
     }
