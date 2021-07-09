@@ -15,10 +15,12 @@ public class StateWin extends GameState{
         background.setBounds(0, 0, 800, 600);
         display.addComponent(background);
 
+
+
     }
 
     @Override
     public void handleInput(char typed) {
-
+        System.exit(0);
     }
 }
