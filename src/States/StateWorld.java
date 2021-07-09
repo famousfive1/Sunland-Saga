@@ -14,6 +14,7 @@ Load character/ move
 
 public class StateWorld extends GameState{
     Player player;
+    private int questCounter;
 
     // Map related stuff
     int[][] map;
@@ -22,6 +23,7 @@ public class StateWorld extends GameState{
 
     public StateWorld() //forestmap1
     {
+
         //load map forest1
         display = new UIParts();
 
@@ -35,6 +37,8 @@ public class StateWorld extends GameState{
 
         //Load collision map
         map = new int[12][16]; int i = 0;
+
+        
         for(String s : Game.loadFile("/assets/Forest1Test.txt")) {
             for (int j = 0; j < 16; j++) {
                 map[i][j] = s.charAt(j) - '0';
@@ -52,6 +56,8 @@ public class StateWorld extends GameState{
                 map[y][x] = 2;
             i++;
         }
+
+        questCounter = 0;
     }
 
     @Override
@@ -80,5 +86,13 @@ public class StateWorld extends GameState{
 
     private void pauseGame() {
         Game.setCurrentState(new StatePaused(this));
+    }
+
+    public void setQuestCounter(int questCounter) {
+        this.questCounter = questCounter;
+    }
+
+    public int getQuestCounter() {
+        return questCounter;
     }
 }
