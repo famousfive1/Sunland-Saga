@@ -28,12 +28,12 @@ public class StateCombat extends GameState {
 
         JButton b = new JButton("Attack 1");
         b.setBounds(200, 400, 80, 40);
-        b.addActionListener(e -> player.usedMove('e'));
+        b.addActionListener(e -> attack('e'));
         display.addComponent(b);
 
         b = new JButton("Attack 2");
         b.setBounds(400, 400, 80, 40);
-        b.addActionListener(e -> player.usedMove('e'));
+        b.addActionListener(e -> attack('f'));
         display.addComponent(b);
 
         b = new JButton("After player wins, do this");
@@ -42,10 +42,39 @@ public class StateCombat extends GameState {
         display.addComponent(b);
     }
 
+
+
     @Override
     public void handleInput(char typed) {
         if(typed == 'p')
             Game.setCurrentState(new StatePaused(this));
         else System.out.println("Press buttons instead!!");
+    }
+
+     void attack(char usedMove){
+        player.usedMove(usedMove);
+        enemy.takeDamage(200);
+
+        if(usedMove!='f' )
+            player.takeDamage(10 + (int)(Math.random()*40));
+
+        if(!enemy.checkHealth()){
+            System.out.println("You Won!!!! Congratulations!!!");
+            player.restoreHealth();
+            save.setQuestCounter(save.getQuestCounter() + 1);
+            if(save.getQuestCounter()==1)
+                Game.setCurrentState(new StateWin());
+
+            else
+             Game.setCurrentState(save);
+            //TODO 1. Do something appropriate here
+        }
+
+        if(!player.checkHealth()){
+            System.out.println("You Died!!! Sorry!!!!");
+            player.restoreHealth();
+            Game.setCurrentState(save);
+            //TODO 2. Do something appropriate here
+        }
     }
 }

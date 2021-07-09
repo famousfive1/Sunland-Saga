@@ -18,11 +18,11 @@ public class Player extends Character {
             case 'f':
                 System.out.println("You dash away but take F damage");
                 health -= 10;
-                if(!checkHealth())
-                {
-                    System.out.println("Player has no health left");
-                    System.exit(0);
-                }
+//                if(!checkHealth())
+//                {
+//                    System.out.println("Player has no health left");
+//                    System.exit(0);
+//                }
                 System.out.println("Current health: "+ health);
                 break;
         }
@@ -59,5 +59,9 @@ public class Player extends Character {
 
     static boolean isValid(int newX, int newY, int[][] map){
         return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && (map[newY][newX] == 0 || map[newY][newX] == 2);
+    }
+
+    public void restoreHealth(){
+        this.health = 100;
     }
 }
