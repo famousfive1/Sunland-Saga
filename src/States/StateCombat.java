@@ -22,16 +22,24 @@ public class StateCombat extends GameState {
         l.setBounds(100, 100, 100, 100);
         display.addComponent(l);
 
-        JTextArea healthIndicatorPlayer = new JTextArea("Health : " + player.getHealth());
-        healthIndicatorPlayer.setBounds(100, 220, 80, 40);
+        JProgressBar healthIndicatorPlayer = new JProgressBar();
+        healthIndicatorPlayer.setStringPainted(true);
+        String fullHealthPlayer = Integer.toString(player.getHealth());
+        healthIndicatorPlayer.setString(player.getHealth() + "/" + fullHealthPlayer);
+        healthIndicatorPlayer.setValue(player.getHealth());
+        healthIndicatorPlayer.setBounds(100, 220, 160, 30);
         display.addComponent(healthIndicatorPlayer);
 
         l = new JLabel(new ImageIcon(enemy.getImgScaled()));
         l.setBounds(500, 100, 100, 100);
         display.addComponent(l);
 
-        JTextArea healthIndicatorEnemy = new JTextArea("Health : " + enemy.getHealth());
-        healthIndicatorEnemy.setBounds(500, 220, 80, 40);
+        JProgressBar healthIndicatorEnemy = new JProgressBar();
+        healthIndicatorEnemy.setStringPainted(true);
+        String fullHealthEnemy = Integer.toString(enemy.getHealth());
+        healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+        healthIndicatorEnemy.setValue(enemy.getHealth() / Integer.parseInt(fullHealthEnemy) * 100);
+        healthIndicatorEnemy.setBounds(500, 220, 160, 30);
         display.addComponent(healthIndicatorEnemy);
 
 
@@ -39,8 +47,10 @@ public class StateCombat extends GameState {
         b.setBounds(200, 400, 80, 40);
         b.addActionListener(e -> {
             attack('e');
-            healthIndicatorEnemy.setText("Health : " + enemy.getHealth());
-            healthIndicatorPlayer.setText("Health : " + player.getHealth());
+            healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
+            healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+            healthIndicatorPlayer.setValue(player.getHealth());
+            healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
         });
         display.addComponent(b);
 
@@ -48,8 +58,10 @@ public class StateCombat extends GameState {
         b.setBounds(400, 400, 80, 40);
         b.addActionListener(e -> {
             attack('f');
-            healthIndicatorEnemy.setText("Health : " + enemy.getHealth());
-            healthIndicatorPlayer.setText("Health : " + player.getHealth());
+            healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
+            healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+            healthIndicatorPlayer.setValue(player.getHealth());
+            healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
         });
         display.addComponent(b);
 
