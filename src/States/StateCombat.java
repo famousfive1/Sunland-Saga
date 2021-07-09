@@ -52,7 +52,7 @@ public class StateCombat extends GameState {
     }
 
      void attack(char usedMove){
-        player.usedMove(usedMove);
+        player.reactToMove(usedMove);
         enemy.takeDamage(200);
 
         if(usedMove!='f' )
@@ -64,7 +64,7 @@ public class StateCombat extends GameState {
         *
         */
 
-        if(!enemy.checkHealth()){
+        if(enemy.getHealth()==0){
             System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
             save.setQuestCounter(save.getQuestCounter() + 1);
@@ -79,7 +79,7 @@ public class StateCombat extends GameState {
             //TODO 1. Do something appropriate here
         }
 
-        if(!player.checkHealth()){
+        if(player.getHealth()==0){
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
             Game.setCurrentState(save);

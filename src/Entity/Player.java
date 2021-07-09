@@ -8,22 +8,16 @@ public class Player extends Character {
         super(name, img, 100);
     }
 
-    public void usedMove(char typed)
+    public void reactToMove(char typed)
     {
         switch (typed) {
             case 'e':
                 System.out.println("You deal E damage");
-                System.out.println("Current health: "+ health);
                 break;
             case 'f':
                 System.out.println("You dash away but take F damage");
-                health -= 10;
-//                if(!checkHealth())
-//                {
-//                    System.out.println("Player has no health left");
-//                    System.exit(0);
-//                }
-                System.out.println("Current health: "+ health);
+                takeDamage(10);
+
                 break;
         }
     }

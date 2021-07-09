@@ -18,9 +18,7 @@ public class Character {
         this.health = health;
     }
 
-    public boolean checkHealth() {
-        return health > 0;
-    }
+
 
     public String getName() {
         return name;
