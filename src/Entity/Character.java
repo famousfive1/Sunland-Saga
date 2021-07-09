@@ -30,17 +30,15 @@ public class Character {
         return x;
     }
 
-    public void setX(int x) {
+    public void setXY(int x, int y) {
         this.x = x;
+        this.y = y;
     }
 
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
 
     public int getHealth() {
         return health;
