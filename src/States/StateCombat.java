@@ -22,18 +22,47 @@ public class StateCombat extends GameState {
         l.setBounds(100, 100, 100, 100);
         display.addComponent(l);
 
+        JProgressBar healthIndicatorPlayer = new JProgressBar();
+        healthIndicatorPlayer.setStringPainted(true);
+        String fullHealthPlayer = Integer.toString(player.getHealth());
+        healthIndicatorPlayer.setString(player.getHealth() + "/" + fullHealthPlayer);
+        healthIndicatorPlayer.setValue(player.getHealth());
+        healthIndicatorPlayer.setBounds(100, 220, 160, 30);
+        display.addComponent(healthIndicatorPlayer);
+
         l = new JLabel(new ImageIcon(enemy.getImgScaled()));
         l.setBounds(500, 100, 100, 100);
         display.addComponent(l);
 
+        JProgressBar healthIndicatorEnemy = new JProgressBar();
+        healthIndicatorEnemy.setStringPainted(true);
+        String fullHealthEnemy = Integer.toString(enemy.getHealth());
+        healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+        healthIndicatorEnemy.setValue(enemy.getHealth() / Integer.parseInt(fullHealthEnemy) * 100);
+        healthIndicatorEnemy.setBounds(500, 220, 160, 30);
+        display.addComponent(healthIndicatorEnemy);
+
+
         JButton b = new JButton("Attack 1");
         b.setBounds(200, 400, 80, 40);
-        b.addActionListener(e -> attack('e'));
+        b.addActionListener(e -> {
+            attack('e');
+            healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
+            healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+            healthIndicatorPlayer.setValue(player.getHealth());
+            healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
+        });
         display.addComponent(b);
 
         b = new JButton("Attack 2");
         b.setBounds(400, 400, 80, 40);
-        b.addActionListener(e -> attack('f'));
+        b.addActionListener(e -> {
+            attack('f');
+            healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
+            healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+            healthIndicatorPlayer.setValue(player.getHealth());
+            healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
+        });
         display.addComponent(b);
 
         b = new JButton("After player wins, do this");
