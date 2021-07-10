@@ -9,6 +9,8 @@ public class Character {
     protected int health;
     private final String name;
 
+    private int baseDmg;
+    // maxDmg + Math.random() * 6
 
     public Character(String name, BufferedImage img, int health) {
         this.name = name;

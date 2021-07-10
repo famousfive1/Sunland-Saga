@@ -1,0 +1,10 @@
+1. NPCs - give quests - random dialogues
+2. Quest stuff -> move into player
+3. Visual changes for map exit points
+4. Add popup window for encounter and dialogues
+5. Add enemy types
+6. Character creation screen (popup window)
+
+
+Add music
+Add mini map

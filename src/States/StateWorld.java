@@ -34,7 +34,7 @@ public class StateWorld extends GameState{
         background = new JLabel();
         display.addComponent(background);
 
-        changeMap("Forest1Test");
+        changeMap("Town1Test");
 
         questCounter = 0;
     }
