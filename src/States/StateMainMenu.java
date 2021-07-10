@@ -31,7 +31,7 @@ public class StateMainMenu extends GameState {
 
     public void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
-        if(name != null)
+        if(name != null && !name.equals(""))
             Game.setCurrentState(new StateWorld(name));
     }
 
