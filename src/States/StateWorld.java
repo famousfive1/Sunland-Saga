@@ -49,6 +49,9 @@ public class StateWorld extends GameState{
             if (map[y][x] == 2) {
                 map[y][x] = 0;
                 MediaPlayer.play("src/assets/combatMusic.wav");
+                JOptionPane.showOptionDialog(null, "You encounter an enemy", "Enemy",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                        new String[] {"To Arms !!!"}, null);
                 Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
             }
             else if(map[y][x] >= 6) {
@@ -71,6 +74,7 @@ public class StateWorld extends GameState{
 
         ArrayList<String> file = Game.loadFile("/assets/"+mapPart+".txt");
         while(i < 12) {
+            assert file != null;
             String s = file.get(i);
             for (int j = 0; j < 16; j++) {
                 map[i][j] = s.charAt(j) - '0';
