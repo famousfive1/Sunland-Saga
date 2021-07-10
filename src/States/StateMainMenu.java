@@ -14,8 +14,13 @@ public class StateMainMenu extends GameState {
         b.addActionListener(e -> buttonPlayClicked());
         display.addComponent(b);
 
-        b = new JButton("Exit");
+        b = new JButton("Help");
         b.setBounds(400-35, 420-15, 90, 50);
+        b.addActionListener(e -> showHelp());
+        display.addComponent(b);
+
+        b = new JButton("Exit");
+        b.setBounds(400-35, 490-15, 90, 50);
         b.addActionListener(e -> System.exit(0));
         display.addComponent(b);
 
@@ -25,11 +30,17 @@ public class StateMainMenu extends GameState {
     }
 
     public static void buttonPlayClicked() {
-        Game.setCurrentState(new StateWorld());
+        String name = JOptionPane.showInputDialog("Enter you character name: ");
+        if(name != null && !name.equals(""))
+            Game.setCurrentState(new StateWorld(name));
     }
 
     @Override
     public void handleInput(char typed) {
         System.out.println("I dont care if you type");
+    }
+
+    private void showHelp() {
+        System.out.println("Help");
     }
 }
