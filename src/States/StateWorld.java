@@ -15,7 +15,7 @@ Load character/ move
 
 public class StateWorld extends GameState{
     Player player;
-    private int questCounter;
+    private int questCount;
 
     // Map related stuff
     int[][] map;
@@ -36,7 +36,7 @@ public class StateWorld extends GameState{
 
         changeMap("Town1Test");
 
-        questCounter = 0;
+        questCount = 0;
     }
 
     @Override
@@ -108,12 +108,12 @@ public class StateWorld extends GameState{
         Game.setCurrentState(new StatePaused(this));
     }
 
-    public void setQuestCounter(int questCounter) {
-        this.questCounter = questCounter;
+    public void setQuestCount(int questCount) {
+        this.questCount = questCount;
     }
 
-    public int getQuestCounter() {
-        return questCounter;
+    public int getQuestCount() {
+        return questCount;
     }
 
 }
