@@ -19,6 +19,7 @@ public class StateWin extends GameState{
 
     @Override
     public void handleInput(char typed) {
-
+        if(typed == 'p')
+            Game.setCurrentState(new StatePaused(this));
     }
 }
