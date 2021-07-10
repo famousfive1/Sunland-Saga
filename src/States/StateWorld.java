@@ -22,13 +22,13 @@ public class StateWorld extends GameState{
     String[] connections;
     JLabel background;
 
-    public StateWorld() //forestmap1
+    public StateWorld(String playerName) //forestmap1
     {
         //load map forest1
         display = new UIParts();
 
         //load player
-        player = new Player("Get Player Name From User", display.loadImg("/assets/PlayerCharacter.png"));
+        player = new Player(playerName, display.loadImg("/assets/PlayerCharacter.png"));
         display.addCharacter(player);
 
         background = new JLabel();
@@ -115,4 +115,5 @@ public class StateWorld extends GameState{
     public int getQuestCounter() {
         return questCounter;
     }
+
 }

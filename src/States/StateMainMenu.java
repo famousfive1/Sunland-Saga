@@ -29,8 +29,10 @@ public class StateMainMenu extends GameState {
         display.addComponent(background);
     }
 
-    public static void buttonPlayClicked() {
-        Game.setCurrentState(new StateWorld());
+    public void buttonPlayClicked() {
+        String name = JOptionPane.showInputDialog("Enter you character name: ");
+        if(name != null)
+            Game.setCurrentState(new StateWorld(name));
     }
 
     @Override
@@ -38,7 +40,7 @@ public class StateMainMenu extends GameState {
         System.out.println("I dont care if you type");
     }
 
-    private static void showHelp() {
+    private void showHelp() {
         System.out.println("Help");
     }
 }
