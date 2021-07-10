@@ -3,6 +3,7 @@ package States;
 import Entity.Character;
 import Entity.Player;
 import GUI.UIParts;
+import Utility.MediaPlayer;
 
 import javax.swing.*;
 
@@ -94,6 +95,7 @@ public class StateCombat extends GameState {
         */
 
         if(enemy.getHealth()==0){
+            MediaPlayer.stop();
             System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
             save.setQuestCount(save.getQuestCount() + 1);
@@ -109,6 +111,7 @@ public class StateCombat extends GameState {
         }
 
         if(player.getHealth()==0){
+            MediaPlayer.stop();
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
             Game.setCurrentState(save);

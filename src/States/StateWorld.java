@@ -3,6 +3,7 @@ package States;
 import Entity.Character;
 import Entity.Player;
 import GUI.UIParts;
+import Utility.MediaPlayer;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class StateWorld extends GameState{
             int x = player.getX(), y = player.getY();
             if (map[y][x] == 2) {
                 map[y][x] = 0;
+                MediaPlayer.play("src/assets/combatMusic.wav");
                 Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
             }
             else if(map[y][x] >= 6) {
