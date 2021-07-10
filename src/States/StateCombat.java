@@ -81,25 +81,31 @@ public class StateCombat extends GameState {
     }
 
      void attack(char usedMove){
-        player.usedMove(usedMove);
+        player.reactToMove(usedMove);
         enemy.takeDamage(200);
 
         if(usedMove!='f' )
             player.takeDamage(10 + (int)(Math.random()*40));
 
-        if(!enemy.checkHealth()){
+        /*
+        * The code below basically checks if someone won after every move and also checks if the player won the required
+        * number of quests to become a champion
+        *
+        */
+
+        if(enemy.getHealth()==0){
             System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
-            save.setQuestCounter(save.getQuestCounter() + 1);
-            if(save.getQuestCounter()==1)
+            save.setQuestCount(save.getQuestCount() + 1);
+            if(save.getQuestCount()==3) {
                 Game.setCurrentState(new StateWin());
-
+            }
             else
              Game.setCurrentState(save);
             //TODO 1. Do something appropriate here
         }
 
-        if(!player.checkHealth()){
+        if(player.getHealth()==0){
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
             Game.setCurrentState(save);

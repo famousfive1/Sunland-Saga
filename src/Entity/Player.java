@@ -8,22 +8,16 @@ public class Player extends Character {
         super(name, img, 100);
     }
 
-    public void usedMove(char typed)
+    public void reactToMove(char typed)
     {
         switch (typed) {
             case 'e':
                 System.out.println("You deal E damage");
-                System.out.println("Current health: "+ health);
                 break;
             case 'f':
                 System.out.println("You dash away but take F damage");
-                health -= 10;
-//                if(!checkHealth())
-//                {
-//                    System.out.println("Player has no health left");
-//                    System.exit(0);
-//                }
-                System.out.println("Current health: "+ health);
+                takeDamage(10);
+
                 break;
         }
     }
@@ -51,14 +45,14 @@ public class Player extends Character {
 
         if(isValid(newX, newY, map)){
             this.x = newX;
-            this.y=newY;
+            this.y = newY;
             return true;
         }
         return false;
     }
 
     static boolean isValid(int newX, int newY, int[][] map){
-        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && (map[newY][newX] == 0 || map[newY][newX] == 2);
+        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && map[newY][newX] != 1 && map[newY][newX] != 5;
     }
 
     public void restoreHealth(){

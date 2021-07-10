@@ -21,11 +21,6 @@ public class StatePaused extends GameState{
         Resume.addActionListener(e -> Game.setCurrentState(save));
         display.addComponent(Resume);
 
-        JButton restart = new JButton("Restart");
-        restart.setBounds(400-65, 250-15, 150, 50);
-        restart.addActionListener(e -> Game.setCurrentState(new StateWorld()));
-        display.addComponent(restart);
-
         JButton backToMainMenu = new JButton("Back to Main Menu");
         backToMainMenu.setBounds(400-65, 350-15, 150, 50);
         backToMainMenu.addActionListener(e -> Game.setCurrentState(new StateMainMenu()));
