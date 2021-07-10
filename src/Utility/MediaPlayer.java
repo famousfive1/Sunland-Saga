@@ -14,9 +14,9 @@ public  class MediaPlayer {
 
 
 
-    public static void play(String path){
+    public static void playInBackground(String path){
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
              clip = AudioSystem.getClip();
             clip.open(audioInputStream);
 
@@ -27,9 +27,15 @@ public  class MediaPlayer {
         clip.loop(100);
     }
 
+
     public static void stop(){
         clip.stop();
         clip.close();
+        try {
+            audioInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }

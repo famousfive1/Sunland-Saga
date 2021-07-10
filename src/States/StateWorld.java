@@ -5,7 +5,6 @@ import Entity.Player;
 import GUI.UIParts;
 import Utility.MediaPlayer;
 
-import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -23,6 +22,8 @@ public class StateWorld extends GameState{
     int[][] map;
     String[] connections;
     JLabel background;
+    String [] enemies = {"Exterminator", "Oberon", "Subtilizer", "Dog", "Wolf"};
+
 
     public StateWorld(String playerName) //forestmap1
     {
@@ -50,11 +51,12 @@ public class StateWorld extends GameState{
             if (map[y][x] == 2) {
                 map[y][x] = 0;
                 MediaPlayer.stop();
-                MediaPlayer.play("src/assets/combatMusic.wav");
-                JOptionPane.showOptionDialog(null, "You encounter an enemy", "Enemy",
+                MediaPlayer.playInBackground("src/assets/combatMusic.wav");
+                Character randomEnemy = generateEnemy();
+                JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
                         new String[] {"To Arms !!!"}, null);
-                Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
+                Game.setCurrentState(new StateCombat(player, randomEnemy, this));
             }
             else if(map[y][x] >= 6) {
                 if(map[y][x] == 6) player.setXY(15, y);
@@ -109,7 +111,8 @@ public class StateWorld extends GameState{
 
     private Character generateEnemy() {
         // Do more stuff
-        return new Character("Enemy", display.loadImg("/assets/enemy.png"), 900);
+        int randomEnemyIndex = (int)( Math.random()*enemies.length);
+        return new Character(enemies[randomEnemyIndex], display.loadImg("/assets/enemy.png"), Math.min(1000, 500 + (int)(Math.random()*randomEnemyIndex*100*randomEnemyIndex)));
     }
 
     private void pauseGame() {
