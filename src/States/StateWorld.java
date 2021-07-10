@@ -5,6 +5,7 @@ import Entity.Player;
 import GUI.UIParts;
 import Utility.MediaPlayer;
 
+import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -48,6 +49,7 @@ public class StateWorld extends GameState{
             int x = player.getX(), y = player.getY();
             if (map[y][x] == 2) {
                 map[y][x] = 0;
+                MediaPlayer.stop();
                 MediaPlayer.play("src/assets/combatMusic.wav");
                 JOptionPane.showOptionDialog(null, "You encounter an enemy", "Enemy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,

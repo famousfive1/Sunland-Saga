@@ -1,6 +1,7 @@
 package States;
 
 import GUI.UIParts;
+import Utility.MediaPlayer;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -35,9 +36,10 @@ public class StateMainMenu extends GameState {
 
     public static void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
-        if(name != null && !name.equals(""))
+        if(name != null && !name.equals("")) {
+            MediaPlayer.play("src/assets/homeMusic.wav");
             Game.setCurrentState(new StateWorld(name));
-
+        }
     }
 
     @Override
