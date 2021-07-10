@@ -67,8 +67,8 @@ public class StateCombat extends GameState {
         if(enemy.getHealth()==0){
             System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
-            save.setQuestCounter(save.getQuestCounter() + 1);
-            if(save.getQuestCounter()==1){
+            save.setQuestCount(save.getQuestCount() + 1);
+            if(save.getQuestCount()==1){
                 Game.setCurrentState(new StateWin());
 
             }
