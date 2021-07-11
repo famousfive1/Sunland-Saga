@@ -84,13 +84,17 @@ public class StateCombat extends GameState {
         enemy.takeDamage(200);
 
 
+
+
+         if(usedMove!='f' )
+             player.takeDamage(10 + (int)(Math.random()*40));
+
          healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
          healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
 
         //The player takes Damage slightly after the enemy takes damage
          Timer timer = new Timer(0, e -> {
-             if(usedMove!='f' )
-                 player.takeDamage(10 + (int)(Math.random()*40));
+
 
              healthIndicatorPlayer.setValue(player.getHealth());
              healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
@@ -106,30 +110,36 @@ public class StateCombat extends GameState {
         * number of quests to become a champion
         *
         */
+        Timer deathCheckTimer = new Timer(0, e->{
 
-        if(enemy.getHealth()==0){
+            if(enemy.getHealth()==0){
 
-            MediaPlayer.stop();
-            MediaPlayer.playInBackground("src/assets/homeMusic.wav");
-            System.out.println("You Won!!!! Congratulations!!!");
-            player.restoreHealth();
-            save.setQuestCount(save.getQuestCount() - 1);
-            if(save.getQuestCount()==0) {
-                save.setQuestType(-1);
-                Game.setCurrentState(new StateWin());
+                MediaPlayer.stop();
+                MediaPlayer.playInBackground("src/assets/homeMusic.wav");
+                System.out.println("You Won!!!! Congratulations!!!");
+                player.restoreHealth();
+                save.setQuestCount(save.getQuestCount() - 1);
+                if(save.getQuestCount()==0) {
+                    save.setQuestType(-1);
+                    Game.setCurrentState(new StateWin());
+                }
+                else
+                    Game.setCurrentState(save);
+                //TODO 1. Do something appropriate here
             }
-            else
-             Game.setCurrentState(save);
-            //TODO 1. Do something appropriate here
-        }
 
-        if(player.getHealth()==0){
-            MediaPlayer.stop();
-            MediaPlayer.playInBackground("src/assets/homeMusic.wav");
-            System.out.println("You Died!!! Sorry!!!!");
-            player.restoreHealth();
-            Game.setCurrentState(save);
-            //TODO 2. Do something appropriate here
-        }
+            else if(player.getHealth()==0){
+                MediaPlayer.stop();
+                MediaPlayer.playInBackground("src/assets/homeMusic.wav");
+                System.out.println("You Died!!! Sorry!!!!");
+                player.restoreHealth();
+                Game.setCurrentState(save);
+                //TODO 2. Do something appropriate here
+            }
+        });
+
+        deathCheckTimer.setInitialDelay(600);
+        deathCheckTimer.setRepeats(false);
+        deathCheckTimer.start();
     }
 }
