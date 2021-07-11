@@ -1,6 +1,7 @@
 package States;
 
 import Entity.Character;
+import Entity.NPCs;
 import Entity.Player;
 import GUI.UIParts;
 
@@ -15,7 +16,8 @@ Load character/ move
 
 public class StateWorld extends GameState{
     Player player;
-    private int questCount;
+    private int questCount = 0;
+    private int questType = -1;
 
     // Map related stuff
     int[][] map;
@@ -52,27 +54,10 @@ public class StateWorld extends GameState{
                         new String[] {"To Arms !!!"}, null);
                 Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
             }
-
-            if(map[y][x] == 4) {
-                JOptionPane quest = new JOptionPane();
-                String questMessage = "objectives : \n1 : Kill 3 bandits";
-                String rewards = "Rewards : \n+50 xp, +1 health potion";
-                int option = JOptionPane.showOptionDialog(null,
-                        "Jason has a quest for you! \n\n" + questMessage + "\n\n" + rewards,"Jason's quest",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new String[] {"accept", "refuse"}, null);
-
-                if(option == 0) {
-                    System.out.println("Quest accepted");
-                    JOptionPane.showMessageDialog(null,
-                            "Quest accepted \nCurrent Quest : quest name");
-                }
-                else if(option == 1) {
-                    System.out.println("Quest refused");
-                    JOptionPane.showMessageDialog(null, "Quest refused");
-                }
+            else if(map[y][x] == 5)
+            {
+                encounterNPC();
             }
-
             else if(map[y][x] >= 6) {
                 if(map[y][x] == 6) player.setXY(15, y);
                 else if(map[y][x] == 7) player.setXY(x, 11);
@@ -137,8 +122,31 @@ public class StateWorld extends GameState{
         this.questCount = questCount;
     }
 
+    public void setQuestType(int questType) {
+        this.questType = questType;
+    }
+
     public int getQuestCount() {
         return questCount;
+    }
+
+    public void encounterNPC()
+    {
+        if(questType == -1)
+        {
+            NPCs npc = new NPCs("EncounterNPC", display.loadImg("/assets/enemy.png"));
+            int a = (int)(Math.random()*5);
+            questCount = 3;
+            questType = a;
+            JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+            new String[] {npc.getQuestDialouge(a)}, null);
+        }
+        else{
+            JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+            new String[] {"Looks like you are already helping someone"}, null);
+        }
     }
 
 }
