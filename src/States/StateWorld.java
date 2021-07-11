@@ -7,6 +7,8 @@ import GUI.UIParts;
 import Utility.MediaPlayer;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /*
@@ -16,14 +18,19 @@ Load character/ move
 */
 
 public class StateWorld extends GameState{
+
     Player player;
     private int questCount = 0;
     private int questType = -1;
+    private int totalQuestCount;
 
     // Map related stuff
     int[][] map;
     String[] connections;
     JLabel background;
+    JProgressBar questProgressBar;
+    JTextArea questDisplay;
+    JTextArea livesDisplay;
     String [] enemies = {"Exterminator", "Oberon", "Subtilizer", "Dog", "Wolf"};
 
 
@@ -35,6 +42,22 @@ public class StateWorld extends GameState{
         //load player
         player = new Player(playerName, display.loadImg("/assets/" + playerIcon));
         display.addCharacter(player);
+
+        questDisplay = new JTextArea("Current quest : none");
+        questDisplay.setBounds(10, 10 , 110, 20);
+        display.addComponent(questDisplay);
+
+        livesDisplay = new JTextArea("Lives left : " + 3);
+        livesDisplay.setBounds(130, 10, 80, 20);
+        display.addComponent(livesDisplay);
+
+        questProgressBar = new JProgressBar();
+        questProgressBar.setValue(questCount);
+        questProgressBar.setStringPainted(true);
+        questProgressBar.setForeground(new Color(0, 75, 180));
+        questProgressBar.setString("QUEST PROGRESS : kills : 0");
+        questProgressBar.setBounds(610, 10, 180, 20);
+        display.addComponent(questProgressBar);
 
         background = new JLabel();
         display.addComponent(background);
@@ -127,6 +150,7 @@ public class StateWorld extends GameState{
 
     public void setQuestCount(int questCount) {
         this.questCount = questCount;
+        totalQuestCount = Math.max(totalQuestCount, questCount);
     }
 
     public void setQuestType(int questType) {
@@ -137,6 +161,18 @@ public class StateWorld extends GameState{
         return questCount;
     }
 
+    public void increaseQuestProgressBar() {
+        questProgressBar.setString("QUEST PROGRESS : kills : " + (3 - questCount));
+        questProgressBar.setValue(((3 - questCount)* 100)/3);
+    }
+
+    public void setQuestDisplay() {
+        if(questType != -1)
+            questDisplay.setText("Current Quest : " + questType);
+        else
+            questDisplay.setText("Current Quest : none");
+    }
+
     public void encounterNPC()
     {
         if(questType == -1)
@@ -145,6 +181,7 @@ public class StateWorld extends GameState{
             int a = (int)(Math.random()*5);
             questCount = 3;
             questType = a;
+            questDisplay.setText("Current quest : " + questType);
             JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
             new String[] {npc.getQuestDialouge(a)}, null);

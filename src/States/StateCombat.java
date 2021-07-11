@@ -66,7 +66,6 @@ public class StateCombat extends GameState {
         b.setBounds(500, 400, 100, 50);
         b.addActionListener(e -> {
             attack('f');
-
         });
         display.addComponent(b);
 
@@ -93,7 +92,7 @@ public class StateCombat extends GameState {
             player.takeDamage(10 + (int)(Math.random()*40));
 
 
-         healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
+         healthIndicatorEnemy.setValue((enemy.getHealth() * 100)/ Integer.parseInt(fullHealthEnemy));
          healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
          healthIndicatorPlayer.setValue(player.getHealth());
          healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
@@ -106,15 +105,20 @@ public class StateCombat extends GameState {
         if(enemy.getHealth()==0){
             MediaPlayer.stop();
             MediaPlayer.playInBackground("/assets/homeMusic.wav");
-            System.out.println("You Won!!!! Congratulations!!!");
+            System.out.println("Quest complete");
+//            System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
             save.setQuestCount(save.getQuestCount() - 1);
             if(save.getQuestCount()==0) {
                 save.setQuestType(-1);
+                player.setInQuest(false);
                 Game.setCurrentState(new StateWin());
             }
             else
-             Game.setCurrentState(save);
+                Game.setCurrentState(save);
+
+            save.setQuestDisplay();
+            save.increaseQuestProgressBar();
             //TODO 1. Do something appropriate here
         }
 
@@ -123,7 +127,15 @@ public class StateCombat extends GameState {
             MediaPlayer.playInBackground("src/assets/homeMusic.wav");
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
-            Game.setCurrentState(save);
+            player.decreaseLive();
+            save.livesDisplay.setText("Lives left " + player.getLives());
+
+            if(player.getLives() == 0) {
+                System.out.println("You lost the game");
+                Game.setCurrentState(new StateLost());
+            }
+            else
+                Game.setCurrentState(save);
             //TODO 2. Do something appropriate here
         }
     }

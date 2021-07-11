@@ -17,13 +17,13 @@ public class StatePaused extends GameState{
         display.addComponent(l);
 
         JButton Resume = new JButton("Resume");
-        Resume.setBounds(400-65, 150-15, 150, 50);
+        Resume.setBounds(400-65, 250-15, 150, 50);
         Resume.addActionListener(e -> Game.setCurrentState(save));
         display.addComponent(Resume);
 
-        JButton backToMainMenu = new JButton("Back to Main Menu");
+        JButton backToMainMenu = new JButton("Quit Game");
         backToMainMenu.setBounds(400-65, 350-15, 150, 50);
-        backToMainMenu.addActionListener(e -> Game.setCurrentState(new StateMainMenu()));
+        backToMainMenu.addActionListener(e -> Game.setCurrentState(new StateLost()));
         display.addComponent(backToMainMenu);
     }
 
