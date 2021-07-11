@@ -52,6 +52,13 @@ public class StateWorld extends GameState{
                         new String[] {"To Arms !!!"}, null);
                 Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
             }
+
+            if(map[y][x] == 4) {
+                JOptionPane.showOptionDialog(null, "'NPC Name' has a quest for you!",
+                        "NPC quest", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        new String[] {"accept", "refuse"}, null);
+            }
+
             else if(map[y][x] >= 6) {
                 if(map[y][x] == 6) player.setXY(15, y);
                 else if(map[y][x] == 7) player.setXY(x, 11);
