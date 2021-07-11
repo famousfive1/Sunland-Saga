@@ -1,0 +1,5 @@
+"Can you kill 3 wolfs and bring me their hide",
+"Can you kill 3 bandits and bring me the stolen goods",
+"Can you kill 5 bandits and bring me the stolen goods",
+"Can you kill 5 wolfs in the forrest",
+"Can you kill 3 wolfs and bring me their teeth"

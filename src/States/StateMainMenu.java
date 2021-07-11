@@ -37,7 +37,7 @@ public class StateMainMenu extends GameState {
 
     @Override
     public void handleInput(char typed) {
-        System.out.println("I dont care if you type");
+        System.out.println("Dont type");
     }
 
     private void showHelp() {
