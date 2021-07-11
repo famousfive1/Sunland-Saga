@@ -62,4 +62,8 @@ public class GameWindow {
 
         SwingUtilities.updateComponentTreeUI(frame);
     }
+
+    public JFrame getFrame() {
+        return frame;
+    }
 }

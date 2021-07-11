@@ -6,8 +6,6 @@ import GUI.UIParts;
 import Utility.MediaPlayer;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class StateCombat extends GameState {
     Player player;
@@ -89,6 +87,7 @@ public class StateCombat extends GameState {
          if(usedMove!='f' && enemy.getHealth()!=0)
              player.takeDamage(10 + (int)(Math.random()*40));
 
+
          healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
          healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
 
@@ -111,9 +110,8 @@ public class StateCombat extends GameState {
         Timer deathCheckTimer = new Timer(0, e->{
 
             if(enemy.getHealth()==0){
-
                 MediaPlayer.stop();
-                MediaPlayer.playInBackground("src/assets/homeMusic.wav");
+                MediaPlayer.playInBackground("/assets/homeMusic.wav");
                 System.out.println("You Won!!!! Congratulations!!!");
                 player.restoreHealth();
                 save.setQuestCount(save.getQuestCount() - 1);
@@ -128,7 +126,7 @@ public class StateCombat extends GameState {
 
             else if(player.getHealth()==0){
                 MediaPlayer.stop();
-                MediaPlayer.playInBackground("src/assets/homeMusic.wav");
+                MediaPlayer.playInBackground("/assets/homeMusic.wav");
                 System.out.println("You Died!!! Sorry!!!!");
                 player.restoreHealth();
                 Game.setCurrentState(save);
