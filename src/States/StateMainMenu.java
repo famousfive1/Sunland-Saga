@@ -31,8 +31,14 @@ public class StateMainMenu extends GameState {
 
     public void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
-        if(name != null && !name.equals(""))
-            Game.setCurrentState(new StateWorld(name));
+        if(name != null && !name.equals("")) {
+            int ch = JOptionPane.showOptionDialog(null, "Choose your starting weapon: ", "Weapon",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                    null, new String[] {"Sword", "Bow", "Battle Axe"}, null);
+            if(ch == 0)      Game.setCurrentState(new StateWorld(name, "PlayerCharacter.png"));
+            else if(ch == 1) Game.setCurrentState(new StateWorld(name, "PlayerCharacter.png"));
+            else if(ch == 2) Game.setCurrentState(new StateWorld(name, "PlayerCharacter.png"));
+        }
     }
 
     @Override
