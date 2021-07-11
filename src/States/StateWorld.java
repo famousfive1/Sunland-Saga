@@ -1,6 +1,7 @@
 package States;
 
 import Entity.Character;
+import Entity.NPCs;
 import Entity.Player;
 import GUI.UIParts;
 
@@ -15,7 +16,8 @@ Load character/ move
 
 public class StateWorld extends GameState{
     Player player;
-    private int questCount;
+    private int questCount = 0;
+    private int questType = -1;
 
     // Map related stuff
     int[][] map;
@@ -51,6 +53,10 @@ public class StateWorld extends GameState{
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
                         new String[] {"To Arms !!!"}, null);
                 Game.setCurrentState(new StateCombat(player, generateEnemy(), this));
+            }
+            else if(map[y][x] == 5)
+            {
+                encounterNPC();
             }
             else if(map[y][x] >= 6) {
                 if(map[y][x] == 6) player.setXY(15, y);
@@ -116,8 +122,31 @@ public class StateWorld extends GameState{
         this.questCount = questCount;
     }
 
+    public void setQuestType(int questType) {
+        this.questType = questType;
+    }
+
     public int getQuestCount() {
         return questCount;
+    }
+
+    public void encounterNPC()
+    {
+        if(questType == -1)
+        {
+            NPCs npc = new NPCs("EncounterNPC", display.loadImg("/assets/enemy.png"));
+            int a = (int)(Math.random()*5);
+            questCount = 3;
+            questType = a;
+            JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+            new String[] {npc.getQuestDialouge(a)}, null);
+        }
+        else{
+            JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+            new String[] {"Looks like you are already helping someone"}, null);
+        }
     }
 
 }

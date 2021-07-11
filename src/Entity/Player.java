@@ -52,7 +52,7 @@ public class Player extends Character {
     }
 
     static boolean isValid(int newX, int newY, int[][] map){
-        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && map[newY][newX] != 1 && map[newY][newX] != 5;
+        return newX >= 0 && newY >= 0 && newX < 16 && newY < 12 && map[newY][newX] != 1;
     }
 
     public void restoreHealth(){
