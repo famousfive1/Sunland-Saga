@@ -54,9 +54,23 @@ public class StateWorld extends GameState{
             }
 
             if(map[y][x] == 4) {
-                JOptionPane.showOptionDialog(null, "'NPC Name' has a quest for you!",
-                        "NPC quest", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                JOptionPane quest = new JOptionPane();
+                String questMessage = "objectives : \n1 : Kill 3 bandits";
+                String rewards = "Rewards : \n+50 xp, +1 health potion";
+                int option = JOptionPane.showOptionDialog(null,
+                        "Jason has a quest for you! \n\n" + questMessage + "\n\n" + rewards,"Jason's quest",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new String[] {"accept", "refuse"}, null);
+
+                if(option == 0) {
+                    System.out.println("Quest accepted");
+                    JOptionPane.showMessageDialog(null,
+                            "Quest accepted \nCurrent Quest : quest name");
+                }
+                else if(option == 1) {
+                    System.out.println("Quest refused");
+                    JOptionPane.showMessageDialog(null, "Quest refused");
+                }
             }
 
             else if(map[y][x] >= 6) {
