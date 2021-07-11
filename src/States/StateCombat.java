@@ -86,13 +86,14 @@ public class StateCombat extends GameState {
 
 
 
-         if(usedMove!='f' )
+         if(usedMove!='f' && enemy.getHealth()!=0)
              player.takeDamage(10 + (int)(Math.random()*40));
 
          healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
          healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
 
-        //The player takes Damage slightly after the enemy takes damage
+        //The code below executes 500 ms after the functions call
+         //This is done to add a visual delay in the enemy attack and the player attack
          Timer timer = new Timer(0, e -> {
 
 
@@ -105,11 +106,8 @@ public class StateCombat extends GameState {
          timer.start();
 
 
-        /*
-        * The code below basically checks if someone won after every move and also checks if the player won the required
-        * number of quests to become a champion
-        *
-        */
+        //The code inside the lambda below will execute 600ms after the function call.
+         //This is done to ensure that the death actually happens sometime after the progress bar gets updated
         Timer deathCheckTimer = new Timer(0, e->{
 
             if(enemy.getHealth()==0){
@@ -141,5 +139,7 @@ public class StateCombat extends GameState {
         deathCheckTimer.setInitialDelay(600);
         deathCheckTimer.setRepeats(false);
         deathCheckTimer.start();
+
+
     }
 }
