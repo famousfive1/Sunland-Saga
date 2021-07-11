@@ -1,6 +1,7 @@
 package States;
 
 import GUI.UIParts;
+import Utility.MediaPlayer;
 
 import javax.swing.*;
 
@@ -32,6 +33,7 @@ public class StateMainMenu extends GameState {
     public static void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
         if(name != null && !name.equals("")) {
+            MediaPlayer.playInBackground("src/assets/homeMusic.wav");
             int ch = JOptionPane.showOptionDialog(null, "Choose your starting weapon: ", "Weapon",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Sword", "Bow", "Battle Axe"}, null);
