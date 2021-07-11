@@ -3,6 +3,7 @@ package States;
 import Entity.Character;
 import Entity.Player;
 import GUI.UIParts;
+import Utility.MediaPlayer;
 
 import javax.swing.*;
 
@@ -10,7 +11,10 @@ public class StateCombat extends GameState {
     Player player;
     Character enemy;
     StateWorld save;
-
+    JProgressBar healthIndicatorPlayer;
+    JProgressBar healthIndicatorEnemy;
+    String fullHealthPlayer;
+    String fullHealthEnemy;
     public StateCombat(Player player, Character enemy, StateWorld save) {
         this.save = save;
 
@@ -22,9 +26,9 @@ public class StateCombat extends GameState {
         l.setBounds(100, 100, 100, 100);
         display.addComponent(l);
 
-        JProgressBar healthIndicatorPlayer = new JProgressBar();
+        healthIndicatorPlayer = new JProgressBar();
         healthIndicatorPlayer.setStringPainted(true);
-        String fullHealthPlayer = Integer.toString(player.getHealth());
+        fullHealthPlayer = Integer.toString(player.getHealth());
         healthIndicatorPlayer.setString(player.getHealth() + "/" + fullHealthPlayer);
         healthIndicatorPlayer.setValue(player.getHealth());
         healthIndicatorPlayer.setBounds(100, 220, 160, 30);
@@ -34,9 +38,9 @@ public class StateCombat extends GameState {
         l.setBounds(500, 100, 100, 100);
         display.addComponent(l);
 
-        JProgressBar healthIndicatorEnemy = new JProgressBar();
+        healthIndicatorEnemy = new JProgressBar();
         healthIndicatorEnemy.setStringPainted(true);
-        String fullHealthEnemy = Integer.toString(enemy.getHealth());
+        fullHealthEnemy = Integer.toString(enemy.getHealth());
         healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
         healthIndicatorEnemy.setValue(enemy.getHealth() / Integer.parseInt(fullHealthEnemy) * 100);
         healthIndicatorEnemy.setBounds(500, 220, 160, 30);
@@ -47,10 +51,6 @@ public class StateCombat extends GameState {
         b.setBounds(200, 400, 80, 40);
         b.addActionListener(e -> {
             attack('e');
-            healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
-            healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
-            healthIndicatorPlayer.setValue(player.getHealth());
-            healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
         });
         display.addComponent(b);
 
@@ -58,10 +58,7 @@ public class StateCombat extends GameState {
         b.setBounds(400, 400, 80, 40);
         b.addActionListener(e -> {
             attack('f');
-            healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
-            healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
-            healthIndicatorPlayer.setValue(player.getHealth());
-            healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
+
         });
         display.addComponent(b);
 
@@ -87,6 +84,11 @@ public class StateCombat extends GameState {
         if(usedMove!='f' )
             player.takeDamage(10 + (int)(Math.random()*40));
 
+
+         healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
+         healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+         healthIndicatorPlayer.setValue(player.getHealth());
+         healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
         /*
         * The code below basically checks if someone won after every move and also checks if the player won the required
         * number of quests to become a champion
@@ -94,6 +96,8 @@ public class StateCombat extends GameState {
         */
 
         if(enemy.getHealth()==0){
+            MediaPlayer.stop();
+            MediaPlayer.playInBackground("/assets/homeMusic.wav");
             System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
             save.setQuestCount(save.getQuestCount() - 1);
@@ -107,6 +111,8 @@ public class StateCombat extends GameState {
         }
 
         if(player.getHealth()==0){
+            MediaPlayer.stop();
+            MediaPlayer.playInBackground("src/assets/homeMusic.wav");
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
             Game.setCurrentState(save);
