@@ -23,7 +23,7 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
         JLabel l = new JLabel(new ImageIcon(player.getImgScaled()));
-        l.setBounds(100, 100, 100, 100);
+        l.setBounds(130, 210, 100, 100);
         display.addComponent(l);
 
         healthIndicatorPlayer = new JProgressBar();
@@ -31,11 +31,11 @@ public class StateCombat extends GameState {
         fullHealthPlayer = Integer.toString(player.getHealth());
         healthIndicatorPlayer.setString(player.getHealth() + "/" + fullHealthPlayer);
         healthIndicatorPlayer.setValue(player.getHealth());
-        healthIndicatorPlayer.setBounds(100, 220, 160, 30);
+        healthIndicatorPlayer.setBounds(100, 330, 160, 30);
         display.addComponent(healthIndicatorPlayer);
 
         l = new JLabel(new ImageIcon(enemy.getImgScaled()));
-        l.setBounds(500, 100, 100, 100);
+        l.setBounds(520, 210, 100, 100);
         display.addComponent(l);
 
         healthIndicatorEnemy = new JProgressBar();
@@ -43,7 +43,7 @@ public class StateCombat extends GameState {
         fullHealthEnemy = Integer.toString(enemy.getHealth());
         healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
         healthIndicatorEnemy.setValue(enemy.getHealth() / Integer.parseInt(fullHealthEnemy) * 100);
-        healthIndicatorEnemy.setBounds(500, 220, 160, 30);
+        healthIndicatorEnemy.setBounds(500, 330, 160, 30);
         display.addComponent(healthIndicatorEnemy);
 
 
@@ -56,6 +56,10 @@ public class StateCombat extends GameState {
         b.setBounds(400, 400, 80, 40);
         b.addActionListener(e -> attack('f'));
         display.addComponent(b);
+
+        JLabel back = new JLabel(new ImageIcon(display.loadImg("/assets/CombatBack.png")));
+        back.setBounds(0, 0, 800, 600);
+        display.addComponent(back);
     }
 
     @Override

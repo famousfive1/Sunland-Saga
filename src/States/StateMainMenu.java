@@ -53,6 +53,6 @@ public class StateMainMenu extends GameState {
 
     @Override
     public void playMusic() {
-
+        MediaPlayer.playInBackground("/assets/MainMenu.wav");
     }
 }

@@ -15,6 +15,7 @@ public class Game {
         window = new GameWindow();
         currentState = new StateMainMenu();
         window.setState(currentState);
+        currentState.playMusic();
     }
 
     public static GameWindow getWindow() {
