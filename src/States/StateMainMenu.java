@@ -33,7 +33,6 @@ public class StateMainMenu extends GameState {
     public static void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
         if(name != null && !name.equals("")) {
-            MediaPlayer.playInBackground("/assets/homeMusic.wav");
             int ch = JOptionPane.showOptionDialog(null, "Choose your starting weapon: ", "Weapon",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Sword", "Bow", "Battle Axe"}, null);
@@ -50,5 +49,10 @@ public class StateMainMenu extends GameState {
 
     private void showHelp() {
         System.out.println("Help");
+    }
+
+    @Override
+    public void playMusic() {
+
     }
 }

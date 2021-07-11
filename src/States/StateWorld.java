@@ -17,7 +17,7 @@ Load character/ move
 
 public class StateWorld extends GameState{
     Player player;
-    private int questCount = 0;
+    private int questCount;
     private int questType = -1;
 
     // Map related stuff
@@ -45,6 +45,11 @@ public class StateWorld extends GameState{
     }
 
     @Override
+    public void playMusic() {
+        MediaPlayer.playInBackground("/assets/homeMusic.wav");
+    }
+
+    @Override
     public void handleInput(char typed) {
         if(typed == 'p')
             pauseGame();
@@ -52,8 +57,6 @@ public class StateWorld extends GameState{
             int x = player.getX(), y = player.getY();
             if (map[y][x] == 2) {
                 map[y][x] = 0;
-                MediaPlayer.stop();
-                MediaPlayer.playInBackground("/assets/combatMusic.wav");
                 Character randomEnemy = generateEnemy();
                 JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,

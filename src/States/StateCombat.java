@@ -49,26 +49,19 @@ public class StateCombat extends GameState {
 
         JButton b = new JButton("Attack 1");
         b.setBounds(200, 400, 80, 40);
-        b.addActionListener(e -> {
-            attack('e');
-        });
+        b.addActionListener(e -> attack('e'));
         display.addComponent(b);
 
         b = new JButton("Attack 2");
         b.setBounds(400, 400, 80, 40);
-        b.addActionListener(e -> {
-            attack('f');
-
-        });
-        display.addComponent(b);
-
-        b = new JButton("After player wins, do this");
-        b.setBounds(300, 500, 200, 60);
-        b.addActionListener(e -> Game.setCurrentState(save));
+        b.addActionListener(e -> attack('f'));
         display.addComponent(b);
     }
 
-
+    @Override
+    public void playMusic() {
+        MediaPlayer.playInBackground("/assets/combatMusic.wav");
+    }
 
     @Override
     public void handleInput(char typed) {
@@ -96,8 +89,6 @@ public class StateCombat extends GameState {
         */
 
         if(enemy.getHealth()==0){
-            MediaPlayer.stop();
-            MediaPlayer.playInBackground("/assets/homeMusic.wav");
             System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
             save.setQuestCount(save.getQuestCount() - 1);
@@ -111,8 +102,6 @@ public class StateCombat extends GameState {
         }
 
         if(player.getHealth()==0){
-            MediaPlayer.stop();
-            MediaPlayer.playInBackground("src/assets/homeMusic.wav");
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
             Game.setCurrentState(save);
