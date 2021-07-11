@@ -53,7 +53,7 @@ public class StateWorld extends GameState{
             if (map[y][x] == 2) {
                 map[y][x] = 0;
                 MediaPlayer.stop();
-                MediaPlayer.playInBackground("src/assets/combatMusic.wav");
+                MediaPlayer.playInBackground("/assets/combatMusic.wav");
                 Character randomEnemy = generateEnemy();
                 JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,

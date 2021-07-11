@@ -97,7 +97,7 @@ public class StateCombat extends GameState {
 
         if(enemy.getHealth()==0){
             MediaPlayer.stop();
-            MediaPlayer.playInBackground("src/assets/homeMusic.wav");
+            MediaPlayer.playInBackground("/assets/homeMusic.wav");
             System.out.println("You Won!!!! Congratulations!!!");
             player.restoreHealth();
             save.setQuestCount(save.getQuestCount() - 1);

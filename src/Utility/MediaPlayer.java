@@ -10,13 +10,10 @@ public  class MediaPlayer {
     private static AudioInputStream audioInputStream;
     private static Clip clip;
 
-
-
-
-
     public static void playInBackground(String path){
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            //audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            audioInputStream = AudioSystem.getAudioInputStream(MediaPlayer.class.getResourceAsStream(path));
              clip = AudioSystem.getClip();
             clip.open(audioInputStream);
 
@@ -36,7 +33,6 @@ public  class MediaPlayer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 }
