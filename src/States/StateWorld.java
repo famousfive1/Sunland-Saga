@@ -17,6 +17,7 @@ Load character/ move
 public class StateWorld extends GameState{
     Player player;
     private int questCount;
+    private int questType = -1;
 
     // Map related stuff
     int[][] map;
@@ -146,6 +147,10 @@ public class StateWorld extends GameState{
 
     public int getQuestCount() {
         return questCount;
+    }
+
+    public void setQuestType(int questType){
+        this.questType = questType;
     }
 
 }
