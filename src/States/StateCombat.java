@@ -6,6 +6,7 @@ import GUI.UIParts;
 import Utility.MediaPlayer;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StateCombat extends GameState {
     Player player;
@@ -22,8 +23,13 @@ public class StateCombat extends GameState {
 
         this.player = player;
         this.enemy = enemy;
+
+        JLabel background = new JLabel(new ImageIcon("/assets/MainMenu.png"));
+        background.setBounds(0, 0, 20, 20);
+        display.addComponent(background);
+
         JLabel l = new JLabel(new ImageIcon(player.getImgScaled()));
-        l.setBounds(100, 100, 100, 100);
+        l.setBounds(150, 70, 150, 150);
         display.addComponent(l);
 
         healthIndicatorPlayer = new JProgressBar();
@@ -31,11 +37,12 @@ public class StateCombat extends GameState {
         fullHealthPlayer = Integer.toString(player.getHealth());
         healthIndicatorPlayer.setString(player.getHealth() + "/" + fullHealthPlayer);
         healthIndicatorPlayer.setValue(player.getHealth());
-        healthIndicatorPlayer.setBounds(100, 220, 160, 30);
+        healthIndicatorPlayer.setBounds(150, 250, 150, 30);
+        healthIndicatorPlayer.setForeground(new Color(0, 180, 0));
         display.addComponent(healthIndicatorPlayer);
 
         l = new JLabel(new ImageIcon(enemy.getImgScaled()));
-        l.setBounds(500, 100, 100, 100);
+        l.setBounds(500, 70, 150, 150);
         display.addComponent(l);
 
         healthIndicatorEnemy = new JProgressBar();
@@ -43,19 +50,20 @@ public class StateCombat extends GameState {
         fullHealthEnemy = Integer.toString(enemy.getHealth());
         healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
         healthIndicatorEnemy.setValue(enemy.getHealth() / Integer.parseInt(fullHealthEnemy) * 100);
-        healthIndicatorEnemy.setBounds(500, 220, 160, 30);
+        healthIndicatorEnemy.setBounds(500, 250, 150, 30);
+        healthIndicatorEnemy.setForeground(new Color(0, 180, 0));
         display.addComponent(healthIndicatorEnemy);
 
 
         JButton b = new JButton("Attack 1");
-        b.setBounds(200, 400, 80, 40);
+        b.setBounds(200, 400, 100, 50);
         b.addActionListener(e -> {
             attack('e');
         });
         display.addComponent(b);
 
         b = new JButton("Attack 2");
-        b.setBounds(400, 400, 80, 40);
+        b.setBounds(500, 400, 100, 50);
         b.addActionListener(e -> {
             attack('f');
 
