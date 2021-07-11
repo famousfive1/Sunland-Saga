@@ -6,6 +6,8 @@ import GUI.UIParts;
 import Utility.MediaPlayer;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StateCombat extends GameState {
     Player player;
@@ -81,14 +83,24 @@ public class StateCombat extends GameState {
         player.reactToMove(usedMove);
         enemy.takeDamage(200);
 
-        if(usedMove!='f' )
-            player.takeDamage(10 + (int)(Math.random()*40));
-
 
          healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
          healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
-         healthIndicatorPlayer.setValue(player.getHealth());
-         healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
+
+        //The player takes Damage slightly after the enemy takes damage
+         Timer timer = new Timer(0, e -> {
+             if(usedMove!='f' )
+                 player.takeDamage(10 + (int)(Math.random()*40));
+
+             healthIndicatorPlayer.setValue(player.getHealth());
+             healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
+
+         });
+         timer.setInitialDelay(500);
+         timer.setRepeats(false);
+         timer.start();
+
+
         /*
         * The code below basically checks if someone won after every move and also checks if the player won the required
         * number of quests to become a champion
@@ -96,6 +108,7 @@ public class StateCombat extends GameState {
         */
 
         if(enemy.getHealth()==0){
+
             MediaPlayer.stop();
             MediaPlayer.playInBackground("src/assets/homeMusic.wav");
             System.out.println("You Won!!!! Congratulations!!!");
