@@ -104,39 +104,38 @@ public class StateCombat extends GameState {
 
         //The code inside the lambda below will execute 600ms after the function call.
          //This is done to ensure that the death actually happens sometime after the progress bar gets updated
-        Timer deathCheckTimer = new Timer(0, e->{
+        Timer deathCheckTimer = new Timer(0, e-> {
 
-        if(enemy.getHealth()==0){
-            System.out.println("Quest Complete");
-            player.restoreHealth();
-            save.setQuestCount(save.getQuestCount() - 1);
-            if(save.getQuestCount()==0) {
-                save.setQuestType(-1);
-                player.setInQuest(false);
-                Game.setCurrentState(new StateWin());
+            if (enemy.getHealth() == 0) {
+                System.out.println("Quest Complete");
+                player.restoreHealth();
+                save.setQuestCount(save.getQuestCount() - 1);
+                if (save.getQuestCount() == 0) {
+                    save.setQuestType(-1);
+                    player.setInQuest(false);
+                    Game.setCurrentState(new StateWin());
+                } else
+                    Game.setCurrentState(save);
+
+                save.setQuestDisplay();
+                save.increaseQuestProgressBar();
+                //TODO 1. Do something appropriate here
             }
-            else
-                Game.setCurrentState(save);
 
-            save.setQuestDisplay();
-            save.increaseQuestProgressBar();
-            //TODO 1. Do something appropriate here
-        }
+            if (player.getHealth() == 0) {
+                System.out.println("You Died!!! Sorry!!!!");
+                player.restoreHealth();
+                player.decreaseLive();
+                save.livesDisplay.setText("Lives left " + player.getLives());
 
-        if(player.getHealth()==0) {
-            System.out.println("You Died!!! Sorry!!!!");
-            player.restoreHealth();
-            player.decreaseLive();
-            save.livesDisplay.setText("Lives left " + player.getLives());
-
-            if(player.getLives() == 0) {
-                System.out.println("You lost the game");
-                Game.setCurrentState(new StateLost());
+                if (player.getLives() == 0) {
+                    System.out.println("You lost the game");
+                    Game.setCurrentState(new StateLost());
+                } else
+                    Game.setCurrentState(save);
+                //TODO 2. Do something appropriate here
             }
-            else
-                Game.setCurrentState(save);
-            //TODO 2. Do something appropriate here
-        }
+        });
 
         deathCheckTimer.setInitialDelay(600);
         deathCheckTimer.setRepeats(false);
