@@ -1,6 +1,7 @@
 package States;
 
 import GUI.UIParts;
+import Utility.MediaPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,12 +18,12 @@ public class StateLost extends GameState{
         display.addComponent(background);
 
         JButton b = new JButton("Back to Main Menu");
-        b.setBounds(400-55, 350-15, 130, 50);
+        b.setBounds(400-80, 200-25, 180, 50);
         b.addActionListener(e -> Game.setCurrentState(new StateMainMenu()));
         display.addComponent(b);
 
         b = new JButton("Exit");
-        b.setBounds(400-35, 420-15, 90, 50);
+        b.setBounds(400-35, 270-15, 90, 50);
         b.addActionListener(e -> System.exit(0));
         display.addComponent(b);
     }
@@ -31,5 +32,10 @@ public class StateLost extends GameState{
     public void handleInput(char typed) {
         if(typed == 'p')
             Game.setCurrentState(new StatePaused(this));
+    }
+
+    @Override
+    public void playMusic() {
+        MediaPlayer.stop();
     }
 }

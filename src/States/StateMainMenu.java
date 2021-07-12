@@ -30,7 +30,6 @@ public class StateMainMenu extends GameState {
         background.setBounds(0, 0, 800, 600);
         display.addComponent(background);
 
-        MediaPlayer.playInBackground("/assets/homeMusic.wav");
     }
 
     public static void buttonPlayClicked() {
@@ -68,6 +67,11 @@ public class StateMainMenu extends GameState {
                 ALL THE BEST""";
 
         JOptionPane.showOptionDialog(null, gameInstructions, "Help: Game rules",
-                JOptionPane.YES_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[] {"OK"}, null);
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[] {"OK"}, null);
+    }
+
+    @Override
+    public void playMusic() {
+        MediaPlayer.playInBackground("/assets/MainMenu.wav");
     }
 }

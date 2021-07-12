@@ -1,6 +1,7 @@
 package States;
 
 import GUI.GameWindow;
+import Utility.MediaPlayer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class Game {
         window = new GameWindow();
         currentState = new StateMainMenu();
         window.setState(currentState);
+        currentState.playMusic();
     }
 
     public static GameWindow getWindow() {
@@ -25,8 +27,10 @@ public class Game {
     }
 
     public static void setCurrentState(GameState GS){
+        MediaPlayer.stop();
         System.out.println("State Change: " + currentState.toString() + " --> " + GS.toString());
         currentState = GS;
+        GS.playMusic();
         window.setState(currentState);
     }
 

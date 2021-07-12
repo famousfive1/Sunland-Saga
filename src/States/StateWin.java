@@ -22,4 +22,9 @@ public class StateWin extends GameState{
         if(typed == 'p')
             Game.setCurrentState(new StatePaused(this));
     }
+
+    @Override
+    public void playMusic() {
+
+    }
 }

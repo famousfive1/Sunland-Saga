@@ -14,4 +14,6 @@ public abstract class GameState {
     }
 
     public abstract void handleInput(char typed);
+
+    public abstract void playMusic();
 }

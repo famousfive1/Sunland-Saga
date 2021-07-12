@@ -34,4 +34,9 @@ public class StatePaused extends GameState{
             Game.setCurrentState(save);
         else System.out.println("Press buttons instead!!");
     }
+
+    @Override
+    public void playMusic() {
+
+    }
 }
