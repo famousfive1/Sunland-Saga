@@ -233,7 +233,7 @@ public class StateWorld extends GameState{
             NPCs npc = new NPCs("EncounterNPC", display.loadImg("/assets/enemy.png"));
             int a = (int)(Math.random()*5);
             int option = JOptionPane.showOptionDialog(null,
-                    "You meet a friendly man" + npc.getQuestDialouge(a), "NPC",
+                    npc.getQuestDialouge(a), "NPC",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,
                     new String[] {"accept", "decline"}, null);
 
