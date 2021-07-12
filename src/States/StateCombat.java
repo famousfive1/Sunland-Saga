@@ -81,19 +81,30 @@ public class StateCombat extends GameState {
         player.reactToMove(usedMove);
         enemy.takeDamage(200);
 
-        if(usedMove!='f' )
-            player.takeDamage(10 + (int)(Math.random()*40));
+         if(usedMove!='f' && enemy.getHealth()!=0)
+             player.takeDamage(10 + (int)(Math.random()*40));
 
 
          healthIndicatorEnemy.setValue((enemy.getHealth() * 100)/ Integer.parseInt(fullHealthEnemy));
          healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
-         healthIndicatorPlayer.setValue(player.getHealth());
-         healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
-        /*
-        * The code below basically checks if someone won after every move and also checks if the player won the required
-        * number of quests to become a champion
-        *
-        */
+
+        //The code below executes 500 ms after the functions call
+         //This is done to add a visual delay in the enemy attack and the player attack
+         Timer timer = new Timer(0, e -> {
+
+
+             healthIndicatorPlayer.setValue(player.getHealth());
+             healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
+
+         });
+         timer.setInitialDelay(500);
+         timer.setRepeats(false);
+         timer.start();
+
+
+        //The code inside the lambda below will execute 600ms after the function call.
+         //This is done to ensure that the death actually happens sometime after the progress bar gets updated
+        Timer deathCheckTimer = new Timer(0, e->{
 
         if(enemy.getHealth()==0){
             System.out.println("Quest Complete");
@@ -112,7 +123,7 @@ public class StateCombat extends GameState {
             //TODO 1. Do something appropriate here
         }
 
-        if(player.getHealth()==0){
+        if(player.getHealth()==0) {
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
             player.decreaseLive();
@@ -126,5 +137,9 @@ public class StateCombat extends GameState {
                 Game.setCurrentState(save);
             //TODO 2. Do something appropriate here
         }
+
+        deathCheckTimer.setInitialDelay(600);
+        deathCheckTimer.setRepeats(false);
+        deathCheckTimer.start();
     }
 }

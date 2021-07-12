@@ -185,6 +185,8 @@ public class StateWorld extends GameState{
             }
         }
 
+        player.restoreHealth();
+
         Game.updateWindow();
     }
 
