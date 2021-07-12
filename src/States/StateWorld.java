@@ -105,7 +105,6 @@ public class StateWorld extends GameState{
                         JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 
                 JDialog dialog = new JDialog();
-                dialog.setLocationRelativeTo(null);
                 dialog.setTitle("Message by Jason");
                 dialog.setModal(true);
 
@@ -113,6 +112,7 @@ public class StateWorld extends GameState{
 
                 dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
                 dialog.pack();
+                dialog.setLocationRelativeTo(null);
 
                 dialog.addKeyListener(new KeyListener() {
                     @Override
