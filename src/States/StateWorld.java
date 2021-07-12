@@ -8,6 +8,9 @@ import Utility.MediaPlayer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -31,6 +34,7 @@ public class StateWorld extends GameState{
     JProgressBar questProgressBar;
     JTextArea questDisplay;
     JTextArea livesDisplay;
+    JDialog npcDialog;
     String [] enemies = {"Exterminator", "Oberon", "Subtilizer", "Dog", "Wolf"};
 
 
@@ -83,9 +87,52 @@ public class StateWorld extends GameState{
                         new String[] {"To Arms !!!"}, null);
                 Game.setCurrentState(new StateCombat(player, randomEnemy, this));
             }
+
             else if(map[y][x] == 5)
             {
-                encounterNPC();
+                System.out.println("NPC encountered");
+
+                String dialogue = """
+                        Jason wants to talk to you?\s
+                        press space if you want to reply
+                        Press any other button to ignore
+                        """;
+
+                JOptionPane optionPane = new JOptionPane(dialogue, JOptionPane.INFORMATION_MESSAGE,
+                        JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+
+                JDialog dialog = new JDialog();
+                dialog.setLocationRelativeTo(null);
+                dialog.setTitle("Message by Jason");
+                dialog.setModal(true);
+
+                dialog.setContentPane(optionPane);
+
+                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                dialog.pack();
+
+                dialog.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(e.getKeyChar() > 0) {
+                            dialog.dispose();
+                            if(e.getKeyChar() == ' ')
+                                encounterNPC();
+                        }
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                });
+
+                dialog.setVisible(true);
             }
             else if(map[y][x] >= 6) {
                 if(map[y][x] == 6) player.setXY(15, y);
@@ -141,7 +188,8 @@ public class StateWorld extends GameState{
     private Character generateEnemy() {
         // Do more stuff
         int randomEnemyIndex = (int)( Math.random()*enemies.length);
-        return new Character(enemies[randomEnemyIndex], display.loadImg("/assets/enemy.png"), Math.min(1000, 500 + (int)(Math.random()*randomEnemyIndex*100*randomEnemyIndex)));
+        return new Character(enemies[randomEnemyIndex], display.loadImg("/assets/enemy.png"),
+                Math.min(1000, 500 + (int)(Math.random()*randomEnemyIndex*100*randomEnemyIndex)));
     }
 
     private void pauseGame() {
@@ -162,8 +210,10 @@ public class StateWorld extends GameState{
     }
 
     public void increaseQuestProgressBar() {
-        questProgressBar.setString("QUEST PROGRESS : kills : " + (3 - questCount));
-        questProgressBar.setValue(((3 - questCount)* 100)/3);
+        if(questType != -1) {
+            questProgressBar.setString("QUEST PROGRESS : kills : " + (3 - questCount));
+            questProgressBar.setValue(((3 - questCount)* 100)/3);
+        }
     }
 
     public void setQuestDisplay() {
@@ -179,12 +229,23 @@ public class StateWorld extends GameState{
         {
             NPCs npc = new NPCs("EncounterNPC", display.loadImg("/assets/enemy.png"));
             int a = (int)(Math.random()*5);
-            questCount = 3;
-            questType = a;
-            questDisplay.setText("Current quest : " + questType);
-            JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-            new String[] {npc.getQuestDialouge(a)}, null);
+            int option = JOptionPane.showOptionDialog(null,
+                    "You meet a friendly man" + npc.getQuestDialouge(a), "NPC",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                    new String[] {"accept", "decline"}, null);
+
+            if(option == 0)
+            {
+                questCount = 3;
+                questType = a;
+                questDisplay.setText("Current quest : " + questType);
+                JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
+                        npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+            }
+            else
+                JOptionPane.showOptionDialog(null, "QUEST declined!", "Quest", JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
         }
         else{
             JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
