@@ -4,14 +4,15 @@ import GUI.UIParts;
 import Utility.MediaPlayer;
 
 import javax.swing.*;
+import java.util.Optional;
 
 public class StateMainMenu extends GameState {
 
     public StateMainMenu() {
         display = new UIParts();
 
-        JButton b = new JButton("Play");
-        b.setBounds(400-35, 350-15, 90, 50);
+        JButton b = new JButton("Start New Game");
+        b.setBounds(400-55, 350-15, 130, 50);
         b.addActionListener(e -> buttonPlayClicked());
         display.addComponent(b);
 
@@ -28,6 +29,8 @@ public class StateMainMenu extends GameState {
         JLabel background = new JLabel(new ImageIcon(display.loadImg("/assets/MainMenu.png")));
         background.setBounds(0, 0, 800, 600);
         display.addComponent(background);
+
+        MediaPlayer.playInBackground("/assets/homeMusic.wav");
     }
 
     public static void buttonPlayClicked() {
@@ -49,6 +52,23 @@ public class StateMainMenu extends GameState {
 
     private void showHelp() {
         System.out.println("Help");
+        String gameInstructions = """
+
+                1. This is a Quest game, so you have to complete quests to win.
+                2. Quests will be given by NPCs in the towns
+                3. You can complete the quests by fighting enemies in the forest outside th town
+                4. You have only three lives throughout the game
+                5. The player starts in the town1 when a new game starts
+                6. You can go to different maps by moving your character to the indicated arrows in each map
+                7. You can pause in any MAPs by pressing p, you can also quit the game or start again from there
+                8. You cannot pause in the beginning or during any fights
+                9. There is no time restriction
+                10. You will discover more features in the game as you progress
+
+                ALL THE BEST""";
+
+        JOptionPane.showOptionDialog(null, gameInstructions, "Help: Game rules",
+                JOptionPane.YES_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[] {"OK"}, null);
     }
 
     @Override

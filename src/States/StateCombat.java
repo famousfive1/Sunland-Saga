@@ -6,6 +6,7 @@ import GUI.UIParts;
 import Utility.MediaPlayer;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StateCombat extends GameState {
     Player player;
@@ -32,6 +33,7 @@ public class StateCombat extends GameState {
         healthIndicatorPlayer.setString(player.getHealth() + "/" + fullHealthPlayer);
         healthIndicatorPlayer.setValue(player.getHealth());
         healthIndicatorPlayer.setBounds(100, 330, 160, 30);
+        healthIndicatorPlayer.setForeground(new Color(0, 180, 0));
         display.addComponent(healthIndicatorPlayer);
 
         l = new JLabel(new ImageIcon(enemy.getImgScaled()));
@@ -43,6 +45,7 @@ public class StateCombat extends GameState {
         fullHealthEnemy = Integer.toString(enemy.getHealth());
         healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
         healthIndicatorEnemy.setValue(enemy.getHealth() / Integer.parseInt(fullHealthEnemy) * 100);
+        healthIndicatorEnemy.setForeground(new Color(0, 180, 0));
         healthIndicatorEnemy.setBounds(500, 330, 160, 30);
         display.addComponent(healthIndicatorEnemy);
 
@@ -82,7 +85,7 @@ public class StateCombat extends GameState {
             player.takeDamage(10 + (int)(Math.random()*40));
 
 
-         healthIndicatorEnemy.setValue(enemy.getHealth() / 8);
+         healthIndicatorEnemy.setValue((enemy.getHealth() * 100)/ Integer.parseInt(fullHealthEnemy));
          healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
          healthIndicatorPlayer.setValue(player.getHealth());
          healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
@@ -93,22 +96,34 @@ public class StateCombat extends GameState {
         */
 
         if(enemy.getHealth()==0){
-            System.out.println("You Won!!!! Congratulations!!!");
+            System.out.println("Quest Complete");
             player.restoreHealth();
             save.setQuestCount(save.getQuestCount() - 1);
             if(save.getQuestCount()==0) {
                 save.setQuestType(-1);
+                player.setInQuest(false);
                 Game.setCurrentState(new StateWin());
             }
             else
-             Game.setCurrentState(save);
+                Game.setCurrentState(save);
+
+            save.setQuestDisplay();
+            save.increaseQuestProgressBar();
             //TODO 1. Do something appropriate here
         }
 
         if(player.getHealth()==0){
             System.out.println("You Died!!! Sorry!!!!");
             player.restoreHealth();
-            Game.setCurrentState(save);
+            player.decreaseLive();
+            save.livesDisplay.setText("Lives left " + player.getLives());
+
+            if(player.getLives() == 0) {
+                System.out.println("You lost the game");
+                Game.setCurrentState(new StateLost());
+            }
+            else
+                Game.setCurrentState(save);
             //TODO 2. Do something appropriate here
         }
     }

@@ -52,6 +52,6 @@ public class Character {
     }
 
     public Image getImgScaled() {
-        return img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+        return img.getScaledInstance(150, 150, Image.SCALE_DEFAULT);
     }
 }

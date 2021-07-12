@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Character {
 
+    private int lives = 3;
+    private boolean inQuest = false;
+
     public Player(String name, BufferedImage img){
         super(name, img, 100);
     }
@@ -57,5 +60,21 @@ public class Player extends Character {
 
     public void restoreHealth(){
         this.health = 100;
+    }
+
+    public boolean isInQuest() {
+        return inQuest;
+    }
+
+    public void setInQuest(boolean inQuest) {
+        this.inQuest = inQuest;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void decreaseLive() {
+        this.lives--;
     }
 }
