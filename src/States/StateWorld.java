@@ -93,7 +93,7 @@ public class StateWorld extends GameState{
                 System.out.println("NPC encountered");
 
                 String dialogue = """
-                        Jason wants to talk to you?\s
+                        Jason wants to talk to you\s
                         press space if you want to reply
                         Press any other button to ignore
                         """;
