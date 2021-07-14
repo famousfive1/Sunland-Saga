@@ -7,6 +7,7 @@ import Utility.MediaPlayer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class StateCombat extends GameState {
     Player player;
@@ -23,42 +24,17 @@ public class StateCombat extends GameState {
 
         this.player = player;
         this.enemy = enemy;
-        JLabel l = new JLabel(new ImageIcon(player.getImgScaled()));
-        l.setBounds(130, 210, 100, 100);
-        display.addComponent(l);
 
-        healthIndicatorPlayer = new JProgressBar();
-        healthIndicatorPlayer.setStringPainted(true);
+        addButtonToScreen("Attack 1", 200, 400, 80, 40, e->attack('e'));
+        addButtonToScreen("Attack 2", 400, 400, 80, 40, e->attack('f'));
+
+        addPlayerToScreen(player, 130, 210, 100, 100);
         fullHealthPlayer = Integer.toString(player.getHealth());
-        healthIndicatorPlayer.setString(player.getHealth() + "/" + fullHealthPlayer);
-        healthIndicatorPlayer.setValue(player.getHealth());
-        healthIndicatorPlayer.setBounds(100, 330, 160, 30);
-        healthIndicatorPlayer.setForeground(new Color(0, 180, 0));
-        display.addComponent(healthIndicatorPlayer);
+        healthIndicatorPlayer =  addHealthBarToScreen(player, 100, 330, 160, 30, new Color(0, 180, 0));
 
-        l = new JLabel(new ImageIcon(enemy.getImgScaled()));
-        l.setBounds(520, 210, 100, 100);
-        display.addComponent(l);
-
-        healthIndicatorEnemy = new JProgressBar();
-        healthIndicatorEnemy.setStringPainted(true);
+        addPlayerToScreen(enemy, 520, 210, 100, 100);
         fullHealthEnemy = Integer.toString(enemy.getHealth());
-        healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
-        healthIndicatorEnemy.setValue(enemy.getHealth() / Integer.parseInt(fullHealthEnemy) * 100);
-        healthIndicatorEnemy.setForeground(new Color(0, 180, 0));
-        healthIndicatorEnemy.setBounds(500, 330, 160, 30);
-        display.addComponent(healthIndicatorEnemy);
-
-
-        JButton b = new JButton("Attack 1");
-        b.setBounds(200, 400, 80, 40);
-        b.addActionListener(e -> attack('e'));
-        display.addComponent(b);
-
-        b = new JButton("Attack 2");
-        b.setBounds(400, 400, 80, 40);
-        b.addActionListener(e -> attack('f'));
-        display.addComponent(b);
+        healthIndicatorEnemy =  addHealthBarToScreen(enemy, 500, 330, 160, 30, new Color(0, 180, 0));
 
         JLabel back = new JLabel(new ImageIcon(display.loadImg("/assets/CombatBack.png")));
         back.setBounds(0, 0, 800, 600);
@@ -140,5 +116,32 @@ public class StateCombat extends GameState {
         deathCheckTimer.setInitialDelay(600);
         deathCheckTimer.setRepeats(false);
         deathCheckTimer.start();
+    }
+
+    private void addPlayerToScreen(Character character, int x, int y, int width, int height){
+        JLabel l = new JLabel(new ImageIcon(character.getImgScaled()));
+        l.setBounds(x, y ,width, height);
+        display.addComponent(l);
+
+    }
+
+    private JProgressBar addHealthBarToScreen(Character character, int x, int y, int width, int height, Color color){
+        JProgressBar healthIndicator = new JProgressBar();
+        healthIndicator.setStringPainted(true);
+        String fullHealth = Integer.toString(character.getHealth());
+        healthIndicator.setString(character.getHealth() + "/" + fullHealth);
+        healthIndicator.setValue(character.getHealth());
+        healthIndicator.setBounds(x, y, width, height);
+        healthIndicator.setForeground(color);
+        display.addComponent(healthIndicator);
+        return healthIndicator;
+    }
+
+    private void addButtonToScreen(String buttonText, int x, int y, int width, int height, ActionListener l){
+        JButton jButton = new JButton(buttonText);
+        jButton.setBounds(x, y, width, height);
+        jButton.addActionListener(l);
+        display.addComponent(jButton);
+        //return jButton;
     }
 }
