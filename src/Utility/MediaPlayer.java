@@ -3,6 +3,7 @@ package Utility;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,6 +25,25 @@ public  class MediaPlayer {
 
         clip.loop(100);
     }
+
+    public static void playSfx(String path){
+        Clip clip = null;
+        try {
+            InputStream s = MediaPlayer.class.getResourceAsStream(path);
+            if(s == null) return;
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(s);
+             clip = AudioSystem.getClip();
+             clip.open(audioInputStream);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        assert clip != null;
+        clip.start();
+
+    }
+
 
 
     public static void stop(){

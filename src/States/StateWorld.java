@@ -101,6 +101,7 @@ public class StateWorld extends GameState{
     }
 
     private void handleNPC() {
+        MediaPlayer.playSfx("/assets/sfx/NpcEncounter.wav");
         System.out.println("NPC encountered");
 
         String dialogue = """
@@ -132,8 +133,9 @@ public class StateWorld extends GameState{
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyChar() > 0) {
                     dialog.dispose();
-                    if(e.getKeyChar() == ' ')
+                    if(e.getKeyChar() == ' ') {
                         encounterNPC();
+                    }
                 }
             }
 
@@ -254,6 +256,7 @@ public class StateWorld extends GameState{
 
         if(currentQuestKillCount==questKillTargets[questType]){
             Timer timer = new Timer(0, e->{
+               MediaPlayer.playSfx("/assets/sfx/QuestCompleted.wav");
                 JOptionPane.showMessageDialog(null, "You Completed Your Current Quest!");
                 questProgressBar.setString("QUEST PROGRESS : kills : " + 0);
                 questProgressBar.setValue(0);
@@ -284,6 +287,7 @@ public class StateWorld extends GameState{
 
             if(option == 0)
             {
+                MediaPlayer.playSfx("/assets/sfx/QuestAcceptRelief.wav");
 //                questCount = 3;
                 questType = a;
                 questDisplay.setText("Current quest : " + questType);
