@@ -26,8 +26,15 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
 
-        addButtonToScreen("Attack 1", 200, 400, 80, 40, e -> attack('e'));
-        addButtonToScreen("Attack 2", 400, 400, 80, 40, e -> attack('f'));
+        addButtonToScreen("Attack 1", 200, 400, 80, 40, e -> {
+            attack('e');
+            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
+        });
+        addButtonToScreen("Attack 2", 400, 400, 80, 40, e -> {
+            attack('f');
+            MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
+
+        });
 
         addPlayerToScreen(player, 130, 210, 100, 100);
         fullHealthPlayer = Integer.toString(player.getHealth());
@@ -84,6 +91,9 @@ public class StateCombat extends GameState {
         Timer deathCheckTimer = new Timer(0, e -> {
 
             if (enemy.getHealth() == 0) {
+
+
+
                 if (save.getQuestType() != -1)
                     save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
 
@@ -94,12 +104,15 @@ public class StateCombat extends GameState {
                 save.setQuestDisplay();
 
                 Game.setCurrentState(save);
+                MediaPlayer.playSfx("/assets/sfx/combatWon.wav");
+                JOptionPane.showMessageDialog(null, "You Won in the Battle!");
 
 
                 //TODO 1. Do something appropriate here
             }
 
             if (player.getHealth() == 0) {
+
                 System.out.println("You Died!!! Sorry!!!!");
                 player.restoreHealth();
                 player.decreaseLive();
@@ -108,8 +121,11 @@ public class StateCombat extends GameState {
                 if (player.getLives() == 0) {
                     System.out.println("You lost the game");
                     Game.setCurrentState(new StateLost());
-                } else
-                    Game.setCurrentState(save);
+                } else {
+                   Game.setCurrentState(save);
+                    MediaPlayer.playSfx("/assets/sfx/dead.wav");
+                    JOptionPane.showMessageDialog(null, "You Died in the Battle!");
+                }
                 //TODO 2. Do something appropriate here
             }
         });

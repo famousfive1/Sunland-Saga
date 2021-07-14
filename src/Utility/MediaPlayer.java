@@ -26,21 +26,25 @@ public  class MediaPlayer {
         clip.loop(100);
     }
 
-    public static void playSfx(String path){
+    public static void playSfx(String path) {
         Clip clip = null;
+        AudioInputStream audioInputStream;
         try {
             InputStream s = MediaPlayer.class.getResourceAsStream(path);
-            if(s == null) return;
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(s);
-             clip = AudioSystem.getClip();
-             clip.open(audioInputStream);
+            if (s == null) return;
 
-        } catch(Exception e) {
+            audioInputStream = AudioSystem.getAudioInputStream(s);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         assert clip != null;
         clip.start();
+
+
 
     }
 
