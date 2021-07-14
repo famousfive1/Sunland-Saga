@@ -85,10 +85,15 @@ public class StateWorld extends GameState{
             if (map[y][x] == 2) {
                 map[y][x] = 0;
                 Character randomEnemy = generateEnemy();
+                StateCombat newStateCombat = new StateCombat(player, randomEnemy, this);
+                MediaPlayer.stop();
+                MediaPlayer.playInBackground("/assets/combatMusic.wav");
                 JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
                         new String[] {"To Arms !!!"}, null);
-                Game.setCurrentState(new StateCombat(player, randomEnemy, this));
+
+
+                Game.setCurrentState(newStateCombat);
             }
 
             else if(map[y][x] == 5)
