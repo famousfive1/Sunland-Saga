@@ -17,6 +17,7 @@ public class StateCombat extends GameState {
     JProgressBar healthIndicatorEnemy;
     String fullHealthPlayer;
     String fullHealthEnemy;
+
     public StateCombat(Player player, Character enemy, StateWorld save) {
         this.save = save;
 
@@ -25,16 +26,16 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
 
-        addButtonToScreen("Attack 1", 200, 400, 80, 40, e->attack('e'));
-        addButtonToScreen("Attack 2", 400, 400, 80, 40, e->attack('f'));
+        addButtonToScreen("Attack 1", 200, 400, 80, 40, e -> attack('e'));
+        addButtonToScreen("Attack 2", 400, 400, 80, 40, e -> attack('f'));
 
         addPlayerToScreen(player, 130, 210, 100, 100);
         fullHealthPlayer = Integer.toString(player.getHealth());
-        healthIndicatorPlayer =  addHealthBarToScreen(player, 100, 330, 160, 30, new Color(0, 180, 0));
+        healthIndicatorPlayer = addHealthBarToScreen(player, 100, 330, 160, 30, new Color(0, 180, 0));
 
         addPlayerToScreen(enemy, 520, 210, 100, 100);
         fullHealthEnemy = Integer.toString(enemy.getHealth());
-        healthIndicatorEnemy =  addHealthBarToScreen(enemy, 500, 330, 160, 30, new Color(0, 180, 0));
+        healthIndicatorEnemy = addHealthBarToScreen(enemy, 500, 330, 160, 30, new Color(0, 180, 0));
 
         JLabel back = new JLabel(new ImageIcon(display.loadImg("/assets/CombatBack.png")));
         back.setBounds(0, 0, 800, 600);
@@ -48,53 +49,53 @@ public class StateCombat extends GameState {
 
     @Override
     public void handleInput(char typed) {
-        if(typed == 'p')
+        if (typed == 'p')
             Game.setCurrentState(new StatePaused(this));
         else System.out.println("Press buttons instead!!");
     }
 
-     void attack(char usedMove){
+    void attack(char usedMove) {
         player.reactToMove(usedMove);
         enemy.takeDamage(200);
 
-         if(usedMove!='f' && enemy.getHealth()!=0)
-             player.takeDamage(10 + (int)(Math.random()*40));
+        if (usedMove != 'f' && enemy.getHealth() != 0)
+            player.takeDamage(10 + (int) (Math.random() * 40));
 
 
-         healthIndicatorEnemy.setValue((enemy.getHealth() * 100)/ Integer.parseInt(fullHealthEnemy));
-         healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
+        healthIndicatorEnemy.setValue((enemy.getHealth() * 100) / Integer.parseInt(fullHealthEnemy));
+        healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
 
         //The code below executes 500 ms after the functions call
-         //This is done to add a visual delay in the enemy attack and the player attack
-         Timer timer = new Timer(0, e -> {
+        //This is done to add a visual delay in the enemy attack and the player attack
+        Timer timer = new Timer(0, e -> {
 
 
-             healthIndicatorPlayer.setValue(player.getHealth());
-             healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
+            healthIndicatorPlayer.setValue(player.getHealth());
+            healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
 
-         });
-         timer.setInitialDelay(500);
-         timer.setRepeats(false);
-         timer.start();
+        });
+        timer.setInitialDelay(500);
+        timer.setRepeats(false);
+        timer.start();
 
 
         //The code inside the lambda below will execute 600ms after the function call.
-         //This is done to ensure that the death actually happens sometime after the progress bar gets updated
-        Timer deathCheckTimer = new Timer(0, e-> {
+        //This is done to ensure that the death actually happens sometime after the progress bar gets updated
+        Timer deathCheckTimer = new Timer(0, e -> {
 
             if (enemy.getHealth() == 0) {
-                System.out.println("Quest Complete");
+                if (save.getQuestType() != -1)
+                    save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
+
+
+                System.out.println("Killed Enemy");
                 player.restoreHealth();
-                save.setQuestCount(save.getQuestCount() - 1);
-                if (save.getQuestCount() == 0) {
-                    save.setQuestType(-1);
-                    player.setInQuest(false);
-                    Game.setCurrentState(new StateWin());
-                } else
-                    Game.setCurrentState(save);
 
                 save.setQuestDisplay();
-                save.increaseQuestProgressBar();
+
+                Game.setCurrentState(save);
+
+
                 //TODO 1. Do something appropriate here
             }
 
@@ -118,14 +119,14 @@ public class StateCombat extends GameState {
         deathCheckTimer.start();
     }
 
-    private void addPlayerToScreen(Character character, int x, int y, int width, int height){
+    private void addPlayerToScreen(Character character, int x, int y, int width, int height) {
         JLabel l = new JLabel(new ImageIcon(character.getImgScaled()));
-        l.setBounds(x, y ,width, height);
+        l.setBounds(x, y, width, height);
         display.addComponent(l);
 
     }
 
-    private JProgressBar addHealthBarToScreen(Character character, int x, int y, int width, int height, Color color){
+    private JProgressBar addHealthBarToScreen(Character character, int x, int y, int width, int height, Color color) {
         JProgressBar healthIndicator = new JProgressBar();
         healthIndicator.setStringPainted(true);
         String fullHealth = Integer.toString(character.getHealth());
@@ -137,11 +138,10 @@ public class StateCombat extends GameState {
         return healthIndicator;
     }
 
-    private void addButtonToScreen(String buttonText, int x, int y, int width, int height, ActionListener l){
+    private void addButtonToScreen(String buttonText, int x, int y, int width, int height, ActionListener l) {
         JButton jButton = new JButton(buttonText);
         jButton.setBounds(x, y, width, height);
         jButton.addActionListener(l);
         display.addComponent(jButton);
-        //return jButton;
     }
 }

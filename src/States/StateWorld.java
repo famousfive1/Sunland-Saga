@@ -8,10 +8,8 @@ import Utility.MediaPlayer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /*
@@ -23,7 +21,7 @@ Load character/ move
 public class StateWorld extends GameState{
 
     Player player;
-    private int questCount;
+    private int currentQuestKillCount;
     private int questType = -1;
     private int totalQuestCount;
 
@@ -36,6 +34,9 @@ public class StateWorld extends GameState{
     JTextArea livesDisplay;
     JDialog npcDialog;
     String [] enemies = {"Exterminator", "Oberon", "Subtilizer", "Dog", "Wolf"};
+
+    int[] questKillTargets = {3, 3, 5, 5, 3};
+
 
 
     public StateWorld(String playerName, String playerIcon) //forestmap1
@@ -56,7 +57,7 @@ public class StateWorld extends GameState{
         display.addComponent(livesDisplay);
 
         questProgressBar = new JProgressBar();
-        questProgressBar.setValue(questCount);
+        questProgressBar.setValue(currentQuestKillCount);
         questProgressBar.setStringPainted(true);
         questProgressBar.setForeground(new Color(0, 75, 180));
         questProgressBar.setString("QUEST PROGRESS : kills : 0");
@@ -68,7 +69,7 @@ public class StateWorld extends GameState{
 
         changeMap("Town1Test");
 
-        questCount = 0;
+        currentQuestKillCount = 0;
     }
 
     @Override
@@ -82,66 +83,12 @@ public class StateWorld extends GameState{
             pauseGame();
         else if(player.move(typed, map)) {
             int x = player.getX(), y = player.getY();
-            if (map[y][x] == 2) {
-                map[y][x] = 0;
-                Character randomEnemy = generateEnemy();
-                StateCombat newStateCombat = new StateCombat(player, randomEnemy, this);
-                MediaPlayer.stop();
-                MediaPlayer.playInBackground("/assets/combatMusic.wav");
-                JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-                        new String[] {"To Arms !!!"}, null);
-
-
-                Game.setCurrentState(newStateCombat);
-            }
+            if (map[y][x] == 2)
+                handleEnemy(x, y);
 
             else if(map[y][x] == 5)
-            {
-                System.out.println("NPC encountered");
+                handleNPC();
 
-                String dialogue = """
-                        Jason wants to talk to you?\s
-                        press space if you want to reply
-                        Press any other button to ignore
-                        """;
-
-                JOptionPane optionPane = new JOptionPane(dialogue, JOptionPane.INFORMATION_MESSAGE,
-                        JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-
-                JDialog dialog = new JDialog();
-                dialog.setLocationRelativeTo(null);
-                dialog.setTitle("Message by Jason");
-                dialog.setModal(true);
-
-                dialog.setContentPane(optionPane);
-
-                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-                dialog.pack();
-
-                dialog.addKeyListener(new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-
-                    }
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        if(e.getKeyChar() > 0) {
-                            dialog.dispose();
-                            if(e.getKeyChar() == ' ')
-                                encounterNPC();
-                        }
-                    }
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-
-                    }
-                });
-
-                dialog.setVisible(true);
-            }
             else if(map[y][x] >= 6) {
                 if(map[y][x] == 6) player.setXY(15, y);
                 else if(map[y][x] == 7) player.setXY(x, 11);
@@ -151,6 +98,66 @@ public class StateWorld extends GameState{
             }
             Game.updateWindow();
         }
+    }
+
+    private void handleNPC() {
+        System.out.println("NPC encountered");
+
+        String dialogue = """
+                Jason wants to talk to you?\s
+                press space if you want to reply
+                Press any other button to ignore
+                """;
+
+        JOptionPane optionPane = new JOptionPane(dialogue, JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+
+        JDialog dialog = new JDialog();
+        dialog.setLocationRelativeTo(null);
+        dialog.setTitle("Message by Jason");
+        dialog.setModal(true);
+
+        dialog.setContentPane(optionPane);
+
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.pack();
+
+        dialog.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyChar() > 0) {
+                    dialog.dispose();
+                    if(e.getKeyChar() == ' ')
+                        encounterNPC();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
+        dialog.setVisible(true);
+    }
+
+    private void handleEnemy(int x, int y) {
+        map[y][x] = 0;
+        Character randomEnemy = generateEnemy();
+        StateCombat newStateCombat = new StateCombat(player, randomEnemy, this);
+        MediaPlayer.stop();
+        MediaPlayer.playInBackground("/assets/combatMusic.wav");
+        JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                new String[] {"To Arms !!!"}, null);
+
+
+        Game.setCurrentState(newStateCombat);
     }
 
     private void changeMap(String mapPart) {
@@ -206,23 +213,54 @@ public class StateWorld extends GameState{
         Game.setCurrentState(new StatePaused(this));
     }
 
-    public void setQuestCount(int questCount) {
-        this.questCount = questCount;
-        totalQuestCount = Math.max(totalQuestCount, questCount);
+    public void setCurrentQuestKillCount(int currentQuestKillCount) {
+        this.currentQuestKillCount = currentQuestKillCount;
+
+        increaseQuestProgressBar();
+
+        if(this.currentQuestKillCount==questKillTargets[this.questType]){
+            System.out.println("Current Quest Completed!!");
+            this.currentQuestKillCount = 0;
+            setQuestType(-1);
+            totalQuestCount++;
+
+
+        }
+
+
+        if(totalQuestCount==3){
+            System.out.println("Congratulations!! You won the game");
+            System.exit(0);
+        }
     }
 
     public void setQuestType(int questType) {
         this.questType = questType;
     }
 
-    public int getQuestCount() {
-        return questCount;
+    public int getQuestType() {
+        return questType;
+    }
+
+    public int getCurrentQuestKillCount() {
+        return currentQuestKillCount;
     }
 
     public void increaseQuestProgressBar() {
         if(questType != -1) {
-            questProgressBar.setString("QUEST PROGRESS : kills : " + (3 - questCount));
-            questProgressBar.setValue(((3 - questCount)* 100)/3);
+            questProgressBar.setString("QUEST PROGRESS : kills : " + currentQuestKillCount);
+            questProgressBar.setValue(((currentQuestKillCount)* 100)/questKillTargets[questType]);
+        }
+
+        if(currentQuestKillCount==questKillTargets[questType]){
+            Timer timer = new Timer(0, e->{
+                JOptionPane.showMessageDialog(null, "You Completed Your Current Quest!");
+                questProgressBar.setString("QUEST PROGRESS : kills : " + 0);
+                questProgressBar.setValue(0);
+            });
+            timer.setInitialDelay(500);
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
@@ -246,7 +284,7 @@ public class StateWorld extends GameState{
 
             if(option == 0)
             {
-                questCount = 3;
+//                questCount = 3;
                 questType = a;
                 questDisplay.setText("Current quest : " + questType);
                 JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
