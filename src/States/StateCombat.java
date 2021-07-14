@@ -150,7 +150,7 @@ public class StateCombat extends GameState {
         });
 
         attack2.addActionListener(f->{
-            attack('e');
+            attack('f');
             MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
         });
     }
