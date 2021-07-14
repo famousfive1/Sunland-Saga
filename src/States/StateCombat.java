@@ -17,6 +17,8 @@ public class StateCombat extends GameState {
     JProgressBar healthIndicatorEnemy;
     String fullHealthPlayer;
     String fullHealthEnemy;
+    JButton attack1;
+    JButton attack2;
 
     public StateCombat(Player player, Character enemy, StateWorld save) {
         this.save = save;
@@ -26,11 +28,11 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
 
-        addButtonToScreen("Attack 1", 200, 400, 80, 40, e -> {
+        attack1 = addButtonToScreen("Attack 1", 200, 400, 80, 40, e -> {
             attack('e');
             MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
         });
-        addButtonToScreen("Attack 2", 400, 400, 80, 40, e -> {
+       attack2 = addButtonToScreen("Attack 2", 400, 400, 80, 40, e -> {
             attack('f');
             MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
 
@@ -62,6 +64,9 @@ public class StateCombat extends GameState {
     }
 
     void attack(char usedMove) {
+
+        disengageButtons();
+
         player.reactToMove(usedMove);
         enemy.takeDamage(200);
 
@@ -128,11 +133,31 @@ public class StateCombat extends GameState {
                 }
                 //TODO 2. Do something appropriate here
             }
+
+            engageButtons();
+
         });
 
         deathCheckTimer.setInitialDelay(600);
         deathCheckTimer.setRepeats(false);
         deathCheckTimer.start();
+    }
+
+    private void engageButtons() {
+        attack1.addActionListener(f->{
+            attack('e');
+            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
+        });
+
+        attack2.addActionListener(f->{
+            attack('e');
+            MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
+        });
+    }
+
+    private void disengageButtons() {
+        attack1.removeActionListener(attack1.getActionListeners()[0]);
+        attack2.removeActionListener(attack2.getActionListeners()[0]);
     }
 
     private void addPlayerToScreen(Character character, int x, int y, int width, int height) {
@@ -154,10 +179,11 @@ public class StateCombat extends GameState {
         return healthIndicator;
     }
 
-    private void addButtonToScreen(String buttonText, int x, int y, int width, int height, ActionListener l) {
+    private JButton addButtonToScreen(String buttonText, int x, int y, int width, int height, ActionListener l) {
         JButton jButton = new JButton(buttonText);
         jButton.setBounds(x, y, width, height);
         jButton.addActionListener(l);
         display.addComponent(jButton);
+        return jButton;
     }
 }
