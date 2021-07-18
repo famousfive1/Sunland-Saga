@@ -34,7 +34,6 @@ public class StateWorld extends GameState{
     JProgressBar questProgressBar;
     JTextArea questDisplay;
     JTextArea livesDisplay;
-    JDialog npcDialog;
     String [] enemies = {"Exterminator", "Oberon", "Subtilizer", "Dog", "Wolf"};
 
 
