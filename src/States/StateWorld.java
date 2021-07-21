@@ -104,31 +104,19 @@ public class StateWorld extends GameState{
         MediaPlayer.playSfx("/assets/sfx/NpcEncounter.wav");
         System.out.println("NPC encountered");
 
-<<<<<<<<< Temporary merge branch 1
-                JDialog dialog = new JDialog();
-                dialog.setTitle("Message by Jason");
-                dialog.setModal(true);
-=========
         String dialogue = """
                 Jason wants to talk to you?\s
                 press space if you want to reply
                 Press any other button to ignore
                 """;
->>>>>>>>> Temporary merge branch 2
 
         JOptionPane optionPane = new JOptionPane(dialogue, JOptionPane.INFORMATION_MESSAGE,
                 JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 
-<<<<<<<<< Temporary merge branch 1
-                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-                dialog.pack();
-                dialog.setLocationRelativeTo(null);
-=========
         JDialog dialog = new JDialog();
         dialog.setLocationRelativeTo(null);
         dialog.setTitle("Message by Jason");
         dialog.setModal(true);
->>>>>>>>> Temporary merge branch 2
 
         dialog.setContentPane(optionPane);
 
@@ -268,7 +256,7 @@ public class StateWorld extends GameState{
 
         if(currentQuestKillCount==questKillTargets[questType]){
             Timer timer = new Timer(0, e->{
-               MediaPlayer.playSfx("/assets/sfx/QuestCompleted.wav");
+                MediaPlayer.playSfx("/assets/sfx/QuestCompleted.wav");
                 JOptionPane.showMessageDialog(null, "You Completed Your Current Quest!");
                 questProgressBar.setString("QUEST PROGRESS : kills : " + 0);
                 questProgressBar.setValue(0);
@@ -304,7 +292,7 @@ public class StateWorld extends GameState{
                 questType = a;
                 questDisplay.setText("Current quest : " + questType);
                 JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
-                        npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
+                                npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
             }
             else
@@ -313,8 +301,8 @@ public class StateWorld extends GameState{
         }
         else{
             JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-            new String[] {"Looks like you are already helping someone"}, null);
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                    new String[] {"Looks like you are already helping someone"}, null);
         }
     }
 
