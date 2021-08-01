@@ -12,11 +12,6 @@ public class StateLost extends GameState{
     public StateLost() {
         display = new UIParts();
 
-        background = new JLabel();
-        background.setForeground(new Color(255, 210, 255));
-        background.setBounds(0, 0, 800, 600);
-        display.addComponent(background);
-
         JButton b = new JButton("Back to Main Menu");
         b.setBounds(400-80, 200-25, 180, 50);
         b.addActionListener(e -> Game.setCurrentState(new StateMainMenu()));
@@ -26,6 +21,11 @@ public class StateLost extends GameState{
         b.setBounds(400-35, 270-15, 90, 50);
         b.addActionListener(e -> System.exit(0));
         display.addComponent(b);
+
+        background = new JLabel(new ImageIcon(display.loadImg("/assets/MainMenu.png")));
+        background.setForeground(new Color(255, 210, 255));
+        background.setBounds(0, 0, 800, 600);
+        display.addComponent(background);
     }
 
     @Override

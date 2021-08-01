@@ -256,7 +256,7 @@ public class StateWorld extends GameState{
 
         if(currentQuestKillCount==questKillTargets[questType]){
             Timer timer = new Timer(0, e->{
-               MediaPlayer.playSfx("/assets/sfx/QuestCompleted.wav");
+                MediaPlayer.playSfx("/assets/sfx/QuestCompleted.wav");
                 JOptionPane.showMessageDialog(null, "You Completed Your Current Quest!");
                 questProgressBar.setString("QUEST PROGRESS : kills : " + 0);
                 questProgressBar.setValue(0);
@@ -292,7 +292,7 @@ public class StateWorld extends GameState{
                 questType = a;
                 questDisplay.setText("Current quest : " + questType);
                 JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
-                        npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
+                                npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
             }
             else
@@ -301,8 +301,8 @@ public class StateWorld extends GameState{
         }
         else{
             JOptionPane.showOptionDialog(null, "You meet a friendly man", "NPC",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-            new String[] {"Looks like you are already helping someone"}, null);
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                    new String[] {"Looks like you are already helping someone"}, null);
         }
     }
 
