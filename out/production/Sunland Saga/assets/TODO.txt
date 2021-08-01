@@ -1,0 +1,11 @@
+1. Kaus: NPCs - give quests - random dialogues
+2. Quest stuff -> move into player
+3. Nithin: Visual changes for map exit points
+4. Nithin: Add popup window for dialogues
+5. Add enemy types and random generation in the function
+    A final boss monster (only generates in the last quest)
+6. Character creation screen (popup window) -> work a bit more
+
+
+Add music
+Add mini map
