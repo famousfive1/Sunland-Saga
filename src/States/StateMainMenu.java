@@ -2,6 +2,7 @@ package States;
 
 import GUI.UIParts;
 import Utility.MediaPlayer;
+import Entity.Player;
 
 import javax.swing.*;
 
@@ -38,6 +39,7 @@ public class StateMainMenu extends GameState {
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Sword", "Bow", "Battle Axe"}, null);
             if(ch == -1) return;
+            else Player.setWeapon(ch);
             ch = JOptionPane.showOptionDialog(null, "Choose difficulty: ", "Difficulty",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Easy", "Medium", "Hard"},null);
