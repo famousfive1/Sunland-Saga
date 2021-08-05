@@ -34,21 +34,35 @@ public class StateMainMenu extends GameState {
     public static void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
         if(name != null && !name.equals("")) {
-            int ch = JOptionPane.showOptionDialog(null, "Choose your starting weapon: ", "Weapon",
+            int chProfession = JOptionPane.showOptionDialog(null, "Choose your character profession: ", "Weapon",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                    null, new String[] {"Sword", "Bow", "Battle Axe"}, null);
-            if(ch == -1) return;
-            ch = JOptionPane.showOptionDialog(null, "Choose difficulty: ", "Difficulty",
+                    null, new ImageIcon[] {new ImageIcon("src/assets/playerCharacter_knight.png"),
+                            new ImageIcon("src/assets/playerCharacter_archer.png"),
+                            new ImageIcon("src/assets/playerCharacter_warrior.png")}, null);
+            if(chProfession == -1) return;
+            String ch = "";
+            if(chProfession == 0) ch = "playerCharacter_knight.png";
+            else if(chProfession == 1) ch = "playerCharacter_archer.png";
+            else if(chProfession == 2) ch = "playerCharacter_warrior.png";
+
+            int ch_difficulty = JOptionPane.showOptionDialog(null,
+                    """
+                            Choose difficulty:
+                            Easy   -(total lives = 5, total quests = 2)
+                            Medium -(total lives = 3, total quests = 4)
+                            Hard   -(total lives = 2, total quests = 7)
+                            """,
+                    "Difficulty",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Easy", "Medium", "Hard"},null);
-            if(ch == -1) return;
+            if(ch_difficulty == -1) return;
 
-            StateWorld world = new StateWorld(name, "PlayerCharacter.png");
+            StateWorld world = new StateWorld(name, ch);
             Game.setCurrentState(world);
 
-            if(ch == 0) world.setDifficulty(2, 5);
-            else if(ch == 1) world.setDifficulty(4, 3);
-            else if(ch == 2) world.setDifficulty(7, 2);
+            if(ch_difficulty == 0) world.setDifficulty(2, 5);
+            else if(ch_difficulty == 1) world.setDifficulty(4, 3);
+            else if(ch_difficulty == 2) world.setDifficulty(7, 2);
         }
     }
 
