@@ -35,7 +35,7 @@ public class StateWorld extends GameState{
     JTextArea livesDisplay;
     JDialog npcDialog;
     String [] enemies = {"Exterminator", "Bandit", "Subtilizer", "Dog", "Wolf"};
-
+    String currentQuestEnemy = "";
     int[] questKillTargets = {3, 3, 5, 5, 3};
 
     public void setDifficulty(int quests, int lives) {
@@ -43,6 +43,10 @@ public class StateWorld extends GameState{
         this.player.setLives(lives);
         livesDisplay.setText("Lives left: " + player.getLives());
         questDisplay.setText("Quests : 0 / " + neededQuests);
+    }
+
+    public String getCurrentQuestEnemy() {
+        return currentQuestEnemy;
     }
 
     public StateWorld(String playerName, String playerIcon) //forestmap1
@@ -263,6 +267,7 @@ public class StateWorld extends GameState{
                 JOptionPane.showMessageDialog(null, "You Completed Your Current Quest!");
                 questProgressBar.setString("QUEST PROGRESS : kills : " + 0);
                 questProgressBar.setValue(0);
+                currentQuestEnemy = "";
             });
             timer.setInitialDelay(500);
             timer.setRepeats(false);
@@ -287,6 +292,7 @@ public class StateWorld extends GameState{
 
             if(option == 0)
             {
+                currentQuestEnemy = enemies[a];
                 MediaPlayer.playSfx("/assets/sfx/QuestAcceptRelief.wav");
 //                questCount = 3;
                 questType = a;
@@ -294,6 +300,7 @@ public class StateWorld extends GameState{
                 JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
                                 npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+
             }
             else
                 JOptionPane.showOptionDialog(null, "QUEST declined!", "Quest", JOptionPane.DEFAULT_OPTION,
