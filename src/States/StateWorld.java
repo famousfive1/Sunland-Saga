@@ -33,7 +33,7 @@ public class StateWorld extends GameState{
     JTextArea questDisplay;
     JTextArea livesDisplay;
     JDialog npcDialog;
-    String [] enemies = {"Exterminator", "Oberon", "Subtilizer", "Dog", "Wolf"};
+    String [] enemies = {"Exterminator", "Bandit", "Subtilizer", "Dog", "Wolf"};
 
     int[] questKillTargets = {3, 3, 5, 5, 3};
 
@@ -48,7 +48,7 @@ public class StateWorld extends GameState{
         player = new Player(playerName, display.loadImg("/assets/" + playerIcon));
         display.addCharacter(player);
 
-        questDisplay = new JTextArea("Current quest : none");
+        questDisplay = new JTextArea("Quest number : 0");
         questDisplay.setBounds(10, 10 , 110, 20);
         display.addComponent(questDisplay);
 
@@ -151,7 +151,6 @@ public class StateWorld extends GameState{
     private void handleEnemy(int x, int y) {
         map[y][x] = 0;
         Character randomEnemy = generateEnemy();
-        StateCombat newStateCombat = new StateCombat(player, randomEnemy, this);
         MediaPlayer.stop();
         MediaPlayer.playInBackground("/assets/combatMusic.wav");
         JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
@@ -159,7 +158,7 @@ public class StateWorld extends GameState{
                 new String[] {"To Arms !!!"}, null);
 
 
-        Game.setCurrentState(newStateCombat);
+        Game.setCurrentState(new StateCombat(player, randomEnemy, this));
     }
 
     private void changeMap(String mapPart) {
@@ -230,9 +229,9 @@ public class StateWorld extends GameState{
         }
 
 
-        if(totalQuestCount==3){
+        if(totalQuestCount==1){
             System.out.println("Congratulations!! You won the game");
-            System.exit(0);
+            Game.setCurrentState(new StateWin());
         }
     }
 
@@ -268,10 +267,7 @@ public class StateWorld extends GameState{
     }
 
     public void setQuestDisplay() {
-        if(questType != -1)
-            questDisplay.setText("Current Quest : " + questType);
-        else
-            questDisplay.setText("Current Quest : none");
+            questDisplay.setText("Quest number : " + totalQuestCount);
     }
 
     public void encounterNPC()
@@ -290,7 +286,7 @@ public class StateWorld extends GameState{
                 MediaPlayer.playSfx("/assets/sfx/QuestAcceptRelief.wav");
 //                questCount = 3;
                 questType = a;
-                questDisplay.setText("Current quest : " + questType);
+                questDisplay.setText("Quest number: " + totalQuestCount);
                 JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
                                 npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);

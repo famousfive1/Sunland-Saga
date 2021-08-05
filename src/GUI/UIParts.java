@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class UIParts {
 
-    private ArrayList<JComponent> components;
-    private ArrayList<Character> entities;
-    private LayoutManager layout;
+    private final ArrayList<JComponent> components;
+    private final ArrayList<Character> entities;
+    private final LayoutManager layout;
 
     public UIParts() {
         components = new ArrayList<>();
