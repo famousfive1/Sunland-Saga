@@ -24,6 +24,7 @@ public class StateWorld extends GameState{
     private int currentQuestKillCount;
     private int questType = -1;
     private int totalQuestCount;
+    private int neededQuests;
 
     // Map related stuff
     int[][] map;
@@ -37,7 +38,12 @@ public class StateWorld extends GameState{
 
     int[] questKillTargets = {3, 3, 5, 5, 3};
 
-
+    public void setDifficulty(int quests, int lives) {
+        this.neededQuests = quests;
+        this.player.setLives(lives);
+        livesDisplay.setText("Lives left: " + player.getLives());
+        questDisplay.setText("Quests : 0 / " + neededQuests);
+    }
 
     public StateWorld(String playerName, String playerIcon) //forestmap1
     {
@@ -48,11 +54,11 @@ public class StateWorld extends GameState{
         player = new Player(playerName, display.loadImg("/assets/" + playerIcon));
         display.addCharacter(player);
 
-        questDisplay = new JTextArea("Quest number : 0");
+        questDisplay = new JTextArea("Quests : 0 / " + neededQuests);
         questDisplay.setBounds(10, 10 , 110, 20);
         display.addComponent(questDisplay);
 
-        livesDisplay = new JTextArea("Lives left : " + 3);
+        livesDisplay = new JTextArea("Lives left : " + player.getLives());
         livesDisplay.setBounds(130, 10, 80, 20);
         display.addComponent(livesDisplay);
 
@@ -224,12 +230,10 @@ public class StateWorld extends GameState{
             this.currentQuestKillCount = 0;
             setQuestType(-1);
             totalQuestCount++;
-
-
+            questDisplay.setText("Quests : " + totalQuestCount + " / " + neededQuests);
         }
 
-
-        if(totalQuestCount==1){
+        if(totalQuestCount==neededQuests){
             System.out.println("Congratulations!! You won the game");
             Game.setCurrentState(new StateWin());
         }
@@ -267,7 +271,7 @@ public class StateWorld extends GameState{
     }
 
     public void setQuestDisplay() {
-            questDisplay.setText("Quest number : " + totalQuestCount);
+            questDisplay.setText("Quests : " + totalQuestCount + " / " + neededQuests);
     }
 
     public void encounterNPC()
@@ -286,7 +290,7 @@ public class StateWorld extends GameState{
                 MediaPlayer.playSfx("/assets/sfx/QuestAcceptRelief.wav");
 //                questCount = 3;
                 questType = a;
-                questDisplay.setText("Quest number: " + totalQuestCount);
+                questDisplay.setText("Quests : " + totalQuestCount + " / " + neededQuests);
                 JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
                                 npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
