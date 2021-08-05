@@ -96,13 +96,6 @@ public class StateCombat extends GameState {
         Timer deathCheckTimer = new Timer(0, e -> {
 
             if (enemy.getHealth() == 0) {
-
-
-
-                if (save.getQuestType() != -1)
-                    save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
-
-
                 System.out.println("Killed Enemy");
                 player.restoreHealth();
 
@@ -112,8 +105,8 @@ public class StateCombat extends GameState {
                 MediaPlayer.playSfx("/assets/sfx/combatWon.wav");
                 JOptionPane.showMessageDialog(null, "You Won in the Battle!");
 
-
-                //TODO 1. Do something appropriate here
+                if (save.getQuestType() != -1)
+                    save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
             }
 
             if (player.getHealth() == 0) {
