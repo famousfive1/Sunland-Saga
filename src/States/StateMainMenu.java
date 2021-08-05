@@ -34,13 +34,21 @@ public class StateMainMenu extends GameState {
     public static void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
         if(name != null && !name.equals("")) {
-            JOptionPane.showOptionDialog(null, "Choose your starting weapon: ", "Weapon",
+            int ch = JOptionPane.showOptionDialog(null, "Choose your starting weapon: ", "Weapon",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Sword", "Bow", "Battle Axe"}, null);
-            JOptionPane.showOptionDialog(null, "Choose difficulty: ", "Difficulty",
+            if(ch == -1) return;
+            ch = JOptionPane.showOptionDialog(null, "Choose difficulty: ", "Difficulty",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Easy", "Medium", "Hard"},null);
-            Game.setCurrentState(new StateWorld(name, "PlayerCharacter.png"));
+            if(ch == -1) return;
+
+            StateWorld world = new StateWorld(name, "PlayerCharacter.png");
+            Game.setCurrentState(world);
+
+            if(ch == 0) world.setDifficulty(2, 5);
+            else if(ch == 1) world.setDifficulty(4, 3);
+            else if(ch == 2) world.setDifficulty(7, 2);
         }
     }
 

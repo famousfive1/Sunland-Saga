@@ -77,4 +77,6 @@ public class Player extends Character {
     public void decreaseLive() {
         this.lives--;
     }
+
+    public void setLives(int live) { this.lives = live; }
 }
