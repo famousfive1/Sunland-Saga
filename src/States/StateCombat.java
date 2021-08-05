@@ -116,8 +116,11 @@ public class StateCombat extends GameState {
                 MediaPlayer.playSfx("/assets/sfx/combatWon.wav");
                 JOptionPane.showMessageDialog(null, "You Won in the Battle!");
 
-                if (save.getQuestType() != -1)
+                if (save.getQuestType() != -1&&enemy.getName().equalsIgnoreCase(save.currentQuestEnemy))
                     save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
+
+
+
             }
 
             if (player.getHealth() == 0) {
