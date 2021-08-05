@@ -12,10 +12,6 @@ public class StatePaused extends GameState{
 
         display = new UIParts();
 
-        JLabel l = new JLabel(new ImageIcon("/assets/MainMenu.png"));
-        l.setBounds(0, 0, 800, 600);
-        display.addComponent(l);
-
         JButton Resume = new JButton("Resume");
         Resume.setBounds(400-65, 250-15, 150, 50);
         Resume.addActionListener(e -> Game.setCurrentState(save));
@@ -25,6 +21,10 @@ public class StatePaused extends GameState{
         backToMainMenu.setBounds(400-65, 350-15, 150, 50);
         backToMainMenu.addActionListener(e -> Game.setCurrentState(new StateLost()));
         display.addComponent(backToMainMenu);
+
+        JLabel l = new JLabel(new ImageIcon(display.loadImg("/assets/MainMenu.png")));
+        l.setBounds(0, 0, 800, 600);
+        display.addComponent(l);
     }
 
 
