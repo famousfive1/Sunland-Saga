@@ -84,7 +84,7 @@ public class StateWorld extends GameState{
 
     @Override
     public void playMusic() {
-        MediaPlayer.playInBackground("/assets/homeMusic.wav");
+        MediaPlayer.playInBackground("/assets/homeMusic.mp3");
     }
 
     @Override
@@ -92,6 +92,7 @@ public class StateWorld extends GameState{
         if(typed == 'p')
             pauseGame();
         else if(player.move(typed, map)) {
+            Game.updateWindow();
             int x = player.getX(), y = player.getY();
             if (map[y][x] == 2)
                 handleEnemy(x, y);
@@ -106,19 +107,16 @@ public class StateWorld extends GameState{
                 else player.setXY(x, 0);
                 changeMap(connections[map[y][x] - 6]);
             }
-            Game.updateWindow();
         }
     }
 
     private void handleNPC() {
-        MediaPlayer.playSfx("/assets/sfx/NpcEncounter.wav");
+        MediaPlayer.playSfx("/assets/sfx/NpcEncounter.mp3");
         System.out.println("NPC encountered");
 
-        String dialogue = """
-                Jason wants to talk to you?\s
-                press space if you want to reply
-                Press any other button to ignore
-                """;
+        String dialogue = "Village elder wants to talk to you? \n" +
+                          "press space if you want to reply\n" +
+                          "Press any other button to ignore\n";
 
         JOptionPane optionPane = new JOptionPane(dialogue, JOptionPane.INFORMATION_MESSAGE,
                 JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
@@ -162,7 +160,7 @@ public class StateWorld extends GameState{
         map[y][x] = 0;
         Character randomEnemy = generateEnemy();
         MediaPlayer.stop();
-        MediaPlayer.playInBackground("/assets/combatMusic.wav");
+        MediaPlayer.playInBackground("/assets/combatMusic.mp3");
         JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
                 new String[] {"To Arms !!!"}, null);
@@ -216,7 +214,8 @@ public class StateWorld extends GameState{
     private Character generateEnemy() {
         // Do more stuff
         int randomEnemyIndex = (int)( Math.random()*enemies.length);
-        return new Character(enemies[randomEnemyIndex], display.loadImg("/assets/enemy.png"),
+        return new Character(enemies[randomEnemyIndex],
+                display.loadImg("/assets/enemyCharacters_"+enemies[randomEnemyIndex].toLowerCase()+".png"),
                 Math.min(1000, 500 + (int)(Math.random()*randomEnemyIndex*100*randomEnemyIndex)));
     }
 
@@ -263,7 +262,7 @@ public class StateWorld extends GameState{
 
         if(currentQuestKillCount==questKillTargets[questType]){
             Timer timer = new Timer(0, e->{
-                MediaPlayer.playSfx("/assets/sfx/QuestCompleted.wav");
+                MediaPlayer.playSfx("/assets/sfx/QuestCompleted.mp3");
                 JOptionPane.showMessageDialog(null, "You Completed Your Current Quest!");
                 questProgressBar.setString("QUEST PROGRESS : kills : " + 0);
                 questProgressBar.setValue(0);
@@ -293,7 +292,7 @@ public class StateWorld extends GameState{
             if(option == 0)
             {
                 currentQuestEnemy = enemies[a];
-                MediaPlayer.playSfx("/assets/sfx/QuestAcceptRelief.wav");
+                MediaPlayer.playSfx("/assets/sfx/QuestAcceptRelief.mp3");
 //                questCount = 3;
                 questType = a;
                 questDisplay.setText("Quests : " + totalQuestCount + " / " + neededQuests);
