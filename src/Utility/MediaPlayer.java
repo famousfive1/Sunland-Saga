@@ -1,64 +1,37 @@
 package Utility;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStream;
+import jaco.mp3.player.MP3Player;
+
+import java.io.File;
+import java.net.URL;
 
 public  class MediaPlayer {
-    private static AudioInputStream audioInputStream;
-    private static Clip clip;
+    private static MP3Player mp3Player = new MP3Player();
 
     public static void playInBackground(String path){
         try {
-            InputStream s = MediaPlayer.class.getResourceAsStream(path);
-            if(s == null) return;
-            audioInputStream = AudioSystem.getAudioInputStream(s);
-             clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-
+            URL u = MediaPlayer.class.getResource(path);
+            if(u == null) return;
+            mp3Player = new MP3Player(u);
         } catch(Exception e) {
             e.printStackTrace();
         }
 
-        clip.loop(100);
+        mp3Player.play();
     }
 
     public static void playSfx(String path) {
-        Clip clip = null;
-        AudioInputStream audioInputStream;
         try {
-            InputStream s = MediaPlayer.class.getResourceAsStream(path);
-            if (s == null) return;
-
-            audioInputStream = AudioSystem.getAudioInputStream(s);
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-
+            URL u = MediaPlayer.class.getResource(path);
+            if(u == null) return;
+            new MP3Player(u).play();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        assert clip != null;
-        clip.start();
-
-
-
     }
 
-
-
     public static void stop(){
-        if(clip == null) return;
-        clip.stop();
-        clip.close();
-        try {
-            audioInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        if(mp3Player.isStopped()) return;
+        mp3Player.stop();
     }
 }

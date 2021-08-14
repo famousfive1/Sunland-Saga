@@ -31,17 +31,17 @@ public class StateCombat extends GameState {
 
         attack1 = addButtonToScreen(player.getWeapon(), 170, 400, 140, 40, e -> {
             attack('f');
-            MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
+            MediaPlayer.playSfx("/assets/sfx/attackTwo.mp3");
         });
        attack2 = addButtonToScreen("Kick", 400, 400, 80, 40, e -> {
             attack('e');
-            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
+            MediaPlayer.playSfx("/assets/sfx/attackOne.mp3");
 
         });
 
         attack3 = addButtonToScreen("Punch", 200, 500, 80, 40, e -> {
             attack('e');
-            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
+            MediaPlayer.playSfx("/assets/sfx/attackOne.mp3");
         });
 
         addButtonToScreen("Flee", 400, 500, 80, 40, e -> {
@@ -64,7 +64,7 @@ public class StateCombat extends GameState {
 
     @Override
     public void playMusic() {
-        MediaPlayer.playInBackground("/assets/combatMusic.wav");
+        MediaPlayer.playInBackground("/assets/combatMusic.mp3");
     }
 
     @Override
@@ -113,7 +113,7 @@ public class StateCombat extends GameState {
                 save.setQuestDisplay();
 
                 Game.setCurrentState(save);
-                MediaPlayer.playSfx("/assets/sfx/combatWon.wav");
+                MediaPlayer.playSfx("/assets/sfx/combatWon.mp3");
                 JOptionPane.showMessageDialog(null, "You Won in the Battle!");
 
                 if (save.getQuestType() != -1&&enemy.getName().equalsIgnoreCase(save.currentQuestEnemy))
@@ -136,7 +136,7 @@ public class StateCombat extends GameState {
                     Game.setCurrentState(new StateLost());
                 } else {
                    Game.setCurrentState(save);
-                    MediaPlayer.playSfx("/assets/sfx/dead.wav");
+                    MediaPlayer.playSfx("/assets/sfx/dead.mp3");
                     JOptionPane.showMessageDialog(null, "You Died in the Battle!");
                 }
                 //TODO 2. Do something appropriate here
@@ -154,17 +154,17 @@ public class StateCombat extends GameState {
     private void engageButtons() {
         attack2.addActionListener(f->{
             attack('e');
-            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
+            MediaPlayer.playSfx("/assets/sfx/attackOne.mp3");
         });
 
         attack1.addActionListener(f->{
             attack('f');
-            MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
+            MediaPlayer.playSfx("/assets/sfx/attackTwo.mp3");
         });
 
         attack3.addActionListener(f->{
             attack('e');
-            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
+            MediaPlayer.playSfx("/assets/sfx/attackOne.mp3");
         });
     }
 
