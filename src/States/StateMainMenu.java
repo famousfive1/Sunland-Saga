@@ -61,20 +61,19 @@ public class StateMainMenu extends GameState {
 
     private void showHelp() {
         System.out.println("Help");
-        String gameInstructions = """
-
-                1. This is a Quest game, so you have to complete quests to win.
-                2. Quests will be given by NPCs in the towns
-                3. You can complete the quests by fighting enemies in the forest outside th town
-                4. You have only three lives throughout the game
-                5. The player starts in the town1 when a new game starts
-                6. You can go to different maps by moving your character to the indicated arrows in each map
-                7. You can pause in any MAPs by pressing p, you can also quit the game or start again from there
-                8. You cannot pause in the beginning or during any fights
-                9. There is no time restriction
-                10. You will discover more features in the game as you progress
-
-                ALL THE BEST""";
+        String gameInstructions = "\n" +
+                                  "1. This is a Quest game, so you have to complete quests to win.\n" +
+                                  "2. Quests will be given by NPCs in the towns\n" +
+                                  "3. You can complete the quests by fighting enemies in the forest outside th town\n" +
+                                  "4. You have only three lives throughout the game\n" +
+                                  "5. The player starts in the town1 when a new game starts\n" +
+                                  "6. You can go to different maps by moving your character to the indicated arrows in each map\n" +
+                                  "7. You can pause in any MAPs by pressing p, you can also quit the game or start again from there\n" +
+                                  "8. You cannot pause in the beginning or during any fights\n" +
+                                  "9. There is no time restriction\n" +
+                                  "10. You will discover more features in the game as you progress\n" +
+                                  "\n" +
+                                  "ALL THE BEST";
 
         JOptionPane.showOptionDialog(null, gameInstructions, "Help: Game rules",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[] {"OK"}, null);
