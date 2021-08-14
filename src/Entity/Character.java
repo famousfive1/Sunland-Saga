@@ -42,8 +42,8 @@ public class Character {
     public void takeDamage(int damage) {
         this.health = Math.max(0, this.health - damage);
 
-        System.out.println(this.name + " takes " + damage+ " damage");
-        System.out.println(this.name + "'s Current health: "+ health);
+        //System.out.println(this.name + " takes " + damage+ " damage");
+        //System.out.println(this.name + "'s Current health: "+ health);
 
     }
 
