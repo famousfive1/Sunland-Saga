@@ -2,7 +2,6 @@ package Utility;
 
 import jaco.mp3.player.MP3Player;
 
-import java.io.File;
 import java.net.URL;
 
 public  class MediaPlayer {
@@ -18,6 +17,7 @@ public  class MediaPlayer {
         }
 
         mp3Player.play();
+        mp3Player.setRepeat(true);
     }
 
     public static void playSfx(String path) {
