@@ -1,5 +1,6 @@
 package States;
 
+import Entity.Player;
 import GUI.UIParts;
 import Utility.MediaPlayer;
 
@@ -41,17 +42,15 @@ public class StateMainMenu extends GameState {
                             new ImageIcon("src/assets/playerCharacter_warrior.png")}, null);
             if(chProfession == -1) return;
             String ch = "";
-            if(chProfession == 0) ch = "playerCharacter_knight.png";
-            else if(chProfession == 1) ch = "playerCharacter_archer.png";
-            else if(chProfession == 2) ch = "playerCharacter_warrior.png";
+            if(chProfession == 0) { ch = "playerCharacter_knight.png"; Player.setWeapon(0); }
+            else if(chProfession == 1) { ch = "playerCharacter_archer.png"; Player.setWeapon(1); }
+            else if(chProfession == 2) { ch = "playerCharacter_warrior.png"; Player.setWeapon(2); }
 
             int ch_difficulty = JOptionPane.showOptionDialog(null,
-                    """
-                            Choose difficulty:
-                            Easy   -(total lives = 5, total quests = 2)
-                            Medium -(total lives = 3, total quests = 4)
-                            Hard   -(total lives = 2, total quests = 7)
-                            """,
+                    "Choose difficulty:\n" +
+                    "Easy   -(total lives = 5, total quests = 2)\n" +
+                    "Medium -(total lives = 3, total quests = 4)\n" +
+                    "Hard   -(total lives = 2, total quests = 7)\n",
                     "Difficulty",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Easy", "Medium", "Hard"},null);
