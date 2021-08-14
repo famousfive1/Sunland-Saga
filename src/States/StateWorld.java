@@ -237,7 +237,10 @@ public class StateWorld extends GameState{
 
         if(totalQuestCount==neededQuests){
             System.out.println("Congratulations!! You won the game");
-            Game.setCurrentState(new StateWin());
+            Timer timer = new Timer(0, e->Game.setCurrentState(new StateWin()));
+            timer.setInitialDelay(1500);
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
