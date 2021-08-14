@@ -29,7 +29,7 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
 
-        attack1 = addButtonToScreen(player.getWeapon(), 170, 400, 140, 40, e -> {
+        attack1 = addButtonToScreen(Player.getWeapon(), 170, 400, 140, 40, e -> {
             attack('f');
             MediaPlayer.playSfx("/assets/sfx/attackTwo.mp3");
         });
