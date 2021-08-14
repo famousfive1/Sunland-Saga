@@ -49,9 +49,8 @@ public class StateWorld extends GameState{
         return currentQuestEnemy;
     }
 
-    public StateWorld(String playerName, String playerIcon) //forestmap1
+    public StateWorld(String playerName, String playerIcon) 
     {
-        //load map forest1
         display = new UIParts();
 
         //load player

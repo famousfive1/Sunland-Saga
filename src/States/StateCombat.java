@@ -139,7 +139,6 @@ public class StateCombat extends GameState {
                     MediaPlayer.playSfx("/assets/sfx/dead.mp3");
                     JOptionPane.showMessageDialog(null, "You Died in the Battle!");
                 }
-                //TODO 2. Do something appropriate here
             }
 
             engageButtons();
