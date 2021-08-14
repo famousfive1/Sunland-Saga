@@ -84,7 +84,9 @@ public class StateMainMenu extends GameState {
                                   "9. There is no time restriction\n" +
                                   "10. You will discover more features in the game as you progress\n" +
                                   "\n" +
-                                  "ALL THE BEST";
+                                  "ALL THE BEST" +
+                                  "External library used: jaco-mp3-player" +
+                                  "(http://jacomp3player.sourceforge.net/ , GNU Lesser General Public License)";
 
         JOptionPane.showOptionDialog(null, gameInstructions, "Help: Game rules",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[] {"OK"}, null);

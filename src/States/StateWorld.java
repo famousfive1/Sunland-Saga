@@ -49,9 +49,8 @@ public class StateWorld extends GameState{
         return currentQuestEnemy;
     }
 
-    public StateWorld(String playerName, String playerIcon) //forestmap1
+    public StateWorld(String playerName, String playerIcon) 
     {
-        //load map forest1
         display = new UIParts();
 
         //load player
@@ -213,6 +212,11 @@ public class StateWorld extends GameState{
 
     private Character generateEnemy() {
         // Do more stuff
+        if(Math.random() >= 0.4)
+            return new Character(enemies[questType],
+                    display.loadImg("/assets/enemyCharacters_"+enemies[questType].toLowerCase()+".png"),
+                    Math.min(1000, 500 + (int)(Math.random()*questType*100*questType)));
+
         int randomEnemyIndex = (int)( Math.random()*enemies.length);
         return new Character(enemies[randomEnemyIndex],
                 display.loadImg("/assets/enemyCharacters_"+enemies[randomEnemyIndex].toLowerCase()+".png"),
@@ -238,7 +242,10 @@ public class StateWorld extends GameState{
 
         if(totalQuestCount==neededQuests){
             System.out.println("Congratulations!! You won the game");
-            Game.setCurrentState(new StateWin());
+            Timer timer = new Timer(0, e->Game.setCurrentState(new StateWin()));
+            timer.setInitialDelay(1500);
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
