@@ -35,7 +35,7 @@ public class StateWorld extends GameState{
     JTextArea livesDisplay;
     JDialog npcDialog;
     String [] enemies = {"Exterminator", "Bandit", "Subtilizer", "Dog", "Wolf"};
-
+    String currentQuestEnemy = "";
     int[] questKillTargets = {3, 3, 5, 5, 3};
 
     public void setDifficulty(int quests, int lives) {
@@ -43,6 +43,10 @@ public class StateWorld extends GameState{
         this.player.setLives(lives);
         livesDisplay.setText("Lives left: " + player.getLives());
         questDisplay.setText("Quests : 0 / " + neededQuests);
+    }
+
+    public String getCurrentQuestEnemy() {
+        return currentQuestEnemy;
     }
 
     public StateWorld(String playerName, String playerIcon) //forestmap1
@@ -211,8 +215,21 @@ public class StateWorld extends GameState{
 
     private Character generateEnemy() {
         // Do more stuff
+        String enemyCharacter = "";
         int randomEnemyIndex = (int)( Math.random()*enemies.length);
-        return new Character(enemies[randomEnemyIndex], display.loadImg("/assets/enemy.png"),
+
+        if(randomEnemyIndex == 0)
+            enemyCharacter = "/assets/enemyCharacters_exterminator.png";
+        else if(randomEnemyIndex == 1)
+            enemyCharacter = "/assets/enemyCharacters_bandit.png";
+        else if(randomEnemyIndex == 2)
+            enemyCharacter = "/assets/enemyCharacters_subtilizer.png";
+        else if(randomEnemyIndex == 3)
+            enemyCharacter = "/assets/enemyCharacters_dog.png";
+        else if(randomEnemyIndex == 4)
+            enemyCharacter = "/assets/enemyCharacters_wolf.png";
+
+        return new Character(enemies[randomEnemyIndex], display.loadImg(enemyCharacter),
                 Math.min(1000, 500 + (int)(Math.random()*randomEnemyIndex*100*randomEnemyIndex)));
     }
 
@@ -263,6 +280,7 @@ public class StateWorld extends GameState{
                 JOptionPane.showMessageDialog(null, "You Completed Your Current Quest!");
                 questProgressBar.setString("QUEST PROGRESS : kills : " + 0);
                 questProgressBar.setValue(0);
+                currentQuestEnemy = "";
             });
             timer.setInitialDelay(500);
             timer.setRepeats(false);
@@ -287,6 +305,7 @@ public class StateWorld extends GameState{
 
             if(option == 0)
             {
+                currentQuestEnemy = enemies[a];
                 MediaPlayer.playSfx("/assets/sfx/QuestAcceptRelief.wav");
 //                questCount = 3;
                 questType = a;
@@ -294,6 +313,7 @@ public class StateWorld extends GameState{
                 JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
                                 npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+
             }
             else
                 JOptionPane.showOptionDialog(null, "QUEST declined!", "Quest", JOptionPane.DEFAULT_OPTION,

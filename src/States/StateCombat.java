@@ -29,33 +29,33 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
 
-        attack1 = addButtonToScreen("Main Weapon", 170, 400, 140, 40, e -> {
+        attack1 = addButtonToScreen("main weapon", 170, 450, 140, 40, e -> {
             attack('f');
             MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
         });
-       attack2 = addButtonToScreen("Kick", 400, 400, 80, 40, e -> {
+       attack2 = addButtonToScreen("Kick", 400, 450, 80, 40, e -> {
             attack('e');
             MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
 
         });
 
-        attack3 = addButtonToScreen("Punch", 200, 500, 80, 40, e -> {
+        attack3 = addButtonToScreen("Punch", 200, 530, 80, 40, e -> {
             attack('e');
             MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
         });
 
-        addButtonToScreen("Flee", 400, 500, 80, 40, e -> {
+        addButtonToScreen("Flee", 400, 530, 80, 40, e -> {
             player.restoreHealth();
             Game.setCurrentState(save);
         });
 
-        addPlayerToScreen(player, 130, 210, 100, 100);
+        addPlayerToScreen(player, 130, 250, 100, 100);
         fullHealthPlayer = Integer.toString(player.getHealth());
-        healthIndicatorPlayer = addHealthBarToScreen(player, 100, 330, 160, 30, new Color(0, 180, 0));
+        healthIndicatorPlayer = addHealthBarToScreen(player, 100, 380, 160, 30, new Color(0, 180, 0));
 
-        addPlayerToScreen(enemy, 520, 210, 100, 100);
+        addPlayerToScreen(enemy, 520, 250, 100, 100);
         fullHealthEnemy = Integer.toString(enemy.getHealth());
-        healthIndicatorEnemy = addHealthBarToScreen(enemy, 500, 330, 160, 30, new Color(0, 180, 0));
+        healthIndicatorEnemy = addHealthBarToScreen(enemy, 500, 380, 160, 30, new Color(0, 180, 0));
 
         JLabel back = new JLabel(new ImageIcon(display.loadImg("/assets/CombatBack.png")));
         back.setBounds(0, 0, 800, 600);
@@ -116,8 +116,11 @@ public class StateCombat extends GameState {
                 MediaPlayer.playSfx("/assets/sfx/combatWon.wav");
                 JOptionPane.showMessageDialog(null, "You Won in the Battle!");
 
-                if (save.getQuestType() != -1)
+                if (save.getQuestType() != -1&&enemy.getName().equalsIgnoreCase(save.currentQuestEnemy))
                     save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
+
+
+
             }
 
             if (player.getHealth() == 0) {

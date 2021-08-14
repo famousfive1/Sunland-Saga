@@ -2,6 +2,7 @@ package States;
 
 import GUI.UIParts;
 import Utility.MediaPlayer;
+import Entity.Player;
 
 import javax.swing.*;
 
@@ -68,7 +69,7 @@ public class StateMainMenu extends GameState {
 
     @Override
     public void handleInput(char typed) {
-        System.out.println("Dont type");
+        System.out.println("Don't type");
     }
 
     private void showHelp() {
