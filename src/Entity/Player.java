@@ -27,10 +27,10 @@ public class Player extends Character {
     {
         switch (typed) {
             case 'e':
-                System.out.println("You deal E damage");
+                //System.out.println("You deal E damage");
                 break;
             case 'f':
-                System.out.println("You dash away but take F damage");
+                //System.out.println("You dash away but take F damage");
                 takeDamage(10);
 
                 break;

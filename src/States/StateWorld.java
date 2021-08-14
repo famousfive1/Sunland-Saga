@@ -49,9 +49,8 @@ public class StateWorld extends GameState{
         return currentQuestEnemy;
     }
 
-    public StateWorld(String playerName, String playerIcon) //forestmap1
+    public StateWorld(String playerName, String playerIcon) 
     {
-        //load map forest1
         display = new UIParts();
 
         //load player
@@ -238,7 +237,10 @@ public class StateWorld extends GameState{
 
         if(totalQuestCount==neededQuests){
             System.out.println("Congratulations!! You won the game");
-            Game.setCurrentState(new StateWin());
+            Timer timer = new Timer(0, e->Game.setCurrentState(new StateWin()));
+            timer.setInitialDelay(1500);
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
