@@ -29,7 +29,7 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
 
-        attack1 = addButtonToScreen(player.getWeapon(), 170, 400, 140, 40, e -> {
+        attack1 = addButtonToScreen(Player.getWeapon(), 170, 400, 140, 40, e -> {
             attack('f');
             MediaPlayer.playSfx("/assets/sfx/attackTwo.mp3");
         });
@@ -49,13 +49,13 @@ public class StateCombat extends GameState {
             Game.setCurrentState(save);
         });
 
-        addPlayerToScreen(player, 130, 210, 100, 100);
+        addPlayerToScreen(player, 130, 220, 100, 100);
         fullHealthPlayer = Integer.toString(player.getHealth());
-        healthIndicatorPlayer = addHealthBarToScreen(player, 100, 330, 160, 30, new Color(0, 180, 0));
+        healthIndicatorPlayer = addHealthBarToScreen(player, 100, 165, 160, 30, new Color(0, 180, 0));
 
-        addPlayerToScreen(enemy, 520, 210, 100, 100);
+        addPlayerToScreen(enemy, 520, 220, 100, 100);
         fullHealthEnemy = Integer.toString(enemy.getHealth());
-        healthIndicatorEnemy = addHealthBarToScreen(enemy, 500, 330, 160, 30, new Color(0, 180, 0));
+        healthIndicatorEnemy = addHealthBarToScreen(enemy, 500, 165, 160, 30, new Color(0, 180, 0));
 
         JLabel back = new JLabel(new ImageIcon(display.loadImg("/assets/CombatBack.png")));
         back.setBounds(0, 0, 800, 600);

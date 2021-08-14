@@ -14,7 +14,7 @@ public class Player extends Character {
 
     static public void setWeapon(int a)
     {
-        String s[] = {"Sword", "Bow", "Battle Axe"};
+        String[] s = {"Greatsword", "Long Bow", "War Hammer"};
         weapon = s[a];
     }
 

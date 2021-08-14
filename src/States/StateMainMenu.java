@@ -1,8 +1,8 @@
 package States;
 
+import Entity.Player;
 import GUI.UIParts;
 import Utility.MediaPlayer;
-import Entity.Player;
 
 import javax.swing.*;
 
@@ -35,46 +35,56 @@ public class StateMainMenu extends GameState {
     public static void buttonPlayClicked() {
         String name = JOptionPane.showInputDialog("Enter you character name: ");
         if(name != null && !name.equals("")) {
-            int ch = JOptionPane.showOptionDialog(null, "Choose your starting weapon: ", "Weapon",
+            int chProfession = JOptionPane.showOptionDialog(null, "Choose your character profession: ", "Weapon",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                    null, new String[] {"Sword", "Bow", "Battle Axe"}, null);
-            if(ch == -1) return;
-            else Player.setWeapon(ch);
-            ch = JOptionPane.showOptionDialog(null, "Choose difficulty: ", "Difficulty",
+                    null, new ImageIcon[] {new ImageIcon("src/assets/playerCharacter_knight.png"),
+                            new ImageIcon("src/assets/playerCharacter_archer.png"),
+                            new ImageIcon("src/assets/playerCharacter_warrior.png")}, null);
+            if(chProfession == -1) return;
+            String ch = "";
+            if(chProfession == 0) { ch = "playerCharacter_knight.png"; Player.setWeapon(0); }
+            else if(chProfession == 1) { ch = "playerCharacter_archer.png"; Player.setWeapon(1); }
+            else if(chProfession == 2) { ch = "playerCharacter_warrior.png"; Player.setWeapon(2); }
+
+            int ch_difficulty = JOptionPane.showOptionDialog(null,
+                    "Choose difficulty:\n" +
+                    "Easy   -(total lives = 5, total quests = 2)\n" +
+                    "Medium -(total lives = 3, total quests = 4)\n" +
+                    "Hard   -(total lives = 2, total quests = 7)\n",
+                    "Difficulty",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, new String[] {"Easy", "Medium", "Hard"},null);
-            if(ch == -1) return;
+            if(ch_difficulty == -1) return;
 
-            StateWorld world = new StateWorld(name, "PlayerCharacter.png");
+            StateWorld world = new StateWorld(name, ch);
             Game.setCurrentState(world);
 
-            if(ch == 0) world.setDifficulty(2, 5);
-            else if(ch == 1) world.setDifficulty(4, 3);
-            else if(ch == 2) world.setDifficulty(7, 2);
+            if(ch_difficulty == 0) world.setDifficulty(2, 5);
+            else if(ch_difficulty == 1) world.setDifficulty(4, 3);
+            else if(ch_difficulty == 2) world.setDifficulty(7, 2);
         }
     }
 
     @Override
     public void handleInput(char typed) {
-        System.out.println("Dont type");
+        System.out.println("Don't type");
     }
 
     private void showHelp() {
         System.out.println("Help");
-        String gameInstructions = """
-
-                1. This is a Quest game, so you have to complete quests to win.
-                2. Quests will be given by NPCs in the towns
-                3. You can complete the quests by fighting enemies in the forest outside th town
-                4. You have only three lives throughout the game
-                5. The player starts in the town1 when a new game starts
-                6. You can go to different maps by moving your character to the indicated arrows in each map
-                7. You can pause in any MAPs by pressing p, you can also quit the game or start again from there
-                8. You cannot pause in the beginning or during any fights
-                9. There is no time restriction
-                10. You will discover more features in the game as you progress
-
-                ALL THE BEST""";
+        String gameInstructions = "\n" +
+                                  "1. This is a Quest game, so you have to complete quests to win.\n" +
+                                  "2. Quests will be given by NPCs in the towns\n" +
+                                  "3. You can complete the quests by fighting enemies in the forest outside th town\n" +
+                                  "4. You have only three lives throughout the game\n" +
+                                  "5. The player starts in the town1 when a new game starts\n" +
+                                  "6. You can go to different maps by moving your character to the indicated arrows in each map\n" +
+                                  "7. You can pause in any MAPs by pressing p, you can also quit the game or start again from there\n" +
+                                  "8. You cannot pause in the beginning or during any fights\n" +
+                                  "9. There is no time restriction\n" +
+                                  "10. You will discover more features in the game as you progress\n" +
+                                  "\n" +
+                                  "ALL THE BEST";
 
         JOptionPane.showOptionDialog(null, gameInstructions, "Help: Game rules",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[] {"OK"}, null);
