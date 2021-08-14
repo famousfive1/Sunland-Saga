@@ -213,6 +213,11 @@ public class StateWorld extends GameState{
 
     private Character generateEnemy() {
         // Do more stuff
+        if(Math.random() >= 0.4)
+            return new Character(enemies[questType],
+                    display.loadImg("/assets/enemyCharacters_"+enemies[questType].toLowerCase()+".png"),
+                    Math.min(1000, 500 + (int)(Math.random()*questType*100*questType)));
+
         int randomEnemyIndex = (int)( Math.random()*enemies.length);
         return new Character(enemies[randomEnemyIndex],
                 display.loadImg("/assets/enemyCharacters_"+enemies[randomEnemyIndex].toLowerCase()+".png"),
