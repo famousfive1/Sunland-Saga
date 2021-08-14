@@ -114,11 +114,9 @@ public class StateWorld extends GameState{
         MediaPlayer.playSfx("/assets/sfx/NpcEncounter.mp3");
         System.out.println("NPC encountered");
 
-        String dialogue = """
-                Jason wants to talk to you?\s
-                press space if you want to reply
-                Press any other button to ignore
-                """;
+        String dialogue = "Jason wants to talk to you? \n" +
+                          "press space if you want to reply\n" +
+                          "Press any other button to ignore\n";
 
         JOptionPane optionPane = new JOptionPane(dialogue, JOptionPane.INFORMATION_MESSAGE,
                 JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
