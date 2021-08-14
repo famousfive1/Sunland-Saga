@@ -92,6 +92,7 @@ public class StateWorld extends GameState{
         if(typed == 'p')
             pauseGame();
         else if(player.move(typed, map)) {
+            Game.updateWindow();
             int x = player.getX(), y = player.getY();
             if (map[y][x] == 2)
                 handleEnemy(x, y);
@@ -106,7 +107,6 @@ public class StateWorld extends GameState{
                 else player.setXY(x, 0);
                 changeMap(connections[map[y][x] - 6]);
             }
-            Game.updateWindow();
         }
     }
 
@@ -114,7 +114,7 @@ public class StateWorld extends GameState{
         MediaPlayer.playSfx("/assets/sfx/NpcEncounter.mp3");
         System.out.println("NPC encountered");
 
-        String dialogue = "Jason wants to talk to you? \n" +
+        String dialogue = "Village elder wants to talk to you? \n" +
                           "press space if you want to reply\n" +
                           "Press any other button to ignore\n";
 
