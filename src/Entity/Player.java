@@ -6,9 +6,21 @@ public class Player extends Character {
 
     private int lives = 3;
     private boolean inQuest = false;
+    static private String weapon = "";
 
     public Player(String name, BufferedImage img){
         super(name, img, 100);
+    }
+
+    static public void setWeapon(int a)
+    {
+        String s[] = {"Sword", "Bow", "Battle Axe"};
+        weapon = s[a];
+    }
+
+    static public String getWeapon()
+    {
+        return weapon;
     }
 
     public void reactToMove(char typed)
@@ -77,4 +89,6 @@ public class Player extends Character {
     public void decreaseLive() {
         this.lives--;
     }
+
+    public void setLives(int live) { this.lives = live; }
 }

@@ -19,6 +19,7 @@ public class StateCombat extends GameState {
     String fullHealthEnemy;
     JButton attack1;
     JButton attack2;
+    JButton attack3;
 
     public StateCombat(Player player, Character enemy, StateWorld save) {
         this.save = save;
@@ -28,14 +29,24 @@ public class StateCombat extends GameState {
         this.player = player;
         this.enemy = enemy;
 
-        attack1 = addButtonToScreen("Attack 1", 200, 400, 80, 40, e -> {
+        attack1 = addButtonToScreen(player.getWeapon(), 170, 400, 140, 40, e -> {
+            attack('f');
+            MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
+        });
+       attack2 = addButtonToScreen("Kick", 400, 400, 80, 40, e -> {
+            attack('e');
+            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
+
+        });
+
+        attack3 = addButtonToScreen("Punch", 200, 500, 80, 40, e -> {
             attack('e');
             MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
         });
-       attack2 = addButtonToScreen("Attack 2", 400, 400, 80, 40, e -> {
-            attack('f');
-            MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
 
+        addButtonToScreen("Flee", 400, 500, 80, 40, e -> {
+            player.restoreHealth();
+            Game.setCurrentState(save);
         });
 
         addPlayerToScreen(player, 130, 210, 100, 100);
@@ -105,8 +116,11 @@ public class StateCombat extends GameState {
                 MediaPlayer.playSfx("/assets/sfx/combatWon.wav");
                 JOptionPane.showMessageDialog(null, "You Won in the Battle!");
 
-                if (save.getQuestType() != -1)
+                if (save.getQuestType() != -1&&enemy.getName().equalsIgnoreCase(save.currentQuestEnemy))
                     save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
+
+
+
             }
 
             if (player.getHealth() == 0) {
@@ -118,6 +132,7 @@ public class StateCombat extends GameState {
 
                 if (player.getLives() == 0) {
                     System.out.println("You lost the game");
+                    JOptionPane.showMessageDialog(null, "You lost all lives. Game Over!!");
                     Game.setCurrentState(new StateLost());
                 } else {
                    Game.setCurrentState(save);
@@ -137,20 +152,26 @@ public class StateCombat extends GameState {
     }
 
     private void engageButtons() {
-        attack1.addActionListener(f->{
+        attack2.addActionListener(f->{
             attack('e');
             MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
         });
 
-        attack2.addActionListener(f->{
+        attack1.addActionListener(f->{
             attack('f');
             MediaPlayer.playSfx("/assets/sfx/attackTwo.wav");
+        });
+
+        attack3.addActionListener(f->{
+            attack('e');
+            MediaPlayer.playSfx("/assets/sfx/attackOne.wav");
         });
     }
 
     private void disengageButtons() {
         attack1.removeActionListener(attack1.getActionListeners()[0]);
         attack2.removeActionListener(attack2.getActionListeners()[0]);
+        attack3.removeActionListener(attack3.getActionListeners()[0]);
     }
 
     private void addPlayerToScreen(Character character, int x, int y, int width, int height) {
