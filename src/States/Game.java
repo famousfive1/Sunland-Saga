@@ -11,6 +11,7 @@ public class Game {
     static GameWindow window;
     static GameState currentState;
 
+    // Execution starts here
     public static void main(String[] args) {
         window = new GameWindow();
         currentState = new StateMainMenu();
@@ -26,6 +27,7 @@ public class Game {
         return currentState;
     }
 
+    // Change current game state
     public static void setCurrentState(GameState GS){
         MediaPlayer.stop();
         System.out.println("State Change: " + currentState.toString() + " --> " + GS.toString());
@@ -38,6 +40,7 @@ public class Game {
         window.updateWindow();
     }
 
+    // Load file and return the lines in an ArrayList
     public static ArrayList<String> loadFile(String path) {
         InputStream fs = Game.class.getResourceAsStream(path);
         if(fs == null) {

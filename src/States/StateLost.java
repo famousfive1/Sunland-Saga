@@ -6,7 +6,8 @@ import Utility.MediaPlayer;
 import javax.swing.*;
 import java.awt.*;
 
-public class StateLost extends GameState{
+// When the player loses the game
+public class StateLost extends GameState {
     JLabel background;
 
     public StateLost() {

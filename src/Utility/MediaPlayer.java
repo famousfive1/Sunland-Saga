@@ -7,6 +7,7 @@ import java.net.URL;
 public  class MediaPlayer {
     private static MP3Player mp3Player = new MP3Player();
 
+    // Play music in background on loop
     public static void playInBackground(String path){
         try {
             URL u = MediaPlayer.class.getResource(path);
@@ -20,6 +21,7 @@ public  class MediaPlayer {
         mp3Player.setRepeat(true);
     }
 
+    // Play audio single time
     public static void playSfx(String path) {
         try {
             URL u = MediaPlayer.class.getResource(path);
@@ -30,6 +32,7 @@ public  class MediaPlayer {
         }
     }
 
+    // Stop playing all audio
     public static void stop(){
         if(mp3Player.isStopped()) return;
         mp3Player.stop();

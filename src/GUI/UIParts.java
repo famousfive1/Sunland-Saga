@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class UIParts {
 
+    // Hold all the elements that need to be displayed on screen
     private final ArrayList<JComponent> components;
     private final ArrayList<Character> entities;
     private final LayoutManager layout;
@@ -42,6 +43,7 @@ public class UIParts {
         return entities;
     }
 
+    // Load image file
     public BufferedImage loadImg(String path) {
         BufferedImage myPicture = null;
         try {

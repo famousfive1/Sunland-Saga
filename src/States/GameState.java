@@ -4,6 +4,8 @@ import GUI.UIParts;
 
 public abstract class GameState {
 
+    // Abstract class inherited by all others
+
     UIParts display;
 
     public UIParts getDisplay() {
