@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Character {
 
-    private int lives = 3;
+    private int lives = 3;          // Lives is set based on difficulty
     private boolean inQuest = false;
     static private String weapon = "";
 
@@ -37,6 +37,7 @@ public class Player extends Character {
         }
     }
 
+    // Movement code for character
     public boolean move(char typed, int[][] map) {
         int newX = this.x;
         int newY = this.y;
@@ -58,6 +59,7 @@ public class Player extends Character {
                 return false;
         }
 
+        // Move only if valid
         if(isValid(newX, newY, map)){
             this.x = newX;
             this.y = newY;

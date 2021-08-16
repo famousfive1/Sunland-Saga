@@ -7,6 +7,7 @@ import Utility.MediaPlayer;
 import javax.swing.*;
 
 public class StateMainMenu extends GameState {
+    // Main menu
 
     public StateMainMenu() {
         display = new UIParts();
@@ -32,8 +33,12 @@ public class StateMainMenu extends GameState {
 
     }
 
+    // When player wants to play new game
     public static void buttonPlayClicked() {
+        // Input character name
         String name = JOptionPane.showInputDialog("Enter you character name: ");
+
+        // Choose your character's type / profession
         if(name != null && !name.equals("")) {
             int chProfession = JOptionPane.showOptionDialog(null, "Choose your character profession: ", "Weapon",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
@@ -46,6 +51,7 @@ public class StateMainMenu extends GameState {
             else if(chProfession == 1) { ch = "playerCharacter_archer.png"; Player.setWeapon(1); }
             else if(chProfession == 2) { ch = "playerCharacter_warrior.png"; Player.setWeapon(2); }
 
+            // Choose difficulty
             int ch_difficulty = JOptionPane.showOptionDialog(null,
                     "Choose difficulty:\n" +
                     "Easy   -(total lives = 5, total quests = 2)\n" +
@@ -56,9 +62,11 @@ public class StateMainMenu extends GameState {
                     null, new String[] {"Easy", "Medium", "Hard"},null);
             if(ch_difficulty == -1) return;
 
+            // Start game
             StateWorld world = new StateWorld(name, ch);
             Game.setCurrentState(world);
 
+            // Set difficulty
             if(ch_difficulty == 0) world.setDifficulty(2, 5);
             else if(ch_difficulty == 1) world.setDifficulty(4, 3);
             else if(ch_difficulty == 2) world.setDifficulty(7, 2);

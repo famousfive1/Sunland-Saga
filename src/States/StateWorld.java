@@ -76,6 +76,7 @@ public class StateWorld extends GameState{
         background = new JLabel();
         display.addComponent(background);
 
+        // Start the game in Town 1
         changeMap("Town1Test");
 
         currentQuestKillCount = 0;
@@ -91,6 +92,7 @@ public class StateWorld extends GameState{
         if(typed == 'p')
             pauseGame();
         else if(player.move(typed, map)) {
+            // Try to move player
             Game.updateWindow();
             int x = player.getX(), y = player.getY();
             if (map[y][x] == 2)
@@ -99,6 +101,7 @@ public class StateWorld extends GameState{
             else if(map[y][x] == 5)
                 handleNPC();
 
+            // Map transition
             else if(map[y][x] >= 6) {
                 if(map[y][x] == 6) player.setXY(15, y);
                 else if(map[y][x] == 7) player.setXY(x, 11);
@@ -110,6 +113,7 @@ public class StateWorld extends GameState{
     }
 
     private void handleNPC() {
+        // Play audio and show pop up
         MediaPlayer.playSfx("/assets/sfx/NpcEncounter.mp3");
         System.out.println("NPC encountered");
 
@@ -156,18 +160,21 @@ public class StateWorld extends GameState{
     }
 
     private void handleEnemy(int x, int y) {
+        // If player lands on enemy tile
         map[y][x] = 0;
         Character randomEnemy = generateEnemy();
         MediaPlayer.stop();
         MediaPlayer.playInBackground("/assets/combatMusic.mp3");
+
         JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
                 new String[] {"To Arms !!!"}, null);
 
-
+        MediaPlayer.playSfx("/assets/sfx/barb_king_rage_fist_01.mp3");
         Game.setCurrentState(new StateCombat(player, randomEnemy, this));
     }
 
+    // Load map data
     private void changeMap(String mapPart) {
         background.setIcon(new ImageIcon(display.loadImg("/assets/"+mapPart+".png")));
         background.setBounds(0, 0, 800, 600);
@@ -185,6 +192,7 @@ public class StateWorld extends GameState{
             i++;
         }
 
+        // Load connections to adjacent maps
         connections = new String[4];
         connections[0] = file.get(i++);
         connections[1] = file.get(i++);
@@ -210,9 +218,10 @@ public class StateWorld extends GameState{
         Game.updateWindow();
     }
 
+    // Generate random enemy
     private Character generateEnemy() {
-        // Do more stuff
-        if(Math.random() >= 0.4)
+        // This makes it more likely to find your quest enemy
+        if(questType != -1 && Math.random() >= 0.4)
             return new Character(enemies[questType],
                     display.loadImg("/assets/enemyCharacters_"+enemies[questType].toLowerCase()+".png"),
                     Math.min(1000, 500 + (int)(Math.random()*questType*100*questType)));
@@ -227,6 +236,7 @@ public class StateWorld extends GameState{
         Game.setCurrentState(new StatePaused(this));
     }
 
+    // When player kills the current quest enemy
     public void setCurrentQuestKillCount(int currentQuestKillCount) {
         this.currentQuestKillCount = currentQuestKillCount;
 
@@ -261,6 +271,7 @@ public class StateWorld extends GameState{
         return currentQuestKillCount;
     }
 
+    // Visual update
     public void increaseQuestProgressBar() {
         if(questType != -1) {
             questProgressBar.setString("QUEST PROGRESS : kills : " + currentQuestKillCount);
@@ -285,8 +296,10 @@ public class StateWorld extends GameState{
             questDisplay.setText("Quests : " + totalQuestCount + " / " + neededQuests);
     }
 
+    // When player talks to NPC
     public void encounterNPC()
     {
+        // Does player already have quest?
         if(questType == -1)
         {
             NPCs npc = new NPCs("EncounterNPC", display.loadImg("/assets/enemy.png"));
@@ -296,6 +309,7 @@ public class StateWorld extends GameState{
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,
                     new String[] {"accept", "decline"}, null);
 
+            // Accept or decline quest
             if(option == 0)
             {
                 currentQuestEnemy = enemies[a];

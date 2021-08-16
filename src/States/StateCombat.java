@@ -22,12 +22,15 @@ public class StateCombat extends GameState {
     JButton attack3;
 
     public StateCombat(Player player, Character enemy, StateWorld save) {
+        // Save the world state so that we can continue game
         this.save = save;
 
         display = new UIParts();
 
         this.player = player;
         this.enemy = enemy;
+
+        // Add UI elements
 
         attack1 = addButtonToScreen(Player.getWeapon(), 170, 400, 140, 40, e -> {
             attack('f');
@@ -74,6 +77,7 @@ public class StateCombat extends GameState {
         else System.out.println("Press buttons instead!!");
     }
 
+    // used move is the attack that the play chooses
     void attack(char usedMove) {
 
         disengageButtons();
@@ -91,8 +95,6 @@ public class StateCombat extends GameState {
         //The code below executes 500 ms after the functions call
         //This is done to add a visual delay in the enemy attack and the player attack
         Timer timer = new Timer(0, e -> {
-
-
             healthIndicatorPlayer.setValue(player.getHealth());
             healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
 
@@ -118,9 +120,6 @@ public class StateCombat extends GameState {
 
                 if (save.getQuestType() != -1&&enemy.getName().equalsIgnoreCase(save.currentQuestEnemy))
                     save.setCurrentQuestKillCount(save.getCurrentQuestKillCount() + 1);
-
-
-
             }
 
             if (player.getHealth() == 0) {
@@ -150,6 +149,7 @@ public class StateCombat extends GameState {
         deathCheckTimer.start();
     }
 
+    // Re-enable buttons
     private void engageButtons() {
         attack2.addActionListener(f->{
             attack('e');
@@ -167,6 +167,7 @@ public class StateCombat extends GameState {
         });
     }
 
+    // Prevent buttons from being spammed
     private void disengageButtons() {
         attack1.removeActionListener(attack1.getActionListeners()[0]);
         attack2.removeActionListener(attack2.getActionListeners()[0]);
@@ -177,7 +178,6 @@ public class StateCombat extends GameState {
         JLabel l = new JLabel(new ImageIcon(character.getImgScaled()));
         l.setBounds(x, y, width, height);
         display.addComponent(l);
-
     }
 
     private JProgressBar addHealthBarToScreen(Character character, int x, int y, int width, int height, Color color) {

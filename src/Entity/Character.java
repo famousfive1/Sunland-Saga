@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Character {
-    protected int x, y;
+    protected int x, y;          // Positions
     protected BufferedImage img;
     protected int health;
     private final String name;
@@ -25,6 +25,7 @@ public class Character {
         return x;
     }
 
+    // Set position
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
@@ -34,7 +35,6 @@ public class Character {
         return y;
     }
 
-
     public int getHealth() {
         return health;
     }
@@ -42,6 +42,7 @@ public class Character {
     public void takeDamage(int damage) {
         this.health = Math.max(0, this.health - damage);
 
+        // For debugging
         //System.out.println(this.name + " takes " + damage+ " damage");
         //System.out.println(this.name + "'s Current health: "+ health);
 
@@ -51,6 +52,7 @@ public class Character {
         return img;
     }
 
+    // Get larger image
     public Image getImgScaled() {
         return img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
     }

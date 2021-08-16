@@ -11,16 +11,18 @@ import java.awt.event.KeyListener;
 public class GameWindow {
 
     JFrame frame;
-    GameState currentState;
+    GameState currentState;     // Hold reference to current state and its UIParts
     UIParts display;
 
     public GameWindow() {
+        // Initialize window
         frame = new JFrame();
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setFocusable(true);
         frame.getContentPane().setPreferredSize(new Dimension(800, 600));
+        // Listen for keyboard inputs and pass it on to current state
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -46,6 +48,7 @@ public class GameWindow {
         updateWindow();
     }
 
+    // Update the JFrame
     public void updateWindow() {
         frame.getContentPane().removeAll();
 
