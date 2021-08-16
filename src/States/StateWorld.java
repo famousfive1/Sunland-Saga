@@ -160,11 +160,12 @@ public class StateWorld extends GameState{
         Character randomEnemy = generateEnemy();
         MediaPlayer.stop();
         MediaPlayer.playInBackground("/assets/combatMusic.mp3");
+
         JOptionPane.showOptionDialog(null, "You encountered an :  " + randomEnemy.getName(), "Enemy",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
                 new String[] {"To Arms !!!"}, null);
 
-
+        MediaPlayer.playSfx("/assets/sfx/barb_king_rage_fist_01.mp3");
         Game.setCurrentState(new StateCombat(player, randomEnemy, this));
     }
 
