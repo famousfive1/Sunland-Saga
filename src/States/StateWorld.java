@@ -49,9 +49,8 @@ public class StateWorld extends GameState{
         return currentQuestEnemy;
     }
 
-    public StateWorld(String playerName, String playerIcon) //forestmap1
+    public StateWorld(String playerName, String playerIcon) 
     {
-        //load map forest1
         display = new UIParts();
 
         //load player
@@ -92,6 +91,7 @@ public class StateWorld extends GameState{
         if(typed == 'p')
             pauseGame();
         else if(player.move(typed, map)) {
+            Game.updateWindow();
             int x = player.getX(), y = player.getY();
             if (map[y][x] == 2)
                 handleEnemy(x, y);
@@ -106,7 +106,6 @@ public class StateWorld extends GameState{
                 else player.setXY(x, 0);
                 changeMap(connections[map[y][x] - 6]);
             }
-            Game.updateWindow();
         }
     }
 
@@ -114,7 +113,7 @@ public class StateWorld extends GameState{
         MediaPlayer.playSfx("/assets/sfx/NpcEncounter.mp3");
         System.out.println("NPC encountered");
 
-        String dialogue = "Jason wants to talk to you? \n" +
+        String dialogue = "Village elder wants to talk to you? \n" +
                           "press space if you want to reply\n" +
                           "Press any other button to ignore\n";
 
@@ -213,8 +212,14 @@ public class StateWorld extends GameState{
 
     private Character generateEnemy() {
         // Do more stuff
+        if(Math.random() >= 0.4)
+            return new Character(enemies[questType],
+                    display.loadImg("/assets/enemyCharacters_"+enemies[questType].toLowerCase()+".png"),
+                    Math.min(1000, 500 + (int)(Math.random()*questType*100*questType)));
+
         int randomEnemyIndex = (int)( Math.random()*enemies.length);
-        return new Character(enemies[randomEnemyIndex], display.loadImg("/assets/enemy.png"),
+        return new Character(enemies[randomEnemyIndex],
+                display.loadImg("/assets/enemyCharacters_"+enemies[randomEnemyIndex].toLowerCase()+".png"),
                 Math.min(1000, 500 + (int)(Math.random()*randomEnemyIndex*100*randomEnemyIndex)));
     }
 
@@ -237,7 +242,10 @@ public class StateWorld extends GameState{
 
         if(totalQuestCount==neededQuests){
             System.out.println("Congratulations!! You won the game");
-            Game.setCurrentState(new StateWin());
+            Timer timer = new Timer(0, e->Game.setCurrentState(new StateWin()));
+            timer.setInitialDelay(1500);
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 

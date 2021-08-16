@@ -10,7 +10,6 @@ public class StateWin extends GameState{
 
     public StateWin() {
 
-
         display = new UIParts();
         background = new JLabel(new ImageIcon(
                 display.loadImg("/assets/winningDialogue.png").getScaledInstance(800, 600, Image.SCALE_DEFAULT)));
