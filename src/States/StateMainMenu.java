@@ -94,7 +94,8 @@ public class StateMainMenu extends GameState {
                                   "\n" +
                                   "ALL THE BEST\n" +
                                   "External library used: jaco-mp3-player" +
-                                  "(http://jacomp3player.sourceforge.net/ , GNU Lesser General Public License)";
+                                  "(http://jacomp3player.sourceforge.net/ , GNU Lesser General Public License)\n" +
+                                  "Copyrighted assets used here are for educational purposes only.";
 
         JOptionPane.showOptionDialog(null, gameInstructions, "Help: Game rules",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[] {"OK"}, null);

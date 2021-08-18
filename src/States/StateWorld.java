@@ -317,7 +317,7 @@ public class StateWorld extends GameState{
 //                questCount = 3;
                 questType = a;
                 questDisplay.setText("Quests : " + totalQuestCount + " / " + neededQuests);
-                JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : To " +
+                JOptionPane.showOptionDialog(null, "QUEST accepted! \nCurrent quest : " +
                                 npc.getQuestDialouge(a), "Quest", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
 
