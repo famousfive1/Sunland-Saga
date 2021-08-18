@@ -77,7 +77,7 @@ public class StateCombat extends GameState {
         else System.out.println("Press buttons instead!!");
     }
 
-    // used move is the attack that the play chooses
+    // used move is the attack that the player chooses
     void attack(char usedMove) {
 
         disengageButtons();
@@ -92,8 +92,8 @@ public class StateCombat extends GameState {
         healthIndicatorEnemy.setValue((enemy.getHealth() * 100) / Integer.parseInt(fullHealthEnemy));
         healthIndicatorEnemy.setString(enemy.getHealth() + "/" + fullHealthEnemy);
 
-        //The code below executes 500 ms after the functions call
-        //This is done to add a visual delay in the enemy attack and the player attack
+        //Executes 500 ms after the functions call
+        //Done to add a visual delay in the enemy attack and the player attack
         Timer timer = new Timer(0, e -> {
             healthIndicatorPlayer.setValue(player.getHealth());
             healthIndicatorPlayer.setString(player.getHealth() + "/" + 100);
@@ -104,8 +104,9 @@ public class StateCombat extends GameState {
         timer.start();
 
 
-        //The code inside the lambda below will execute 600ms after the function call.
-        //This is done to ensure that the death actually happens sometime after the progress bar gets updated
+        //Code inside the lambda below will execute 600ms after the function call.
+        //Done to ensure that the death actually happens sometime after the progress bar gets updated
+        //(So as to accommodate both logical and visual changes)
         Timer deathCheckTimer = new Timer(0, e -> {
 
             if (enemy.getHealth() == 0) {
@@ -174,12 +175,14 @@ public class StateCombat extends GameState {
         attack3.removeActionListener(attack3.getActionListeners()[0]);
     }
 
+    //Add a player to the screen
     private void addPlayerToScreen(Character character, int x, int y, int width, int height) {
         JLabel l = new JLabel(new ImageIcon(character.getImgScaled()));
         l.setBounds(x, y, width, height);
         display.addComponent(l);
     }
 
+    //Add a customised JProgressBar and return the button if needed to be modified later on
     private JProgressBar addHealthBarToScreen(Character character, int x, int y, int width, int height, Color color) {
         JProgressBar healthIndicator = new JProgressBar();
         healthIndicator.setStringPainted(true);
@@ -192,6 +195,7 @@ public class StateCombat extends GameState {
         return healthIndicator;
     }
 
+    //Add a customised JButton and return the button if needed to be modified later on
     private JButton addButtonToScreen(String buttonText, int x, int y, int width, int height, ActionListener l) {
         JButton jButton = new JButton(buttonText);
         jButton.setBounds(x, y, width, height);

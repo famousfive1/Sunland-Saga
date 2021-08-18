@@ -21,11 +21,6 @@ Load character/ move
 public class StateWorld extends GameState{
 
     Player player;
-    private int currentQuestKillCount;
-    private int questType = -1;
-    private int totalQuestCount;
-    private int neededQuests;
-
     // Map related stuff
     int[][] map;
     String[] connections;
@@ -37,19 +32,12 @@ public class StateWorld extends GameState{
     String [] enemies = {"Exterminator", "Bandit", "Subtilizer", "Dog", "Wolf"};
     String currentQuestEnemy = "";
     int[] questKillTargets = {3, 3, 5, 5, 3};
+    private int currentQuestKillCount;
+    private int questType = -1;
+    private int totalQuestCount;
+    private int neededQuests;
 
-    public void setDifficulty(int quests, int lives) {
-        this.neededQuests = quests;
-        this.player.setLives(lives);
-        livesDisplay.setText("Lives left: " + player.getLives());
-        questDisplay.setText("Quests : 0 / " + neededQuests);
-    }
-
-    public String getCurrentQuestEnemy() {
-        return currentQuestEnemy;
-    }
-
-    public StateWorld(String playerName, String playerIcon) 
+    public StateWorld(String playerName, String playerIcon)
     {
         display = new UIParts();
 
@@ -80,6 +68,17 @@ public class StateWorld extends GameState{
         changeMap("Town1Test");
 
         currentQuestKillCount = 0;
+    }
+
+    public void setDifficulty(int quests, int lives) {
+        this.neededQuests = quests;
+        this.player.setLives(lives);
+        livesDisplay.setText("Lives left: " + player.getLives());
+        questDisplay.setText("Quests : 0 / " + neededQuests);
+    }
+
+    public String getCurrentQuestEnemy() {
+        return currentQuestEnemy;
     }
 
     @Override
@@ -236,6 +235,18 @@ public class StateWorld extends GameState{
         Game.setCurrentState(new StatePaused(this));
     }
 
+    public int getQuestType() {
+        return questType;
+    }
+
+    public void setQuestType(int questType) {
+        this.questType = questType;
+    }
+
+    public int getCurrentQuestKillCount() {
+        return currentQuestKillCount;
+    }
+
     // When player kills the current quest enemy
     public void setCurrentQuestKillCount(int currentQuestKillCount) {
         this.currentQuestKillCount = currentQuestKillCount;
@@ -257,18 +268,6 @@ public class StateWorld extends GameState{
             timer.setRepeats(false);
             timer.start();
         }
-    }
-
-    public void setQuestType(int questType) {
-        this.questType = questType;
-    }
-
-    public int getQuestType() {
-        return questType;
-    }
-
-    public int getCurrentQuestKillCount() {
-        return currentQuestKillCount;
     }
 
     // Visual update
